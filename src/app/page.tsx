@@ -1,10 +1,23 @@
+import Hero from "@/components/sections/Hero";
+import About from "@/components/sections/About";
+import Skills from "@/components/sections/Skills";
+import Projects from "@/components/sections/Projects";
+import Experience from "@/components/sections/Experience";
+import Blog from "@/components/sections/Blog";
+import Testimonials from "@/components/sections/Testimonials";
+import Contact from "@/components/sections/Contact";
+
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <h1 className="text-4xl font-bold font-sans">Portfolio Setup Complete</h1>
-      <p className="mt-4 text-xl text-secondary">
-        Tailwind v4 + Next.js + Framer Motion Ready
-      </p>
+    <main className="flex min-h-screen flex-col">
+      <Hero />
+      <About />
+      <Skills />
+      <Projects />
+      <Experience />
+      <Testimonials />
+      <Blog />
+      <Contact />
     </main>
   );
 }

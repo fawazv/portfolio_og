@@ -1,0 +1,105 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { cn } from "@/lib/utils";
+
+const navItems = [
+  { name: "About", href: "#about" },
+  { name: "Services", href: "#services" },
+  { name: "Projects", href: "#projects" },
+  { name: "Contact", href: "#contact" },
+];
+
+export default function Navbar() {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <>
+      <motion.nav
+        className={cn(
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out px-6 py-4",
+          isScrolled
+            ? "bg-white/80 dark:bg-black/80 backdrop-blur-md border-b border-black/5 dark:border-white/5 py-3"
+            : "bg-transparent py-5"
+        )}
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        <div className="container mx-auto flex items-center justify-between">
+            {/* Logo */}
+          <Link href="/" className="text-xl font-bold tracking-tighter uppercase z-50 mix-blend-difference text-white dark:text-white">
+            Dev<span className="opacity-50">.Portfolio</span>
+          </Link>
+
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center gap-8">
+            {navItems.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className="text-sm font-medium uppercase tracking-wide hover:text-secondary transition-colors mix-blend-difference text-white dark:text-gray-300"
+              >
+                {item.name}
+              </Link>
+            ))}
+            <div className="pl-4 border-l border-white/20">
+                 <ThemeToggle />
+            </div>
+          </div>
+
+          {/* Mobile Toggle */}
+          <div className="flex items-center md:hidden gap-4">
+             <ThemeToggle />
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="z-50 p-2 mix-blend-difference text-white"
+            >
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
+        </div>
+      </motion.nav>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: "-100%" }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: "-100%" }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            className="fixed inset-0 z-40 bg-white dark:bg-black flex flex-col items-center justify-center"
+          >
+            <div className="flex flex-col items-center gap-8">
+              {navItems.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="text-4xl font-bold uppercase tracking-tighter hover:text-secondary transition-colors"
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
