@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import NoiseOverlay from "@/components/ui/noise-overlay";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,10 +16,18 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const playfair = Playfair_Display({
+  variable: "--font-serif",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+});
+
 export const metadata: Metadata = {
   title: "Premium Developer Portfolio",
   description: "A cinematic developer portfolio.",
 };
+
+import SmoothScroll from "@/components/smooth-scroll";
 
 export default function RootLayout({
   children,
@@ -28,7 +37,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} antialiased`}
       >
         <ThemeProvider
             attribute="class"
@@ -36,6 +45,8 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+          <NoiseOverlay />
+          <SmoothScroll />
           <Navbar />
           {children}
           <Footer />

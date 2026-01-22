@@ -3,8 +3,12 @@
 import { motion } from "framer-motion";
 
 const skills = [
-  "React", "Next.js", "TypeScript", "Tailwind CSS", "Node.js", 
-  "GraphQL", "PostgreSQL", "Framer Motion", "Three.js", "AWS"
+  "JavaScript (ES6+)", "TypeScript", "React.js", "Next.js", "Node.js", "Express.js", 
+  "HTML5", "CSS3", "Tailwind CSS", "Vite", "Material UI", "Shadcn UI", 
+  "Bootstrap", "Framer Motion", "Redux Toolkit", "Context API",
+  "Nginx", "MongoDB", "NoSQL", "PostgreSQL", "Mongoose",
+  "Docker", "RabbitMQ", "AWS EC2", "AWS S3", "Google Cloud", 
+  "Firebase", "Git", "Postman", "Figma"
 ];
 
 export default function Skills() {

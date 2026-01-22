@@ -10,9 +10,8 @@ export default function Footer() {
         </div>
         
         <div className="flex gap-6">
-            <a href="#" className="text-sm uppercase tracking-wide hover:text-secondary transition-colors">Twitter</a>
-            <a href="#" className="text-sm uppercase tracking-wide hover:text-secondary transition-colors">LinkedIn</a>
-            <a href="#" className="text-sm uppercase tracking-wide hover:text-secondary transition-colors">GitHub</a>
+            <a href="https://linkedin.com/in/mohammed-fawaz" target="_blank" rel="noopener noreferrer" className="text-sm uppercase tracking-wide hover:text-secondary transition-colors">LinkedIn</a>
+            <a href="https://github.com/fawaz-v" target="_blank" rel="noopener noreferrer" className="text-sm uppercase tracking-wide hover:text-secondary transition-colors">GitHub</a>
         </div>
       </div>
     </footer>

@@ -1,76 +1,105 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { RevealHeader } from "@/components/ui/reveal-header";
+import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const experience = [
   {
-    year: "2024 - Present",
-    role: "Senior Frontend Engineer",
-    company: "TechFlow Systems",
-    description: "Leading the migration to Next.js App Router and implementing a new design system."
+    year: "July 2020 - March 2023",
+    role: "Bachelor of Commerce",
+    company: "Calicut University",
+    description: "Specialized in Co-operation."
   },
   {
-    year: "2021 - 2024",
-    role: "Full Stack Developer",
-    company: "Creative Pulse Agency",
-    description: "Built award-winning marketing sites and complex e-commerce platforms for global brands."
-  },
-  {
-    year: "2019 - 2021",
-    role: "UI/UX Designer & Dev",
-    company: "Freelance",
-    description: "Collaborated with startups to design and prototype MVPs using React and Figma."
+    year: "July 2018 - April 2020",
+    role: "Higher Secondary",
+    company: "GHSS Tirurangadi",
+    description: "Commerce with Computer Application."
   }
 ];
 
 export default function Experience() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const leftRef = useRef<HTMLDivElement>(null);
+  const rightRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    ScrollTrigger.create({
+      trigger: containerRef.current,
+      start: "top top",
+      end: "bottom bottom",
+      pin: leftRef.current,
+      // markers: true, // debug
+    });
+
+    // Animate list items on scroll
+    const items = gsap.utils.toArray(".edu-item");
+    items.forEach((item: any, i) => {
+      gsap.fromTo(item, 
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          scrollTrigger: {
+            trigger: item,
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+    });
+
+  }, { scope: containerRef });
+
   return (
-    <section id="experience" className="py-24 bg-accent/5">
-      <div className="container mx-auto px-6">
-         <motion.h2 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-4xl md:text-6xl font-bold uppercase tracking-tighter mb-20 text-center"
+    <section id="experience" className="bg-background">
+      <div 
+        ref={containerRef} 
+        className="container mx-auto px-6 flex flex-col md:flex-row min-h-screen"
+      >
+        {/* Left Column - Pinned */}
+        <div 
+            ref={leftRef} 
+            className="w-full md:w-1/2 h-screen flex flex-col justify-center sticky top-0 md:relative"
         >
-            Experience
-        </motion.h2>
+             <RevealHeader className="text-4xl md:text-6xl font-bold uppercase tracking-tighter mb-8 md:mb-0">
+                Education
+            </RevealHeader>
+            <div className="w-24 h-1 bg-secondary mt-4 hidden md:block" />
+        </div>
 
-        <div className="max-w-4xl mx-auto relative">
-            {/* Vertical Line */}
-            <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-black/10 dark:bg-white/10 transform md:-translate-x-1/2 ml-6 md:ml-0" />
-
+        {/* Right Column - Scrolling Content */}
+        <div ref={rightRef} className="w-full md:w-1/2 flex flex-col justify-center py-20 md:py-0">
             <div className="space-y-16">
                 {experience.map((item, index) => (
-                    <motion.div 
+                    <div 
                         key={index}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: index * 0.1 }}
-                        className={`relative flex flex-col md:flex-row gap-8 ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}
+                        className="edu-item relative flex flex-col gap-4 border-l-2 border-black/10 dark:border-white/10 pl-8 pb-8 last:pb-0"
                     >
                         {/* Dot */}
-                        <div className="absolute left-0 md:left-1/2 top-0 w-3 h-3 bg-secondary rounded-full transform md:-translate-x-1/2 translate-y-2 ml-[1.35rem] md:ml-0 z-10 box-content border-4 border-background" />
+                        <div className="absolute left-[-9px] top-0 w-4 h-4 bg-secondary rounded-full" />
 
-                        <div className="md:w-1/2 pl-16 md:pl-0">
-                           <div className={`p-6 bg-background border border-black/5 dark:border-white/5 shadow-sm rounded-sm ${index % 2 === 0 ? 'md:text-left md:mr-12' : 'md:text-right md:ml-12'}`}>
-                                <span className="text-secondary font-bold text-sm uppercase tracking-wider block mb-2">
-                                    {item.year}
-                                </span>
-                                <h3 className="text-xl font-bold uppercase tracking-tight mb-1">
-                                    {item.role}
-                                </h3>
-                                <p className="text-sm font-medium text-muted-foreground uppercase mb-4">
-                                    {item.company}
-                                </p>
-                                <p className="text-muted-foreground leading-relaxed">
-                                    {item.description}
-                                </p>
-                           </div>
-                        </div>
-                        <div className="md:w-1/2" /> {/* Spacer */}
-                    </motion.div>
+                        <div className="">
+                            <span className="text-secondary font-bold text-sm uppercase tracking-wider block mb-2">
+                                {item.year}
+                            </span>
+                            <h3 className="text-2xl md:text-3xl font-bold uppercase tracking-tight mb-2">
+                                {item.role}
+                            </h3>
+                            <p className="text-lg font-medium text-muted-foreground uppercase mb-4">
+                                {item.company}
+                            </p>
+                            <p className="text-muted-foreground leading-relaxed max-w-md">
+                                {item.description}
+                            </p>
+                       </div>
+                    </div>
                 ))}
             </div>
         </div>

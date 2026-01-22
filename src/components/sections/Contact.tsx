@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { RevealHeader } from "@/components/ui/reveal-header";
 
 export default function Contact() {
   return (
@@ -14,9 +15,9 @@ export default function Contact() {
                  whileInView={{ opacity: 1, y: 0 }}
                  viewport={{ once: true }}
             >
-                <h2 className="text-5xl md:text-7xl font-bold uppercase tracking-tighter mb-8 text-foreground">
+                <RevealHeader className="text-5xl md:text-7xl font-bold uppercase tracking-tighter mb-8 text-foreground">
                     Let's Work <br /> <span className="text-secondary">Together</span>
-                </h2>
+                </RevealHeader>
                 <p className="text-lg text-muted-foreground mb-12 max-w-md">
                     Have a project in mind? I'm currently available for freelance projects and open to full-time opportunities.
                 </p>
@@ -24,14 +25,13 @@ export default function Contact() {
                 <div className="space-y-4">
                     <div className="block">
                          <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground block mb-1">Email</span>
-                         <a href="mailto:hello@example.com" className="text-xl font-bold hover:text-secondary transition-colors">hello@example.com</a>
+                         <a href="mailto:fawazv.business@gmail.com" className="text-xl font-bold hover:text-secondary transition-colors">fawazv.business@gmail.com</a>
                     </div>
                      <div className="block">
                          <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground block mb-1">Socials</span>
                          <div className="flex gap-4">
-                             <a href="#" className="text-lg font-bold hover:text-secondary transition-colors underline decoration-secondary/30">Twitter</a>
-                             <a href="#" className="text-lg font-bold hover:text-secondary transition-colors underline decoration-secondary/30">LinkedIn</a>
-                             <a href="#" className="text-lg font-bold hover:text-secondary transition-colors underline decoration-secondary/30">GitHub</a>
+                             <a href="https://linkedin.com/in/mohammed-fawaz" target="_blank" rel="noopener noreferrer" className="text-lg font-bold hover:text-secondary transition-colors underline decoration-secondary/30">LinkedIn</a>
+                             <a href="https://github.com/fawaz-v" target="_blank" rel="noopener noreferrer" className="text-lg font-bold hover:text-secondary transition-colors underline decoration-secondary/30">GitHub</a>
                          </div>
                     </div>
                 </div>

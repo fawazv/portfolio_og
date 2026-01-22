@@ -6,12 +6,14 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { MagneticButton } from "@/components/ui/magnetic-button";
 import { cn } from "@/lib/utils";
 
 const navItems = [
   { name: "About", href: "#about" },
-  { name: "Services", href: "#services" },
+  { name: "Skills", href: "#skills" },
   { name: "Projects", href: "#projects" },
+  { name: "Education", href: "#experience" },
   { name: "Contact", href: "#contact" },
 ];
 
@@ -49,16 +51,25 @@ export default function Navbar() {
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="text-sm font-medium uppercase tracking-wide hover:text-secondary transition-colors mix-blend-difference text-white dark:text-gray-300"
-              >
-                {item.name}
-              </Link>
+              <MagneticButton key={item.name}>
+                 <Link
+                    href={item.href}
+                    className="text-sm font-medium uppercase tracking-wide hover:text-secondary transition-colors mix-blend-difference text-white dark:text-gray-300 px-2 py-1 block"
+                 >
+                    {item.name}
+                 </Link>
+              </MagneticButton>
             ))}
-            <div className="pl-4 border-l border-white/20">
+            <div className="pl-4 border-l border-white/20 flex gap-4">
                  <ThemeToggle />
+                 <a 
+                    href="/resume.pdf" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="hidden md:inline-flex items-center justify-center px-4 py-1 text-sm font-bold uppercase tracking-wide bg-white text-black hover:bg-white/90 transition-colors rounded-sm"
+                 >
+                    Resume
+                 </a>
             </div>
           </div>
 
@@ -96,6 +107,15 @@ export default function Navbar() {
                   {item.name}
                 </Link>
               ))}
+               <a
+                  href="/resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="text-4xl font-bold uppercase tracking-tighter hover:text-secondary transition-colors text-white/50"
+                >
+                  Resume
+                </a>
             </div>
           </motion.div>
         )}

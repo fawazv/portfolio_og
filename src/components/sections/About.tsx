@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { RevealHeader } from "@/components/ui/reveal-header";
 
 export default function About() {
   return (
@@ -15,15 +16,12 @@ export default function About() {
             transition={{ duration: 0.8 }}
             className="space-y-8"
           >
-            <h2 className="text-4xl md:text-6xl font-bold uppercase tracking-tight text-foreground">
-              We <span className="text-muted-foreground font-serif italic normal-case">help create</span> <br/>
-              Moments of <br/>
-              <span className="text-secondary">Excellence</span>
-            </h2>
+            <RevealHeader className="text-4xl md:text-6xl font-bold uppercase tracking-tight text-foreground">
+              About <span className="text-secondary font-serif italic">Me</span>
+            </RevealHeader>
             
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-lg">
-              I am a passionate developer focused on building scalable, performant, and accessible web applications. 
-              My approach combines technical precision with a keen eye for design, ensuring that every line of code contributes to an exceptional user experience.
+              Enthusiastic and committed self-taught Full Stack Developer with expertise in TypeScript, React.js, Next.js, Node.js, Express.js, and MongoDB. Experienced in building scalable web applications and microservices with a focus on clean code, performance, and maintainability. Strong problem-solving skills with a commitment to continuous learning and delivering high-quality solutions in fast-paced environments.
             </p>
 
             <motion.a 

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { RevealHeader } from "@/components/ui/reveal-header";
 
 const posts = [
   {
@@ -33,7 +34,9 @@ export default function Blog() {
             viewport={{ once: true }}
             className="flex items-end justify-between mb-16"
         >
-             <h2 className="text-4xl md:text-6xl font-bold uppercase tracking-tighter">Insights</h2>
+             <RevealHeader className="text-4xl md:text-6xl font-bold uppercase tracking-tighter">
+                 Insights
+             </RevealHeader>
              <a href="#" className="hidden md:block text-sm font-bold uppercase tracking-wide border-b border-foreground pb-1 hover:text-secondary transition-colors">
                  View All Posts
              </a>
