@@ -27,7 +27,10 @@ export const metadata: Metadata = {
   description: "A cinematic developer portfolio.",
 };
 
+import CustomCursor from "@/components/ui/cursor";
 import SmoothScroll from "@/components/smooth-scroll";
+
+import Background from "@/components/ui/background";
 
 export default function RootLayout({
   children,
@@ -40,12 +43,14 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} antialiased`}
       >
         <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Background />
           <NoiseOverlay />
+          <CustomCursor />
           <SmoothScroll />
           <Navbar />
           {children}

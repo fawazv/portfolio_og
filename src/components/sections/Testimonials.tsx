@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 
 const testimonials = [
   {
@@ -18,52 +18,84 @@ const testimonials = [
     author: "Elena Rodriguez",
     role: "Founder, ArtSpace"
   },
-   {
+  {
     text: "Code quality is top-notch. Documentation was clear, making handover seamless.",
     author: "Markus Weber",
     role: "Lead Dev, Omega Solutions"
   }
 ];
 
+function TestimonialCard({ item }: { item: typeof testimonials[0] }) {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  function handleMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
+    const { left, top } = currentTarget.getBoundingClientRect();
+    mouseX.set(clientX - left);
+    mouseY.set(clientY - top);
+  }
+
+  return (
+    <div
+      className="group relative w-[400px] overflow-hidden bg-white/5 border border-white/10 p-8"
+      onMouseMove={handleMouseMove}
+    >
+      {/* Spotlight Glow */}
+      <motion.div
+        className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition duration-300 group-hover:opacity-100"
+        style={{
+          background: useMotionTemplate`
+                        radial-gradient(
+                        650px circle at ${mouseX}px ${mouseY}px,
+                        rgba(255,255,255,0.1),
+                        transparent 80%
+                        )
+                    `,
+        }}
+      />
+
+      <div className="relative flex h-full flex-col justify-between z-10">
+        <p className="text-lg md:text-xl font-medium tracking-tight mb-8 text-white/80 leading-relaxed">
+          "{item.text}"
+        </p>
+        <div>
+          <div className="text-sm font-bold uppercase tracking-wide text-white">
+            {item.author}
+          </div>
+          <div className="text-xs font-bold uppercase tracking-wide text-white/50">
+            {item.role}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Testimonials() {
   return (
-    <section id="testimonials" className="py-24 bg-accent/5 overflow-hidden">
-       <div className="container mx-auto px-6 mb-16">
-            <h2 className="text-sm font-bold uppercase tracking-widest text-muted-foreground text-center">
-                What People Say
-            </h2>
-       </div>
+    <section id="testimonials" className="py-24 bg-background overflow-hidden relative z-10">
+      <div className="container mx-auto px-6 mb-16">
+        <h2 className="text-sm font-bold uppercase tracking-widest text-muted-foreground text-center mb-4">
+          Testimonials
+        </h2>
+        <div className="w-12 h-1 bg-secondary mx-auto" />
+      </div>
 
-       {/* Simple Marquee Animation */}
-       <div className="relative w-full">
-           <div className="absolute left-0 top-0 bottom-0 w-32 bg-linear-to-r from-background to-transparent z-10" />
-           <div className="absolute right-0 top-0 bottom-0 w-32 bg-linear-to-l from-background to-transparent z-10" />
-           
-           <motion.div 
-                className="flex gap-8 w-max"
-                animate={{ x: ["0%", "-50%"] }}
-                transition={{ repeat: Infinity, ease: "linear", duration: 20 }}
-           >
-               {[...testimonials, ...testimonials].map((item, index) => (
-                   <div 
-                        key={index} 
-                        className="w-[400px] p-8 bg-background border border-black/5 dark:border-white/5 flex flex-col justify-between"
-                    >
-                       <p className="text-lg md:text-xl font-medium tracking-tight mb-6">
-                           "{item.text}"
-                       </p>
-                       <div>
-                           <div className="text-sm font-bold uppercase tracking-wide text-foreground">
-                               {item.author}
-                           </div>
-                           <div className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
-                               {item.role}
-                           </div>
-                       </div>
-                   </div>
-               ))}
-           </motion.div>
-       </div>
+      {/* Infinite Marquee */}
+      <div className="relative w-full">
+        <div className="absolute left-0 top-0 bottom-0 w-32 bg-linear-to-r from-background to-transparent z-20" />
+        <div className="absolute right-0 top-0 bottom-0 w-32 bg-linear-to-l from-background to-transparent z-20" />
+
+        <motion.div
+          className="flex gap-8 w-max"
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{ repeat: Infinity, ease: "linear", duration: 30 }}
+        >
+          {[...testimonials, ...testimonials].map((item, index) => (
+            <TestimonialCard key={index} item={item} />
+          ))}
+        </motion.div>
+      </div>
     </section>
   );
 }

@@ -9,6 +9,8 @@ const nextConfig: NextConfig = {
         hostname: 'picsum.photos',
       },
     ],
+    // Allow high quality for hero images
+    qualities: [75, 90, 100],
   },
 };
 

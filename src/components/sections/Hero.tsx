@@ -10,45 +10,50 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const subtitleRef = useRef<HTMLParagraphElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
+  const nameRef = useRef<HTMLHeadingElement>(null);
+  const roleRef = useRef<HTMLParagraphElement>(null);
 
   useGSAP(() => {
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-    // Initial state
-    gsap.set(titleRef.current, { y: 100, opacity: 0 });
-    gsap.set(subtitleRef.current, { y: 50, opacity: 0 });
+    // 1. Initial State Setup
+    gsap.set(".char-reveal", { y: 100, opacity: 0, rotateX: -45 });
+    gsap.set(roleRef.current, { y: 20, opacity: 0 });
     gsap.set(scrollRef.current, { opacity: 0 });
-    gsap.set(imageRef.current, { scale: 1.2 });
+    // Reduced scale from 1.1 to 1.05 for "zoomed out" feel, reduced blur for clarity
+    gsap.set(imageRef.current, { scale: 1.05, filter: "blur(5px)" });
 
-    // Animation Sequence
+    // 2. Cinematic Entrance Sequence
     tl.to(imageRef.current, {
       scale: 1,
-      duration: 2,
+      filter: "blur(0px)",
+      duration: 2.5,
       ease: "power2.inOut",
     })
-    .to(titleRef.current, {
-      y: 0,
-      opacity: 1,
-      duration: 1,
-      stagger: 0.1,
-    }, "-=1.5")
-    .to(subtitleRef.current, {
-      y: 0,
-      opacity: 1,
-      duration: 1,
-    }, "-=1")
-    .to(scrollRef.current, {
-      opacity: 1,
-      duration: 1,
-    }, "-=0.5");
+      .to(".char-reveal", {
+        y: 0,
+        opacity: 1,
+        rotateX: 0,
+        stagger: 0.05,
+        duration: 1.2,
+        ease: "power4.out",
+      }, "-=1.5")
+      .to(roleRef.current, {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+      }, "-=0.8")
+      .to(scrollRef.current, {
+        opacity: 1,
+        duration: 1,
+      }, "-=0.5");
 
-    // Scroll Parallax Effect
+    // 3. Scroll Parallax Effect
     gsap.to(imageRef.current, {
-      y: 200,
+      y: 100, // Reduced movement to keep image steadier
+      scale: 1.02, // Minimal zoom on scroll to maintain sharpness
       ease: "none",
       scrollTrigger: {
         trigger: containerRef.current,
@@ -58,61 +63,90 @@ export default function Hero() {
       },
     });
 
+    gsap.to(nameRef.current, {
+      y: -50,
+      opacity: 0,
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top top",
+        end: "50% top",
+        scrub: true,
+      }
+    });
+
   }, { scope: containerRef });
 
-  return (
-    <section 
-      ref={containerRef}
-      className="relative h-screen min-h-screen w-full overflow-hidden flex items-center justify-center"
-    >
-      {/* Background Images - Dual Theme Strategy */}
-      <div ref={imageRef} className="absolute inset-0 z-0 w-full h-full">
-         <div className="absolute inset-0 z-0 dark:hidden">
-            <Image
-              src="/light.png"
-              alt="Hero Background Light"
-              fill
-              className="object-cover"
-              priority
-            />
-             <div className="absolute inset-0 bg-white/10" />
-         </div>
+  const renderSplitText = (text: string) => {
+    return text.split("").map((char, index) => (
+      <span key={index} className="char-reveal inline-block origin-bottom transform-3d">
+        {char === " " ? "\u00A0" : char}
+      </span>
+    ));
+  };
 
-         <div className="absolute inset-0 z-0 hidden dark:block">
-            <Image
-              src="/dark.png"
-              alt="Hero Background Dark"
-              fill
-              className="object-cover"
-              priority
-            />
-            <div className="absolute inset-0 bg-black/40" />
-         </div>
+  return (
+    <section
+      ref={containerRef}
+      className="relative h-screen min-h-screen w-full overflow-hidden flex items-center justify-center bg-background"
+    >
+      {/* Background Images - Cinematic Dual Theme Strategy */}
+      <div ref={imageRef} className="absolute inset-0 z-0 w-full h-full will-change-transform">
+        {/* Light Mode: Architectural Minimal */}
+        <div className="absolute inset-0 z-0 dark:hidden">
+          <Image
+            src="/white.png"
+            alt="Architectural Abstract"
+            fill
+            sizes="100vw"
+            className="object-cover"
+            priority
+            quality={100}
+          />
+          <div className="absolute inset-0 bg-linear-to-b from-white/30 via-transparent to-white/60" />
+        </div>
+
+        {/* Dark Mode: Liquid Metal */}
+        <div className="absolute inset-0 z-0 hidden dark:block">
+          <Image
+            src="/dark1.png"
+            alt="Liquid Metal Abstract"
+            fill
+            sizes="100vw"
+            className="object-cover"
+            priority
+            quality={100}
+          />
+          {/* Vignette & Overlay for text readability */}
+          <div className="absolute inset-0 bg-black/20" />
+          <div className="absolute inset-0 bg-linear-to-t from-background via-transparent to-black/40" />
+        </div>
       </div>
 
       {/* Content Overlay */}
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center">
-        <div className="max-w-4xl overflow-hidden">
-          <h1 ref={titleRef} className="text-5xl md:text-7xl lg:text-9xl font-bold tracking-tighter uppercase mb-6 mix-blend-difference text-white dark:text-white">
-            Mohammed <br /> Fawaz
+        <div className="max-w-5xl overflow-hidden perspective-1000">
+          <h1 ref={nameRef} className="text-6xl md:text-8xl lg:text-[10rem] font-bold tracking-tighter uppercase mb-6 leading-none text-foreground mix-blend-overlay dark:mix-blend-normal dark:text-white drop-shadow-2xl">
+            <div className="block">{renderSplitText("Mohammed")}</div>
+            <div className="block text-secondary dark:text-white/90">{renderSplitText("Fawaz")}</div>
           </h1>
-          
-          <p 
-            ref={subtitleRef}
-            className="text-lg md:text-xl font-medium tracking-wide uppercase text-white/90 dark:text-white/80 max-w-2xl mx-auto"
+
+          <p
+            ref={roleRef}
+            className="text-lg md:text-2xl font-light tracking-[0.2em] uppercase text-foreground/80 dark:text-white/70 max-w-2xl mx-auto backdrop-blur-xs py-2 px-4 rounded-full border border-white/10"
           >
             Full Stack Developer
           </p>
         </div>
       </div>
 
-      {/* Scroll Indicator */}
-        <div 
-            ref={scrollRef}
-            className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20"
-        >
-            <div className="w-px h-24 bg-linear-to-b from-transparent via-white to-transparent opacity-60 animate-bounce" />
-        </div>
+      {/* Modern Scroll Indicator */}
+      <div
+        ref={scrollRef}
+        className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2"
+      >
+        <span className="text-[10px] uppercase tracking-widest text-muted-foreground animate-pulse">Scroll</span>
+        <div className="w-px h-16 bg-linear-to-b from-transparent via-foreground/50 to-transparent dark:via-white/50" />
+      </div>
 
     </section>
   );

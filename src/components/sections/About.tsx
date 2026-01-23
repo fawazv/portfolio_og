@@ -7,67 +7,84 @@ import { useRef } from "react";
 
 export default function About() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
+  const y = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.9, 1], [0, 1, 1, 0]);
 
   return (
     <section id="about" ref={containerRef} className="min-h-screen flex items-center justify-center py-20 bg-background relative overflow-hidden">
       <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           {/* Text Content */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="space-y-8"
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="space-y-8 order-2 lg:order-1"
           >
-            <RevealHeader className="text-4xl md:text-6xl font-bold uppercase tracking-tight text-foreground">
-              About <span className="text-secondary font-serif italic">Me</span>
+            <RevealHeader className="text-5xl md:text-7xl font-bold uppercase tracking-tighter text-foreground leading-[0.9]">
+              About <br /> <span className="text-secondary font-serif italic tracking-normal">The Dev</span>
             </RevealHeader>
 
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-lg">
-              Enthusiastic and committed self-taught Full Stack Developer with expertise in TypeScript, React.js, Next.js, Node.js, Express.js, and MongoDB. Experienced in building scalable web applications and microservices with a focus on clean code, performance, and maintainability. Strong problem-solving skills with a commitment to continuous learning and delivering high-quality solutions in fast-paced environments.
-            </p>
-
-            <motion.a
-              href="#contact"
-              className="inline-block relative group overflow-hidden"
-              whileHover="hover"
+            <motion.div
+              className="space-y-6 text-lg md:text-xl text-muted-foreground leading-relaxed max-w-lg"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3, duration: 0.8 }}
             >
-              <span className="block text-lg font-bold uppercase tracking-wide border-b border-foreground pb-1">
-                Get in Touch
-              </span>
-              <span className="absolute bottom-0 left-0 w-full h-px bg-secondary transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300" />
-            </motion.a>
-          </motion.div>
-
-          {/* Image / Visual */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="relative h-[400px] w-[400px] md:h-[600px] md:w-[600px] mx-auto rounded-full overflow-hidden group shadow-2xl"
-          >
-            <motion.div style={{ y }} className="absolute inset-0 scale-110">
-              <Image
-                src="/about-visual.png"
-                alt="About Me Visual"
-                fill
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
-                priority
-              />
+              <p>
+                I'm a self-taught Full Stack Developer who pivoted from a background in Commerce to the world of Code.
+              </p>
+              <p>
+                My journey is defined by a relentless curiosity—from studying accounting to debugging distributed systems. I build scalable applications with a focus on performance, clean architecture, and cinematic user experiences.
+              </p>
             </motion.div>
 
-            {/* Overlay Gradient */}
-            <div className="absolute inset-0 bg-linear-to-t from-background/20 to-transparent pointer-events-none" />
-
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5, duration: 0.8 }}
+            >
+              <a
+                href="#contact"
+                className="inline-flex items-center gap-2 relative group overflow-hidden"
+              >
+                <span className="block text-lg font-bold uppercase tracking-widest border-b border-foreground/30 pb-1 group-hover:border-secondary transition-colors duration-300">
+                  Get in Touch
+                </span>
+                <span className="transform group-hover:translate-x-1 transition-transform duration-300 text-secondary">→</span>
+              </a>
+            </motion.div>
           </motion.div>
+
+          {/* Image / Visual - Parallax Mask */}
+          <div className="relative order-1 lg:order-2">
+            <motion.div
+              style={{ opacity }}
+              className="relative h-[500px] w-full md:h-[700px] overflow-hidden rounded-full lg:rounded-none lg:mask-image-fade"
+            >
+              <motion.div style={{ y }} className="absolute inset-0 h-[120%] w-full -top-[10%]">
+                <Image
+                  src="/about-visual.png"
+                  alt="About Me Visual"
+                  fill
+                  className="object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                  priority
+                />
+              </motion.div>
+
+              {/* Cinematic Overlay */}
+              <div className="absolute inset-0 bg-linear-to-t from-background via-transparent to-transparent opacity-60" />
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>

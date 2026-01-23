@@ -2,6 +2,9 @@
 
 import { motion } from "framer-motion";
 import { RevealHeader } from "@/components/ui/reveal-header";
+import { useState } from "react";
+import { ArticleModal } from "@/components/ui/article-modal";
+import Image from "next/image";
 
 const posts = [
   {
@@ -11,7 +14,7 @@ const posts = [
     image: "/images/insights/commerce_to_code.png",
     excerpt: "How I pivoted from a B.Com degree to Full Stack Development in under a year. The challenges, the late nights, and the breakthroughs.",
     content: `My transition from a B.Com graduate to a Full Stack Developer was one of the most challenging yet rewarding years of my life. 
-
+    
 It started with a simple curiosity about how websites work, which quickly turned into an obsession. I spent my mornings studying accounting and my nights debugging JavaScript. The late nights were tough, often questioning if I was making the right choice, but every breakthrough—the first time a database connection worked, or when a CSS layout finally looked right—fueled my passion.
 
 In under a year, through intensive self-study, bootcamps, and building projects like Elite Hotel and Nxtcart, I managed to bridge the gap between commerce and code.`
@@ -47,31 +50,56 @@ Switching to Next.js was a game-changer.
 - **Image Optimization**: Automatically handled large product images.
 
 The result was a blazing-fast, SEO-optimized shopping experience that felt professional and snappy.`
+  },
+  {
+    category: "Design",
+    readTime: "4 min read",
+    title: "The Art of Minimalist UI",
+    image: "/images/insights/minimalist_ui.png",
+    excerpt: "Why 'Less is More' isn't just a trend, but a necessity for modern web applications. Exploring whitespace, typography, and functional colors.",
+    content: `Minimalism in UI design is often misunderstood as simply removing elements. In reality, it's about prioritizing what matters most to the user.
+
+When designing this portfolio, I adhered to three core principles:
+1. **Whitespace is Active**: It's not empty space; it's a design element that guides the eye and reduces cognitive load.
+2. **Typography as Interface**: Good type hierarchy eliminates the need for excessive borders and boxes.
+3. **Intentional Motion**: Animations should serve a purpose—providing feedback or continuity—rather than just being decoration.
+
+By stripping away the non-essential, we enhance the essential.`
+  },
+  {
+    category: "Tech",
+    readTime: "7 min read",
+    title: "Scaling with Docker & K8s",
+    image: "/images/insights/docker_k8s.png",
+    excerpt: "Moving from a single VPS to a container orchestration strategy. How Docker simplified my deployment pipeline.",
+    content: `As my applications grew in complexity, "it works on my machine" became a frequent blocker. Deployment was manual, error-prone, and inconsistent.
+
+Adopting Docker changed everything:
+- **Consistency**: The dev environment matches production bit-for-bit.
+- **Isolation**: Services like Redis, Postgres, and Node.js run in their own containers without conflict.
+- **Portability**: I can deploy to AWS, DigitalOcean, or a Raspberry Pi with the same commands.
+
+While Kubernetes (K8s) adds complexity, understanding the basics of container orchestration gave me the confidence to build truly cloud-native systems.`
   }
 ];
-
-import { useState } from "react";
-import { ArticleModal } from "@/components/ui/article-modal";
-import Image from "next/image";
 
 export default function Blog() {
   const [selectedPost, setSelectedPost] = useState<typeof posts[0] | null>(null);
 
   return (
-    <section id="blog" className="py-24 bg-background">
+    <section id="blog" className="py-24 bg-background border-t border-black/5 dark:border-white/5">
       <div className="container mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="flex items-end justify-between mb-16"
-        >
+        <div className="flex items-end justify-between mb-16">
           <RevealHeader className="text-4xl md:text-6xl font-bold uppercase tracking-tighter">
             Insights
           </RevealHeader>
-        </motion.div>
+          <div className="hidden md:block text-sm font-bold uppercase tracking-widest text-muted-foreground">
+            Read my latest thoughts
+          </div>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Bento / Magazine Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[400px]">
           {posts.map((post, index) => (
             <motion.article
               key={index}
@@ -79,49 +107,44 @@ export default function Blog() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="group"
+              className={`group relative overflow-hidden rounded-3xl cursor-pointer bg-accent/5 border border-black/5 dark:border-white/5 ${index === 0 ? "md:col-span-2" : "md:col-span-1"}`}
+              onClick={() => setSelectedPost(post)}
             >
-              <div
-                className="relative h-64 bg-accent/10 mb-6 overflow-hidden border border-black/5 dark:border-white/5 cursor-pointer"
-                onClick={() => setSelectedPost(post)}
-              >
+              {/* Background Image */}
+              <div className="absolute inset-0 z-0">
                 <Image
                   src={post.image}
                   alt={post.title}
                   fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 />
-                {/* Overlay for category if image is too bright */}
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500" />
-                <div className="absolute inset-0 flex items-center justify-center text-white/40 font-bold uppercase tracking-widest text-2xl transform rotate-45 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
-                  {post.category}
+                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors duration-500" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-transparent" />
+              </div>
+
+              {/* Content Overlay */}
+              <div className="absolute inset-0 z-10 p-8 flex flex-col justify-end">
+                <div className="flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-white/70 mb-3">
+                  <span className="px-2 py-1 border border-white/20 rounded-full bg-white/10 backdrop-blur-md">{post.category}</span>
+                  <span>{post.readTime}</span>
+                </div>
+
+                <h3 className={`font-bold text-white mb-3 leading-tight group-hover:text-neon-blue transition-colors ${index === 0 ? "text-3xl md:text-4xl" : "text-xl md:text-2xl"}`}>
+                  {post.title}
+                </h3>
+
+                {index === 0 && (
+                  <p className="text-white/80 text-base md:text-lg font-serif italic line-clamp-2 max-w-xl">
+                    {post.excerpt}
+                  </p>
+                )}
+
+                <div className="mt-6 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                  <span className="text-sm font-bold uppercase tracking-wider text-neon-blue flex items-center gap-2">
+                    Read Article <span>→</span>
+                  </span>
                 </div>
               </div>
-
-              <div className="flex items-center gap-4 text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">
-                <span>{post.category}</span>
-                <span className="w-1 h-1 bg-secondary rounded-full" />
-                <span>{post.readTime}</span>
-              </div>
-
-              <h3
-                className="text-xl font-bold uppercase tracking-tight mb-3 group-hover:text-secondary transition-colors cursor-pointer"
-                onClick={() => setSelectedPost(post)}
-              >
-                {post.title}
-              </h3>
-
-              <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-                {post.excerpt}
-              </p>
-
-              <button
-                onClick={() => setSelectedPost(post)}
-                className="group/btn flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-foreground hover:text-secondary transition-colors"
-              >
-                Read Article
-                <span className="transform group-hover/btn:translate-x-1 transition-transform duration-300">→</span>
-              </button>
             </motion.article>
           ))}
         </div>

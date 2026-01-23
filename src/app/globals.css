@@ -4,30 +4,71 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-serif: var(--font-serif);
+
+  --color-neon-blue: #00f0ff;
+  --color-neon-purple: #bc13fe;
+  --color-rich-black: #0a0a0a;
+  --color-rich-gray: #1a1a1a;
+
+  --animate-fade-in: fade-in 1s ease-out forwards;
+  --animate-slow-zoom: slow-zoom 20s linear infinite;
+
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slow-zoom {
+    0% {
+      transform: scale(1);
+    }
+
+    50% {
+      transform: scale(1.05);
+    }
+
+    100% {
+      transform: scale(1);
+    }
+  }
 }
 
 :root {
   --background: #ffffff;
-  --foreground: #000000;
+  --foreground: #0a0a0a;
 
-  /* "Lunaria" Warm Brown / Bronze */
-  --secondary: #5C4D44;
+  /* "Lunaria" Warm Brown / Bronze -> Now "Obsidian" Premium Palette */
+  --secondary: #2a2a2a;
   --secondary-foreground: #ffffff;
 
   --accent: #f4f4f5;
   --accent-foreground: #18181b;
+
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #121212;
+    --background: #000000;
+    /* Deep rich black */
     --foreground: #ffffff;
 
-    --secondary: #5C4D44;
-    --secondary-foreground: #ffffff;
+    --secondary: #ffffff;
+    --secondary-foreground: #000000;
 
-    --accent: #27272a;
+    --accent: #1a1a1a;
     --accent-foreground: #fafafa;
+
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-bg: rgba(20, 20, 20, 0.6);
+    --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
   }
 }
 
@@ -37,6 +78,16 @@ body {
   font-family: var(--font-sans), sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Glassmorphism Utility */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
 }
 
 /* Lenis Smooth Scroll Recommended CSS */
