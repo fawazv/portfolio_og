@@ -8,22 +8,34 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const experience = [
+const journey = [
   {
-    year: "July 2020 - March 2023",
-    role: "Bachelor of Commerce",
-    company: "Calicut University",
-    description: "Specialized in Co-operation."
+    year: "2026 - Present",
+    role: "Full Stack Developer",
+    company: "Freelance & Open Source",
+    description: "Architecting enterprise-scale applications like 'Elite Hotel' (Microservices) and 'Nxtcart' (E-commerce). Expertise in Next.js, Docker, Kubernetes, and Cloud Architecture."
   },
   {
-    year: "July 2018 - April 2020",
-    role: "Higher Secondary",
+    year: "2024",
+    role: "The Pivot to Tech",
+    company: "Self-Taught Journey",
+    description: "Graduated with a Bachelor of Commerce but discovered a passion for problem-solving. Dedicated 1000+ hours to mastering the MERN stack and software engineering fundamentals."
+  },
+  {
+    year: "2020 - 2023",
+    role: "Bachelor of Commerce",
+    company: "Calicut University",
+    description: "Graduated with a specialization in Co-operation. Developed a strong analytical mindset and understanding of business logic."
+  },
+  {
+    year: "2018 - 2020",
+    role: "Computer Applications",
     company: "GHSS Tirurangadi",
-    description: "Commerce with Computer Application."
+    description: "Higher Secondary in Commerce with Computer Applications. Early exposure to programming concepts which sparked my initial interest in tech."
   }
 ];
 
-export default function Experience() {
+export default function Journey() {
   const containerRef = useRef<HTMLDivElement>(null);
   const leftRef = useRef<HTMLDivElement>(null);
   const rightRef = useRef<HTMLDivElement>(null);
@@ -38,7 +50,7 @@ export default function Experience() {
     });
 
     // Animate list items on scroll
-    const items = gsap.utils.toArray(".edu-item");
+    const items = gsap.utils.toArray(".journey-item");
     items.forEach((item: any, i) => {
       gsap.fromTo(item, 
         { opacity: 0, y: 50 },
@@ -58,7 +70,7 @@ export default function Experience() {
   }, { scope: containerRef });
 
   return (
-    <section id="experience" className="bg-background">
+    <section id="journey" className="bg-background">
       <div 
         ref={containerRef} 
         className="container mx-auto px-6 flex flex-col md:flex-row min-h-screen"
@@ -69,7 +81,7 @@ export default function Experience() {
             className="w-full md:w-1/2 h-screen flex flex-col justify-center sticky top-0 md:relative"
         >
              <RevealHeader className="text-4xl md:text-6xl font-bold uppercase tracking-tighter mb-8 md:mb-0">
-                Education
+                My Journey
             </RevealHeader>
             <div className="w-24 h-1 bg-secondary mt-4 hidden md:block" />
         </div>
@@ -77,10 +89,10 @@ export default function Experience() {
         {/* Right Column - Scrolling Content */}
         <div ref={rightRef} className="w-full md:w-1/2 flex flex-col justify-center py-20 md:py-0">
             <div className="space-y-16">
-                {experience.map((item, index) => (
+                {journey.map((item, index) => (
                     <div 
                         key={index}
-                        className="edu-item relative flex flex-col gap-4 border-l-2 border-black/10 dark:border-white/10 pl-8 pb-8 last:pb-0"
+                        className="journey-item relative flex flex-col gap-4 border-l-2 border-black/10 dark:border-white/10 pl-8 pb-8 last:pb-0"
                     >
                         {/* Dot */}
                         <div className="absolute left-[-9px] top-0 w-4 h-4 bg-secondary rounded-full" />

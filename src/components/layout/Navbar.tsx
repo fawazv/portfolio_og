@@ -35,7 +35,7 @@ export default function Navbar() {
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out px-6 py-4",
           isScrolled
-            ? "bg-white/80 dark:bg-black/80 backdrop-blur-md border-b border-black/5 dark:border-white/5 py-3"
+            ? "bg-white/80 dark:bg-black/80 backdrop-blur-md py-3"
             : "bg-transparent py-5"
         )}
         initial={{ y: -100 }}
@@ -43,7 +43,7 @@ export default function Navbar() {
         transition={{ duration: 0.8 }}
       >
         <div className="container mx-auto flex items-center justify-between">
-            {/* Logo */}
+          {/* Logo */}
           <Link href="/" className="text-xl font-bold tracking-tighter uppercase z-50 mix-blend-difference text-white dark:text-white">
             Dev<span className="opacity-50">.Portfolio</span>
           </Link>
@@ -52,30 +52,30 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
               <MagneticButton key={item.name}>
-                 <Link
-                    href={item.href}
-                    className="text-sm font-medium uppercase tracking-wide hover:text-secondary transition-colors mix-blend-difference text-white dark:text-gray-300 px-2 py-1 block"
-                 >
-                    {item.name}
-                 </Link>
+                <Link
+                  href={item.href}
+                  className="text-sm font-medium uppercase tracking-wide hover:text-secondary transition-colors mix-blend-difference text-white dark:text-gray-300 px-2 py-1 block"
+                >
+                  {item.name}
+                </Link>
               </MagneticButton>
             ))}
             <div className="pl-4 border-l border-white/20 flex gap-4">
-                 <ThemeToggle />
-                 <a 
-                    href="/resume.pdf" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="hidden md:inline-flex items-center justify-center px-4 py-1 text-sm font-bold uppercase tracking-wide bg-white text-black hover:bg-white/90 transition-colors rounded-sm"
-                 >
-                    Resume
-                 </a>
+              <ThemeToggle />
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden md:inline-flex items-center justify-center px-4 py-1 text-sm font-bold uppercase tracking-wide bg-white text-black hover:bg-white/90 transition-colors rounded-sm"
+              >
+                Resume
+              </a>
             </div>
           </div>
 
           {/* Mobile Toggle */}
           <div className="flex items-center md:hidden gap-4">
-             <ThemeToggle />
+            <ThemeToggle />
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="z-50 p-2 mix-blend-difference text-white"
@@ -107,15 +107,15 @@ export default function Navbar() {
                   {item.name}
                 </Link>
               ))}
-               <a
-                  href="/resume.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-4xl font-bold uppercase tracking-tighter hover:text-secondary transition-colors text-white/50"
-                >
-                  Resume
-                </a>
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-4xl font-bold uppercase tracking-tighter hover:text-secondary transition-colors text-white/50"
+              >
+                Resume
+              </a>
             </div>
           </motion.div>
         )}
