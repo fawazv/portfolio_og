@@ -102,7 +102,7 @@ export default function Hero() {
             priority
             quality={100}
           />
-          <div className="absolute inset-0 bg-linear-to-b from-white/30 via-transparent to-white/60" />
+
         </div>
 
         {/* Dark Mode: Liquid Metal */}
