@@ -22,14 +22,14 @@ export default function Hero() {
     gsap.set(".char-reveal", { y: 100, opacity: 0, rotateX: -45 });
     gsap.set(roleRef.current, { y: 20, opacity: 0 });
     gsap.set(scrollRef.current, { opacity: 0 });
-    // Reduced scale from 1.1 to 1.05 for "zoomed out" feel, reduced blur for clarity
-    gsap.set(imageRef.current, { scale: 1.05, filter: "blur(5px)" });
+    // Optimized: Removed filter blur animation as it causes significant paint overhead
+    gsap.set(imageRef.current, { scale: 1.1, opacity: 0 });
 
     // 2. Cinematic Entrance Sequence
     tl.to(imageRef.current, {
       scale: 1,
-      filter: "blur(0px)",
-      duration: 2.5,
+      opacity: 1, // Use opacity instead of blur for performance
+      duration: 2.0, // Slightly faster
       ease: "power2.inOut",
     })
       .to(".char-reveal", {
@@ -39,7 +39,7 @@ export default function Hero() {
         stagger: 0.05,
         duration: 1.2,
         ease: "power4.out",
-      }, "-=1.5")
+      }, "-=1.2")
       .to(roleRef.current, {
         y: 0,
         opacity: 1,
@@ -55,6 +55,7 @@ export default function Hero() {
       y: 100, // Reduced movement to keep image steadier
       scale: 1.02, // Minimal zoom on scroll to maintain sharpness
       ease: "none",
+      willChange: "transform", // Hint browser
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",

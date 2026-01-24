@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, memo } from "react";
 import Image from "next/image";
 import { RevealHeader } from "@/components/ui/reveal-header";
 import { Github, ExternalLink, ArrowRight } from "lucide-react";
@@ -66,6 +66,7 @@ export default function Projects() {
       gsap.to(sectionRef.current, {
         x: -totalWidth,
         ease: "none",
+        willChange: "transform", // Hint browser for smoother scroll
         scrollTrigger: {
           trigger: triggerRef.current,
           start: "top top",
@@ -114,18 +115,18 @@ export default function Projects() {
   );
 }
 
-function ProjectCard({ project, index }: { project: any, index: number }) {
+const ProjectCard = memo(function ProjectCard({ project, index }: { project: any, index: number }) {
   // Holographic Tilt Effect Logic could go here or simple CSS hover
   return (
     <div
       // Reduced dimensions for better overview
       className="group relative h-[50vh] md:h-[60vh] w-full lg:w-[35vw] shrink-0 
-                       perspective-1000 cursor-pointer"
+                       perspective-1000 cursor-pointer will-change-transform"
     >
       <div className="relative w-full h-full duration-500 ease-out transform group-hover:-translate-y-4 group-hover:rotate-x-2 group-hover:scale-[1.02]">
 
-        {/* Glass Panel Container */}
-        <div className="absolute inset-0 bg-white/5 backdrop-blur-xl border border-foreground/30 dark:border-white/30 lg:border-foreground/10 lg:dark:border-white/10 rounded-3xl overflow-hidden shadow-neon-blue/40 lg:shadow-2xl lg:dark:shadow-neon-blue/20 transition-all duration-500 lg:group-hover:border-foreground/30 lg:dark:group-hover:border-white/30 lg:group-hover:shadow-neon-blue/40">
+        {/* Glass Panel Container - Optimized backdrop blur */}
+        <div className="absolute inset-0 bg-white/5 backdrop-blur-none md:backdrop-blur-xl border border-foreground/30 dark:border-white/30 lg:border-foreground/10 lg:dark:border-white/10 rounded-3xl overflow-hidden shadow-neon-blue/40 lg:shadow-2xl lg:dark:shadow-neon-blue/20 transition-all duration-500 lg:group-hover:border-foreground/30 lg:dark:group-hover:border-white/30 lg:group-hover:shadow-neon-blue/40">
 
           {/* Image Layer */}
           <div className="relative h-3/5 w-full overflow-hidden">
@@ -134,7 +135,9 @@ function ProjectCard({ project, index }: { project: any, index: number }) {
               src={project.image}
               alt={project.title}
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 35vw"
               className="object-cover transition-transform duration-1000 group-hover:scale-110"
+              loading="lazy"
             />
             {/* Number Watermark */}
             <div className="absolute top-4 right-6 text-9xl font-black text-white/5 z-0 pointer-events-none">
@@ -173,4 +176,4 @@ function ProjectCard({ project, index }: { project: any, index: number }) {
       </div>
     </div>
   );
-}
+});

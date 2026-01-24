@@ -85,14 +85,11 @@ export default function Contact() {
                             <div>
                                 <h4 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2">Socials</h4>
                                 <div className="flex gap-6">
-                                    <a href="#" className="hover:text-secondary transition-colors text-foreground" aria-label="LinkedIn">
+                                    <a href="https://www.linkedin.com/in/mohammed-fawaz-216314280/" className="hover:text-secondary transition-colors text-foreground" aria-label="LinkedIn">
                                         <Linkedin size={28} strokeWidth={1.5} />
                                     </a>
-                                    <a href="#" className="hover:text-secondary transition-colors text-foreground" aria-label="GitHub">
+                                    <a href="https://github.com/fawazv/" className="hover:text-secondary transition-colors text-foreground" aria-label="GitHub">
                                         <Github size={28} strokeWidth={1.5} />
-                                    </a>
-                                    <a href="#" className="hover:text-secondary transition-colors text-foreground" aria-label="Twitter">
-                                        <Twitter size={28} strokeWidth={1.5} />
                                     </a>
                                 </div>
                             </div>

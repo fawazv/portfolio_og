@@ -8,10 +8,10 @@ export default function Footer() {
             © {new Date().getFullYear()} All rights reserved.
           </p>
         </div>
-        
+
         <div className="flex gap-6">
-            <a href="https://linkedin.com/in/mohammed-fawaz" target="_blank" rel="noopener noreferrer" className="text-sm uppercase tracking-wide hover:text-secondary transition-colors">LinkedIn</a>
-            <a href="https://github.com/fawaz-v" target="_blank" rel="noopener noreferrer" className="text-sm uppercase tracking-wide hover:text-secondary transition-colors">GitHub</a>
+          <a href="https://www.linkedin.com/in/mohammed-fawaz-216314280/" target="_blank" rel="noopener noreferrer" className="text-sm uppercase tracking-wide hover:text-secondary transition-colors">LinkedIn</a>
+          <a href="https://github.com/fawazv/" target="_blank" rel="noopener noreferrer" className="text-sm uppercase tracking-wide hover:text-secondary transition-colors">GitHub</a>
         </div>
       </div>
     </footer>

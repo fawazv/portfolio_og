@@ -90,6 +90,7 @@ export default function Testimonials() {
           className="flex gap-8 w-max"
           animate={{ x: ["0%", "-50%"] }}
           transition={{ repeat: Infinity, ease: "linear", duration: 30 }}
+          style={{ willChange: "transform" }}
         >
           {[...testimonials, ...testimonials].map((item, index) => (
             <TestimonialCard key={index} item={item} />
