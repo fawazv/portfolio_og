@@ -15,6 +15,8 @@ export default function SmoothScroll() {
       touchMultiplier: 2,
     });
 
+    (window as any).lenis = lenis;
+
     function raf(time: number) {
       lenis.raf(time);
       requestAnimationFrame(raf);
@@ -25,7 +27,7 @@ export default function SmoothScroll() {
     const handleAnchorClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       const anchor = target.closest("a");
-      
+
       if (anchor) {
         const href = anchor.getAttribute("href");
         if (href?.startsWith("#") && href.length > 1) {
@@ -42,6 +44,7 @@ export default function SmoothScroll() {
 
     return () => {
       lenis.destroy();
+      delete (window as any).lenis;
       document.removeEventListener("click", handleAnchorClick);
     };
   }, []);
