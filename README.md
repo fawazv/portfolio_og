@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio_og
 
-## Getting Started
+A premium, cinematic developer portfolio website built with modern web technologies, featuring advanced animations, smooth scrolling, and a high-performance design.
 
-First, run the development server:
+![Portfolio Preview](public/og-image.png)
+
+## 🚀 Features
+
+- **Cinematic Design**: Immersive visual experience with advanced animations and smooth transitions.
+- **Smooth Scrolling**: Integrated **Lenis** for a butter-smooth scrolling experience.
+- **Advanced Animations**: Powered by **GSAP** and **Framer Motion** for complex, high-performance interactions.
+- **Responsive Layout**: Fully responsive design using **Tailwind CSS 4**.
+- **Dynamic Content**:
+    - **Hero Section**: Captivating introduction.
+    - **About**: Personal summary and background.
+    - **Journey**: Timeline of professional experience and education.
+    - **Skills**: Technical proficiency showcase.
+    - **Projects**: Portfolio of work with details and links.
+    - **Blog**: Insights and articles with a custom modal reader.
+    - **Testimonials**: Endorsements and feedback.
+    - **Contact**: Functional contact form integrated with **Nodemailer**.
+- **Dark Mode**: Optimized for visual comfort and aesthetics.
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Next.js 16](https://nextjs.org/) (App Router)
+- **Library**: [React 19](https://react.dev/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
+- **Animations**:
+    - [GSAP](https://gsap.com/)
+    - [Framer Motion](https://www.framer.com/motion/)
+- **Scrolling**: [Lenis](https://lenis.studio/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Email**: [Nodemailer](https://nodemailer.com/)
+
+## 📂 Project Structure
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+src/
+├── app/                  # Next.js App Router pages and layout
+├── components/           # React components
+│   ├── layout/           # Navbar, Footer, etc.
+│   ├── sections/         # Main sections (Hero, About, Projects, etc.)
+│   ├── ui/               # Reusable UI components
+│   └── smooth-scroll.tsx # Lenis integration
+├── lib/                  # Utility functions and shared logic
+└── ...
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ⚡ Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1.  **Clone the repository:**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+    ```bash
+    git clone https://github.com/yourusername/portfolio_og.git
+    cd portfolio_og
+    ```
 
-## Learn More
+2.  **Install dependencies:**
 
-To learn more about Next.js, take a look at the following resources:
+    ```bash
+    npm install
+    # or
+    yarn install
+    # or
+    pnpm install
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3.  **Set up environment variables:**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+    Create a `.env.local` file in the root directory and add your necessary environment variables (e.g., for Nodemailer):
 
-## Deploy on Vercel
+    ```src
+    EMAIL_USER=your_email@example.com
+    EMAIL_PASS=your_email_password
+    ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4.  **Run the development server:**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+    ```bash
+    npm run dev
+    ```
+
+    Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## 📦 Build & Deploy
+
+To build the application for production:
+
+```bash
+npm run build
+```
+
+The easiest way to deploy is using the [Vercel Platform](https://vercel.com/new).
+
+## 📄 License
+
+This project is licensed under the MIT License.
