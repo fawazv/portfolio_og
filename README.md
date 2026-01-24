@@ -3,6 +3,7 @@
 A premium, cinematic developer portfolio website built with modern web technologies, featuring advanced animations, smooth scrolling, and a high-performance design.
 
 ![Portfolio Preview](public/og-image.png)
+![Portfolio Preview](public/og-image-light.png)
 
 ## 🚀 Features
 
