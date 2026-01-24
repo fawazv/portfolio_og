@@ -123,7 +123,7 @@ function ProjectCard({ project, index }: { project: any, index: number }) {
       <div className="relative w-full h-full duration-500 ease-out transform group-hover:-translate-y-4 group-hover:rotate-x-2 group-hover:scale-[1.02]">
 
         {/* Glass Panel Container */}
-        <div className="absolute inset-0 bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden shadow-2xl dark:shadow-neon-blue/20 transition-all duration-500 group-hover:border-white/30 group-hover:shadow-neon-blue/40">
+        <div className="absolute inset-0 bg-white/5 backdrop-blur-xl border border-foreground/10 dark:border-white/10 rounded-3xl overflow-hidden shadow-2xl dark:shadow-neon-blue/20 transition-all duration-500 group-hover:border-foreground/30 dark:group-hover:border-white/30 group-hover:shadow-neon-blue/40">
 
           {/* Image Layer */}
           <div className="relative h-3/5 w-full overflow-hidden">

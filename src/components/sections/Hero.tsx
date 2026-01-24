@@ -125,7 +125,7 @@ export default function Hero() {
       {/* Content Overlay */}
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center">
         <div className="max-w-5xl overflow-hidden perspective-1000">
-          <h1 ref={nameRef} className="text-6xl md:text-8xl lg:text-[10rem] font-bold tracking-tighter uppercase mb-6 leading-none text-foreground mix-blend-overlay dark:mix-blend-normal dark:text-white drop-shadow-2xl">
+          <h1 ref={nameRef} className="text-6xl md:text-8xl lg:text-[10rem] font-bold tracking-tighter uppercase mb-6 leading-none text-foreground dark:mix-blend-overlay dark:text-white drop-shadow-2xl">
             <div className="block">{renderSplitText("Mohammed")}</div>
             <div className="block text-secondary dark:text-white/90">{renderSplitText("Fawaz")}</div>
           </h1>

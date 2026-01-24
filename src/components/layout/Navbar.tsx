@@ -46,7 +46,7 @@ export default function Navbar() {
       >
         <div className="container mx-auto flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="text-xl font-bold tracking-tighter uppercase z-50 mix-blend-difference text-white dark:text-white">
+          <Link href="/" className="text-xl font-bold tracking-tighter uppercase z-50 mix-blend-difference text-foreground dark:text-white">
             Dev<span className="opacity-50">.Portfolio</span>
           </Link>
 
@@ -56,13 +56,13 @@ export default function Navbar() {
               <MagneticButton key={item.name}>
                 <Link
                   href={item.href}
-                  className="text-sm font-medium uppercase tracking-wide hover:text-secondary transition-colors mix-blend-difference text-white dark:text-gray-300 px-2 py-1 block"
+                  className="text-sm font-medium uppercase tracking-wide hover:text-secondary transition-colors mix-blend-difference text-foreground dark:text-gray-300 px-2 py-1 block"
                 >
                   {item.name}
                 </Link>
               </MagneticButton>
             ))}
-            <div className="pl-4 border-l border-white/20 flex gap-4">
+            <div className="pl-4 border-l border-foreground/20 dark:border-white/20 flex gap-4">
               <ThemeToggle />
               <a
                 href="/resume.pdf"
@@ -80,7 +80,7 @@ export default function Navbar() {
             <ThemeToggle />
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="z-50 p-2 mix-blend-difference text-white"
+              className="z-50 p-2 mix-blend-difference text-foreground dark:text-white"
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>

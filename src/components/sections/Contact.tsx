@@ -53,7 +53,7 @@ export default function Contact() {
                 onChange={onChange}
                 onFocus={() => setFocusedField(id)}
                 onBlur={() => setFocusedField(null)}
-                className="w-full bg-transparent border-b border-white/20 py-2 text-lg font-medium text-foreground focus:outline-none transition-colors"
+                className="w-full bg-transparent border-b border-foreground/20 py-2 text-lg font-medium text-foreground focus:outline-none transition-colors"
             />
             {/* Animated Line */}
             <div className={`absolute bottom-0 left-0 h-[2px] bg-secondary transition-all duration-500 ease-out ${focusedField === id ? "w-full" : "w-0"}`} />
@@ -63,7 +63,7 @@ export default function Contact() {
     return (
         <section id="contact" className="py-24 bg-background min-h-screen flex items-center relative overflow-hidden">
             {/* Background Noise/Gradient */}
-            <div className="absolute inset-0 bg-[url('/noise.png')] opacity-5 pointer-events-none" />
+            <div className="absolute inset-0 bg-noise opacity-5 pointer-events-none" />
             <div className="absolute -bottom-1/2 -right-1/2 w-[1000px] h-[1000px] bg-secondary/5 rounded-full blur-[100px] pointer-events-none" />
 
             <div className="container mx-auto px-6 relative z-10">
@@ -123,7 +123,7 @@ export default function Contact() {
                                     onChange={handleChange}
                                     onFocus={() => setFocusedField("message")}
                                     onBlur={() => setFocusedField(null)}
-                                    className="w-full bg-transparent border-b border-white/20 py-2 text-lg font-medium text-foreground focus:outline-none transition-colors resize-none"
+                                    className="w-full bg-transparent border-b border-foreground/20 py-2 text-lg font-medium text-foreground focus:outline-none transition-colors resize-none"
                                 />
                                 <div className={`absolute bottom-2 left-0 h-[2px] bg-secondary transition-all duration-500 ease-out ${focusedField === "message" ? "w-full" : "w-0"}`} />
                             </div>

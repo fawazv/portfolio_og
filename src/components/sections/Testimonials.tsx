@@ -37,7 +37,7 @@ function TestimonialCard({ item }: { item: typeof testimonials[0] }) {
 
   return (
     <div
-      className="group relative w-[400px] overflow-hidden bg-white/5 border border-white/10 p-8"
+      className="group relative w-[400px] overflow-hidden bg-foreground/5 border border-foreground/10 p-8"
       onMouseMove={handleMouseMove}
     >
       {/* Spotlight Glow */}
@@ -55,14 +55,14 @@ function TestimonialCard({ item }: { item: typeof testimonials[0] }) {
       />
 
       <div className="relative flex h-full flex-col justify-between z-10">
-        <p className="text-lg md:text-xl font-medium tracking-tight mb-8 text-white/80 leading-relaxed">
+        <p className="text-lg md:text-xl font-medium tracking-tight mb-8 text-foreground/80 dark:text-white/80 leading-relaxed">
           "{item.text}"
         </p>
         <div>
-          <div className="text-sm font-bold uppercase tracking-wide text-white">
+          <div className="text-sm font-bold uppercase tracking-wide text-foreground dark:text-white">
             {item.author}
           </div>
-          <div className="text-xs font-bold uppercase tracking-wide text-white/50">
+          <div className="text-xs font-bold uppercase tracking-wide text-foreground/50 dark:text-white/50">
             {item.role}
           </div>
         </div>
