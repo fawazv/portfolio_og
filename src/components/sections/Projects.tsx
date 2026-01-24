@@ -125,7 +125,7 @@ function ProjectCard({ project, index }: { project: any, index: number }) {
       <div className="relative w-full h-full duration-500 ease-out transform group-hover:-translate-y-4 group-hover:rotate-x-2 group-hover:scale-[1.02]">
 
         {/* Glass Panel Container */}
-        <div className="absolute inset-0 bg-white/5 backdrop-blur-xl border border-foreground/10 dark:border-white/10 rounded-3xl overflow-hidden shadow-2xl dark:shadow-neon-blue/20 transition-all duration-500 group-hover:border-foreground/30 dark:group-hover:border-white/30 group-hover:shadow-neon-blue/40">
+        <div className="absolute inset-0 bg-white/5 backdrop-blur-xl border border-foreground/30 dark:border-white/30 lg:border-foreground/10 lg:dark:border-white/10 rounded-3xl overflow-hidden shadow-neon-blue/40 lg:shadow-2xl lg:dark:shadow-neon-blue/20 transition-all duration-500 lg:group-hover:border-foreground/30 lg:dark:group-hover:border-white/30 lg:group-hover:shadow-neon-blue/40">
 
           {/* Image Layer */}
           <div className="relative h-3/5 w-full overflow-hidden">
@@ -150,16 +150,16 @@ function ProjectCard({ project, index }: { project: any, index: number }) {
                   {project.category}
                 </span>
               </div>
-              <h3 className="text-3xl md:text-4xl font-bold text-white uppercase tracking-tight mb-3 group-hover:text-neon-blue transition-colors">
+              <h3 className="text-3xl md:text-4xl font-bold text-neon-blue lg:text-white uppercase tracking-tight mb-3 lg:group-hover:text-neon-blue transition-colors">
                 {project.title}
               </h3>
-              <p className="text-white/60 text-sm leading-relaxed line-clamp-3 group-hover:text-white/80 transition-colors">
+              <p className="text-white/80 lg:text-white/60 text-sm leading-relaxed line-clamp-3 lg:group-hover:text-white/80 transition-colors">
                 {project.description}
               </p>
             </div>
 
             {/* Actions */}
-            <div className="flex items-center gap-6 mt-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+            <div className="flex items-center gap-6 mt-6 translate-y-0 opacity-100 lg:translate-y-4 lg:opacity-0 lg:group-hover:translate-y-0 lg:group-hover:opacity-100 transition-all duration-300">
               <a href={project.liveUrl} className="flex items-center gap-2 text-white hover:text-neon-blue transition-colors uppercase text-sm font-bold tracking-wider">
                 View Project <ArrowRight size={16} />
               </a>

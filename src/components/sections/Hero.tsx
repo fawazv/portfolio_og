@@ -98,7 +98,7 @@ export default function Hero() {
             alt="Architectural Abstract"
             fill
             sizes="100vw"
-            className="object-cover"
+            className="object-cover object-[25%_50%] md:object-center"
             priority
             quality={100}
           />
@@ -112,7 +112,7 @@ export default function Hero() {
             alt="Liquid Metal Abstract"
             fill
             sizes="100vw"
-            className="object-cover"
+            className="object-cover object-[25%_50%] md:object-center"
             priority
             quality={100}
           />

@@ -118,7 +118,7 @@ export default function Blog() {
                   fill
                   className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors duration-500" />
+                <div className="absolute inset-0 bg-black/50 lg:bg-black/40 lg:group-hover:bg-black/50 transition-colors duration-500" />
                 <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-transparent" />
               </div>
 
@@ -129,7 +129,7 @@ export default function Blog() {
                   <span>{post.readTime}</span>
                 </div>
 
-                <h3 className={`font-bold text-white mb-3 leading-tight group-hover:text-neon-blue transition-colors ${index === 0 ? "text-3xl md:text-4xl" : "text-xl md:text-2xl"}`}>
+                <h3 className={`font-bold text-neon-blue lg:text-white mb-3 leading-tight lg:group-hover:text-neon-blue transition-colors ${index === 0 ? "text-3xl md:text-4xl" : "text-xl md:text-2xl"}`}>
                   {post.title}
                 </h3>
 
@@ -139,7 +139,7 @@ export default function Blog() {
                   </p>
                 )}
 
-                <div className="mt-6 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                <div className="mt-6 transform translate-y-0 opacity-100 lg:translate-y-4 lg:opacity-0 lg:group-hover:translate-y-0 lg:group-hover:opacity-100 transition-all duration-300">
                   <span className="text-sm font-bold uppercase tracking-wider text-neon-blue flex items-center gap-2">
                     Read Article <span>→</span>
                   </span>
