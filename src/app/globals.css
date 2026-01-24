@@ -41,7 +41,7 @@
 }
 
 :root {
-  --background: #ffffff;
+  --background: transparent;
   --foreground: #0a0a0a;
 
   /* "Lunaria" Warm Brown / Bronze -> Now "Obsidian" Premium Palette */
@@ -50,6 +50,9 @@
 
   --accent: #f4f4f5;
   --accent-foreground: #18181b;
+
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
 
   --glass-border: rgba(0, 0, 0, 0.08);
   --glass-bg: rgba(255, 255, 255, 0.7);
@@ -66,6 +69,9 @@
 
   --accent: #1a1a1a;
   --accent-foreground: #fafafa;
+
+  --muted: #27272a;
+  --muted-foreground: #a1a1aa;
 
   --glass-border: rgba(255, 255, 255, 0.08);
   --glass-bg: rgba(20, 20, 20, 0.6);

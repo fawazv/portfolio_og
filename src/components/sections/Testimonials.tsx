@@ -37,7 +37,7 @@ function TestimonialCard({ item }: { item: typeof testimonials[0] }) {
 
   return (
     <div
-      className="group relative w-[400px] overflow-hidden bg-foreground/5 border border-foreground/10 p-8"
+      className="group relative w-[85vw] md:w-[400px] overflow-hidden bg-foreground/5 border border-foreground/10 p-8"
       onMouseMove={handleMouseMove}
     >
       {/* Spotlight Glow */}

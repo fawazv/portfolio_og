@@ -123,16 +123,16 @@ export default function Hero() {
       </div>
 
       {/* Content Overlay */}
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center">
-        <div className="max-w-5xl overflow-hidden perspective-1000">
-          <h1 ref={nameRef} className="text-6xl md:text-8xl lg:text-[10rem] font-bold tracking-tighter uppercase mb-6 leading-none text-foreground dark:mix-blend-overlay dark:text-white drop-shadow-2xl">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-end text-right">
+        <div className="w-full max-w-none perspective-1000">
+          <h1 ref={nameRef} className="text-4xl sm:text-6xl md:text-8xl lg:text-[10rem] font-bold tracking-tighter uppercase mb-6 leading-none text-foreground dark:mix-blend-overlay dark:text-white drop-shadow-2xl">
             <div className="block">{renderSplitText("Mohammed")}</div>
             <div className="block text-secondary dark:text-white/90">{renderSplitText("Fawaz")}</div>
           </h1>
 
           <p
             ref={roleRef}
-            className="text-lg md:text-2xl font-light tracking-[0.2em] uppercase text-foreground/80 dark:text-white/70 max-w-2xl mx-auto backdrop-blur-xs py-2 px-4 rounded-full border border-white/10"
+            className="text-lg md:text-2xl font-light tracking-[0.2em] uppercase text-foreground/80 dark:text-white/70 max-w-2xl ml-auto mr-0 backdrop-blur-xs py-2 px-4 rounded-full border border-white/10"
           >
             Full Stack Developer
           </p>

@@ -46,17 +46,17 @@ export default function Navbar() {
       >
         <div className="container mx-auto flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="text-xl font-bold tracking-tighter uppercase z-50 mix-blend-difference text-foreground dark:text-white">
+          <Link href="/" className="text-xl font-bold tracking-tighter uppercase z-50 text-foreground dark:text-white">
             Dev<span className="opacity-50">.Portfolio</span>
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden xl:flex items-center gap-8">
             {navItems.map((item) => (
               <MagneticButton key={item.name}>
                 <Link
                   href={item.href}
-                  className="text-sm font-medium uppercase tracking-wide hover:text-secondary transition-colors mix-blend-difference text-foreground dark:text-gray-300 px-2 py-1 block"
+                  className="text-sm font-medium uppercase tracking-wide hover:text-secondary transition-colors text-foreground dark:text-gray-300 px-2 py-1 block"
                 >
                   {item.name}
                 </Link>
@@ -68,7 +68,7 @@ export default function Navbar() {
                 href="/resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hidden md:inline-flex items-center justify-center px-4 py-1 text-sm font-bold uppercase tracking-wide bg-white text-black hover:bg-white/90 transition-colors rounded-sm"
+                className="hidden xl:inline-flex items-center justify-center px-4 py-1 text-sm font-bold uppercase tracking-wide bg-white text-black hover:bg-white/90 transition-colors rounded-sm"
               >
                 Resume
               </a>
@@ -76,11 +76,11 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Toggle */}
-          <div className="flex items-center md:hidden gap-4">
+          <div className="flex items-center xl:hidden gap-4">
             <ThemeToggle />
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="z-50 p-2 mix-blend-difference text-foreground dark:text-white"
+              className="z-50 p-2 text-foreground dark:text-white"
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>

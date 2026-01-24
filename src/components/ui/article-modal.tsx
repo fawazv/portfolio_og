@@ -111,7 +111,7 @@ export function ArticleModal({ isOpen, onClose, article }: ArticleModalProps) {
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.3 }}
-                                    className="prose prose-invert prose-neutral max-w-none"
+                                    className="prose dark:prose-invert prose-neutral max-w-none"
                                 >
                                     <p className="text-xl text-muted-foreground mb-8 font-medium leading-relaxed italic">
                                         {article.excerpt}

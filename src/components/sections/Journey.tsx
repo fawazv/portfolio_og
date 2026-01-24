@@ -41,32 +41,36 @@ export default function Journey() {
   const rightRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    ScrollTrigger.create({
-      trigger: containerRef.current,
-      start: "top top",
-      end: "bottom bottom",
-      pin: leftRef.current,
+    const mm = gsap.matchMedia();
+
+    mm.add("(min-width: 768px)", () => {
+      // Desktop: Pinning and Timeline Animation
+      ScrollTrigger.create({
+        trigger: containerRef.current,
+        start: "top top",
+        end: "bottom bottom",
+        pin: leftRef.current,
+      });
+
+      const line = containerRef.current?.querySelector(".timeline-line-fill");
+      if (line) {
+        gsap.fromTo(line,
+          { scaleY: 0 },
+          {
+            scaleY: 1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: rightRef.current,
+              start: "top 60%",
+              end: "bottom 80%",
+              scrub: 1,
+            }
+          }
+        );
+      }
     });
 
-    // CSS-based Line Animation (No SVG overflow issues)
-    const line = containerRef.current?.querySelector(".timeline-line-fill");
-    if (line) {
-      gsap.fromTo(line,
-        { scaleY: 0 },
-        {
-          scaleY: 1,
-          ease: "none",
-          scrollTrigger: {
-            trigger: rightRef.current,
-            start: "top 60%", // Start earlier
-            end: "bottom 80%",
-            scrub: 1,
-          }
-        }
-      );
-    }
-
-    // Animate list items on scroll
+    // Universal: Item Reveal (works on both but simple on mobile)
     const items = gsap.utils.toArray(".journey-item");
     items.forEach((item: any, i) => {
       gsap.fromTo(item,
@@ -84,6 +88,8 @@ export default function Journey() {
       );
     });
 
+    return () => mm.revert();
+
   }, { scope: containerRef });
 
   return (
@@ -95,7 +101,7 @@ export default function Journey() {
         {/* Left Column - Pinned */}
         <div
           ref={leftRef}
-          className="w-full md:w-1/2 h-screen flex flex-col justify-center sticky top-0 md:relative"
+          className="w-full md:w-1/2 flex flex-col justify-center relative"
         >
           <RevealHeader className="text-4xl md:text-6xl font-bold uppercase tracking-tighter mb-8 md:mb-0 text-foreground/20">
             My Journey
