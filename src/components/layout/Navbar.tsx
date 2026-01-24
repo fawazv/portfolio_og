@@ -31,6 +31,18 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const pathname = usePathname();
+
+  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (pathname === "/") {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
     <>
       <motion.nav
@@ -46,7 +58,11 @@ export default function Navbar() {
       >
         <div className="container mx-auto flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="text-xl font-bold tracking-tighter uppercase z-50 text-foreground dark:text-white">
+          <Link
+            href="/"
+            onClick={handleLogoClick}
+            className="text-xl font-bold tracking-tighter uppercase z-50 text-foreground dark:text-white"
+          >
             Dev<span className="opacity-50">.Portfolio</span>
           </Link>
 
