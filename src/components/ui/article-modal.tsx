@@ -54,7 +54,7 @@ export function ArticleModal({ isOpen, onClose, article }: ArticleModalProps) {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        className="absolute inset-0 bg-background/80 backdrop-blur-xl"
+                        className="absolute inset-0 bg-white/80 dark:bg-black/80 backdrop-blur-xl"
                     />
 
                     {/* Modal Content */}
@@ -63,10 +63,10 @@ export function ArticleModal({ isOpen, onClose, article }: ArticleModalProps) {
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 20 }}
                         transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                        className="relative w-full max-w-4xl max-h-[90vh] bg-background border border-foreground/10 overflow-hidden flex flex-col shadow-2xl"
+                        className="relative w-full max-w-4xl max-h-[90vh] bg-white dark:bg-black border border-foreground/10 overflow-hidden flex flex-col shadow-2xl"
                     >
                         {/* Header */}
-                        <div className="flex items-center justify-between p-6 border-b border-foreground/10 bg-background/50 backdrop-blur-md sticky top-0 z-10">
+                        <div className="flex items-center justify-between p-6 border-b border-foreground/10 bg-white/50 dark:bg-black/50 backdrop-blur-md sticky top-0 z-10">
                             <div className="flex items-center gap-4 text-xs font-bold uppercase tracking-wider text-muted-foreground">
                                 <span>{article.category}</span>
                                 <span className="w-1 h-1 bg-secondary rounded-full" />
@@ -94,7 +94,7 @@ export function ArticleModal({ isOpen, onClose, article }: ArticleModalProps) {
                                     className="object-cover"
                                     priority
                                 />
-                                <div className="absolute inset-0 bg-linear-to-t from-background to-transparent" />
+                                <div className="absolute inset-0 bg-linear-to-t from-white dark:from-black to-transparent" />
                             </div>
 
                             <div className="max-w-2xl mx-auto px-6 pb-12">
@@ -125,7 +125,7 @@ export function ArticleModal({ isOpen, onClose, article }: ArticleModalProps) {
                         </div>
 
                         {/* Footer / Progress Indicator Placeholder */}
-                        <div className="p-4 border-t border-foreground/10 bg-background/50 text-center">
+                        <div className="p-4 border-t border-foreground/10 bg-white/50 dark:bg-black/50 text-center">
                             <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-muted-foreground/50">
                                 End of Insight
                             </p>
