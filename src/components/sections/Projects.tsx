@@ -16,7 +16,7 @@ const projects = [
     category: "Full Stack System",
     image: "/images/projects/elite-hotel.png",
     description: "Microservices-based Hotel Management System with secure authentication, billing, and integrated payments using Node.js, Express, and Docker.",
-    liveUrl: "#",
+    liveUrl: "",
     githubUrl: "#"
   },
   {
@@ -40,7 +40,7 @@ const projects = [
     category: "Distributed System",
     image: "/images/projects/blog-platform.png",
     description: "Scalable blog platform with Node.js, Express, MongoDB, RabbitMQ, and Docker, featuring microservices architecture and CI/CD pipelines.",
-    liveUrl: "#",
+    liveUrl: "",
     githubUrl: "#"
   },
   {
@@ -48,7 +48,7 @@ const projects = [
     category: "Frontend Experience",
     image: "/images/projects/pixabay-gallery.png",
     description: "Responsive image gallery built with React, Vite, and Tailwind CSS. Features infinite scroll, masonry layout, and advanced search.",
-    liveUrl: "#",
+    liveUrl: "",
     githubUrl: "#"
   }
 ];
@@ -163,10 +163,14 @@ const ProjectCard = memo(function ProjectCard({ project, index }: { project: any
 
             {/* Actions */}
             <div className="flex items-center gap-6 mt-6 translate-y-0 opacity-100 lg:translate-y-4 lg:opacity-0 lg:group-hover:translate-y-0 lg:group-hover:opacity-100 transition-all duration-300">
-              <a href={project.liveUrl} className="flex items-center gap-2 text-white hover:text-neon-blue transition-colors uppercase text-sm font-bold tracking-wider">
-                View Project <ArrowRight size={16} />
-              </a>
-              <div className="h-px w-8 bg-white/20" />
+              {project.liveUrl && (
+                <>
+                  <a href={project.liveUrl} className="flex items-center gap-2 text-white hover:text-neon-blue transition-colors uppercase text-sm font-bold tracking-wider">
+                    View Project <ArrowRight size={16} />
+                  </a>
+                  <div className="h-px w-8 bg-white/20" />
+                </>
+              )}
               <a href={project.githubUrl} className="text-white/50 hover:text-white transition-colors">
                 <Github size={20} />
               </a>
