@@ -1,12 +1,12 @@
 "use client";
 
-import { useRef, useState, memo } from "react";
+import { memo, useRef } from "react";
 import Image from "next/image";
 import { RevealHeader } from "@/components/ui/reveal-header";
-import { Github, ExternalLink, ArrowRight } from "lucide-react";
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
+import { Github, ArrowRight } from "lucide-react";
+import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -54,43 +54,46 @@ const projects = [
 ];
 
 export default function Projects() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const triggerRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
+    // Only enable horizontal scroll on larger screens for better performance/UX on mobile
     const mm = gsap.matchMedia();
 
-    mm.add("(min-width: 1024px)", () => {
-      const totalWidth = sectionRef.current ? sectionRef.current.scrollWidth - window.innerWidth : 0;
+    mm.add("(min-width: 768px)", () => {
+      if (!containerRef.current) return;
 
-      gsap.to(sectionRef.current, {
-        x: -totalWidth,
+      const totalWidth = containerRef.current.scrollWidth;
+      const viewportWidth = window.innerWidth;
+      const xMovement = -(totalWidth - viewportWidth + 100); // 100px buffer
+
+      gsap.to(containerRef.current, {
+        x: xMovement,
         ease: "none",
-        willChange: "transform", // Hint browser for smoother scroll
         scrollTrigger: {
-          trigger: triggerRef.current,
-          start: "top top",
-          end: "+=3000",
-          scrub: 1,
+          trigger: sectionRef.current,
           pin: true,
-          anticipatePin: 1,
+          scrub: 1,
+          start: "top top",
+          end: () => `+=${containerRef.current!.scrollWidth - window.innerWidth}`,
           invalidateOnRefresh: true,
+          anticipatePin: 1,
         },
       });
     });
 
-    return () => mm.revert();
-  }, { scope: triggerRef });
+  }, { scope: sectionRef });
 
   return (
-    <section id="projects" className="overflow-hidden bg-background relative z-20">
-      <div ref={triggerRef}>
-
-        {/* Pinned Container */}
-        <div className="min-h-screen lg:h-screen flex flex-col justify-center relative">
-
-          {/* Section Header - Fixed Spacing & Visibility */}
-          <div className="container mx-auto px-6 mb-12 pt-10 relative lg:absolute lg:top-10 left-0 right-0 z-0 pointer-events-none">
+    <section
+      id="projects"
+      ref={sectionRef}
+      className="relative z-20 bg-background overflow-hidden"
+    >
+      <div className="py-20 md:h-screen md:flex md:flex-col md:justify-center">
+        <div className="container mx-auto px-6 mb-12 md:mb-0 md:absolute md:top-20 md:left-6 md:px-0 md:z-10">
+          <div className="mb-10 pl-6">
             <RevealHeader className="text-5xl md:text-8xl font-black uppercase tracking-tighter mb-4 text-foreground/30 dark:text-white/30 dark:mix-blend-overlay">
               Selected Works
             </RevealHeader>
@@ -99,16 +102,20 @@ export default function Projects() {
               <p className="text-lg text-muted-foreground uppercase tracking-widest font-medium">Interactive Gallery</p>
             </div>
           </div>
+        </div>
 
-          {/* Horizontal Scroll Track - Mobile Vertical / Desktop Horizontal */}
-          <div
-            ref={sectionRef}
-            className="flex flex-col lg:flex-row gap-10 px-6 lg:px-32 w-full lg:w-fit items-center h-full pt-0 lg:pt-48 pb-20 lg:pb-0 relative z-20"
-          >
-            {projects.map((project, index) => (
-              <ProjectCard key={index} project={project} index={index} />
-            ))}
-          </div>
+        {/* Projects Container */}
+        <div
+          ref={containerRef}
+          className="flex flex-col md:flex-row gap-20 md:gap-32 px-6 md:px-0 md:pl-[10vw]"
+        >
+          {projects.map((project, index) => (
+            <div key={index} className="shrink-0 w-full md:w-[80vw] lg:w-[60vw]">
+              <ProjectCard project={project} index={index} />
+            </div>
+          ))}
+          {/* Extra spacer for horizontal scroll end feel */}
+          <div className="shrink-0 w-0 md:w-[10vw]" />
         </div>
       </div>
     </section>
@@ -116,68 +123,56 @@ export default function Projects() {
 }
 
 const ProjectCard = memo(function ProjectCard({ project, index }: { project: any, index: number }) {
-  // Holographic Tilt Effect Logic could go here or simple CSS hover
   return (
-    <div
-      // Reduced dimensions for better overview
-      className="group relative h-[50vh] md:h-[60vh] w-full lg:w-[35vw] shrink-0 
-                       perspective-1000 cursor-pointer will-change-transform"
-    >
-      <div className="relative w-full h-full duration-500 ease-out transform group-hover:-translate-y-4 group-hover:rotate-x-2 group-hover:scale-[1.02]">
+    <div className="group relative w-full perspective-1000">
+      <div className="flex flex-col lg:flex-row gap-10 items-center">
 
-        {/* Glass Panel Container - Optimized backdrop blur */}
-        <div className="absolute inset-0 bg-white/5 backdrop-blur-none md:backdrop-blur-xl border border-foreground/30 dark:border-white/30 lg:border-foreground/10 lg:dark:border-white/10 rounded-3xl overflow-hidden shadow-neon-blue/40 lg:shadow-2xl lg:dark:shadow-neon-blue/20 transition-all duration-500 lg:group-hover:border-foreground/30 lg:dark:group-hover:border-white/30 lg:group-hover:shadow-neon-blue/40">
+        {/* Visual Side */}
+        <div className="w-full lg:w-3/5 relative aspect-video rounded-3xl overflow-hidden border border-foreground/10 dark:border-white/10 shadow-2xl transition-all duration-500 group-hover:shadow-neon-blue/20">
+          <div className="absolute inset-0 bg-black/20 z-10 transition-opacity duration-500 group-hover:opacity-0" />
+          <Image
+            src={project.image}
+            alt={project.title}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 60vw, 50vw"
+            className="object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+        </div>
 
-          {/* Image Layer */}
-          <div className="relative h-3/5 w-full overflow-hidden">
-            <div className="absolute inset-0 bg-linear-to-b from-transparent to-black/80 z-10" />
-            <Image
-              src={project.image}
-              alt={project.title}
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 35vw"
-              className="object-cover transition-transform duration-1000 group-hover:scale-110"
-              loading="lazy"
-            />
-            {/* Number Watermark */}
-            <div className="absolute top-4 right-6 text-9xl font-black text-white/5 z-0 pointer-events-none">
-              {index + 1}
-            </div>
+        {/* Content Side */}
+        <div className="w-full lg:w-2/5 flex flex-col justify-center">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="text-xs font-bold uppercase tracking-[0.2em] px-3 py-1 border border-foreground/20 dark:border-neon-blue/30 rounded-full bg-foreground/5 dark:bg-neon-blue/10 text-muted-foreground dark:text-neon-blue">
+              {project.category}
+            </span>
+            <span className="text-6xl font-black text-foreground/5 dark:text-white/5 pointer-events-none select-none">
+              0{index + 1}
+            </span>
           </div>
 
-          {/* Content Layer - Tech Style */}
-          <div className="absolute bottom-0 w-full h-3/5 p-8 flex flex-col justify-end z-20 bg-linear-to-t from-black via-black/80 to-transparent">
-            <div>
-              <div className="flex items-center gap-3 mb-3">
-                <span className="text-white/90 dark:text-neon-blue text-xs font-bold uppercase tracking-[0.2em] px-3 py-1 border border-white/20 dark:border-neon-blue/30 rounded-full bg-white/10 dark:bg-neon-blue/10 backdrop-blur-md">
-                  {project.category}
-                </span>
-              </div>
-              <h3 className="text-3xl md:text-4xl font-bold text-neon-blue lg:text-white uppercase tracking-tight mb-3 lg:group-hover:text-neon-blue transition-colors">
-                {project.title}
-              </h3>
-              <p className="text-white/80 lg:text-white/60 text-sm leading-relaxed line-clamp-3 lg:group-hover:text-white/80 transition-colors">
-                {project.description}
-              </p>
-            </div>
+          <h3 className="text-4xl md:text-5xl font-bold uppercase tracking-tight mb-6 group-hover:text-secondary transition-colors">
+            {project.title}
+          </h3>
 
-            {/* Actions */}
-            <div className="flex items-center gap-6 mt-6 translate-y-0 opacity-100 lg:translate-y-4 lg:opacity-0 lg:group-hover:translate-y-0 lg:group-hover:opacity-100 transition-all duration-300">
-              {project.liveUrl && (
-                <>
-                  <a href={project.liveUrl} className="flex items-center gap-2 text-white hover:text-neon-blue transition-colors uppercase text-sm font-bold tracking-wider">
-                    View Project <ArrowRight size={16} />
-                  </a>
-                  <div className="h-px w-8 bg-white/20" />
-                </>
-              )}
-              <a href={project.githubUrl} className="text-white/50 hover:text-white transition-colors">
-                <Github size={20} />
+          <p className="text-muted-foreground/80 text-lg leading-relaxed mb-8">
+            {project.description}
+          </p>
+
+          <div className="flex items-center gap-6">
+            {project.liveUrl && (
+              <a href={project.liveUrl} className="flex items-center gap-2 text-foreground dark:text-white hover:text-secondary transition-colors uppercase text-sm font-bold tracking-wider">
+                View Project <ArrowRight size={16} />
               </a>
-            </div>
+            )}
+            {project.liveUrl && <div className="h-4 w-px bg-foreground/20 dark:bg-white/20" />}
+            <a href={project.githubUrl} className="flex items-center gap-2 text-muted-foreground hover:text-foreground dark:hover:text-white transition-colors uppercase text-sm font-bold tracking-wider">
+              <Github size={20} />
+              <span>Source</span>
+            </a>
           </div>
         </div>
       </div>
     </div>
   );
 });
+

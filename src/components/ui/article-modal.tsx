@@ -84,7 +84,6 @@ export function ArticleModal({ isOpen, onClose, article }: ArticleModalProps) {
                         {/* Scrollable Area */}
                         <div
                             className="flex-1 overflow-y-auto custom-scrollbar"
-                            data-lenis-prevent
                         >
                             <div className="relative h-64 md:h-96 w-full mb-8">
                                 <Image
