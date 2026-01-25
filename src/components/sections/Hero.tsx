@@ -51,9 +51,9 @@ export default function Hero() {
       }, "-=0.5");
 
     // 3. Scroll Parallax Effect
+    // 3. Scroll Parallax Effect
     gsap.to(imageRef.current, {
       y: 100, // Reduced movement to keep image steadier
-      scale: 1.02, // Minimal zoom on scroll to maintain sharpness
       ease: "none",
       willChange: "transform", // Hint browser
       scrollTrigger: {
@@ -79,7 +79,7 @@ export default function Hero() {
 
   const renderSplitText = (text: string) => {
     return text.split("").map((char, index) => (
-      <span key={index} className="char-reveal inline-block origin-bottom transform-3d">
+      <span key={index} className="char-reveal inline-block origin-bottom transform-3d opacity-0">
         {char === " " ? "\u00A0" : char}
       </span>
     ));
@@ -91,7 +91,7 @@ export default function Hero() {
       className="relative h-screen min-h-screen w-full overflow-hidden flex items-center justify-center bg-background"
     >
       {/* Background Images - Cinematic Dual Theme Strategy */}
-      <div ref={imageRef} className="absolute inset-0 z-0 w-full h-full will-change-transform">
+      <div ref={imageRef} className="absolute inset-0 z-0 w-full h-full will-change-transform opacity-0">
         {/* Light Mode: Architectural Minimal */}
         <div className="absolute inset-0 z-0 dark:hidden">
           <Image
@@ -133,7 +133,7 @@ export default function Hero() {
 
           <p
             ref={roleRef}
-            className="text-lg md:text-2xl font-light tracking-[0.2em] uppercase text-foreground/80 dark:text-white/70 max-w-2xl ml-auto mr-0 backdrop-blur-xs py-2 px-4 rounded-full border border-white/10"
+            className="text-lg md:text-2xl font-light tracking-[0.2em] uppercase text-foreground/80 dark:text-white/70 max-w-2xl ml-auto mr-0 backdrop-blur-xs py-2 px-4 rounded-full border border-white/10 opacity-0"
           >
             Full Stack Developer
           </p>
@@ -143,7 +143,7 @@ export default function Hero() {
       {/* Modern Scroll Indicator */}
       <div
         ref={scrollRef}
-        className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2"
+        className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 opacity-0"
       >
         <span className="text-[10px] uppercase tracking-widest text-muted-foreground animate-pulse">Scroll</span>
         <div className="w-px h-16 bg-linear-to-b from-transparent via-foreground/50 to-transparent dark:via-white/50" />
