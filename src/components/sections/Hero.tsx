@@ -133,7 +133,7 @@ export default function Hero() {
 
           <p
             ref={roleRef}
-            className="text-lg md:text-2xl font-light tracking-[0.2em] uppercase text-foreground/80 dark:text-white/70 max-w-2xl ml-auto mr-0 backdrop-blur-xs py-2 px-4 rounded-full border border-white/10 opacity-0"
+            className="text-lg md:text-2xl font-light tracking-[0.2em] uppercase text-foreground/80 dark:text-white/70 max-w-2xl ml-auto mr-0 md:backdrop-blur-xs py-2 px-4 rounded-full border border-white/10 opacity-0"
           >
             Full Stack Developer
           </p>
