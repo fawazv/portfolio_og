@@ -112,12 +112,21 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:absolute focus:z-9999 focus:p-4 focus:bg-background focus:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-neon-blue"
+          >
+            Skip to content
+          </a>
+
           <SmoothScroll />
           <Background />
           <NoiseOverlay />
           <CustomCursor />
           <Navbar />
-          {children}
+          <main id="main-content">
+            {children}
+          </main>
           <Footer />
         </ThemeProvider>
       </body>

@@ -130,8 +130,8 @@ export default function Hero() {
               quality={85}
             />
             {/* Vignette & Overlay for text readability */}
-            <div className="absolute inset-0 bg-black/20" />
-            <div className="absolute inset-0 bg-linear-to-t from-background via-transparent to-black/40" />
+            <div className="absolute inset-0 bg-black/20" aria-hidden="true" />
+            <div className="absolute inset-0 bg-linear-to-t from-background via-transparent to-black/40" aria-hidden="true" />
           </>
         )}
       </div>
@@ -139,9 +139,13 @@ export default function Hero() {
       {/* Content Overlay */}
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-end text-right">
         <div className="w-full max-w-none perspective-1000">
-          <h1 ref={nameRef} className="text-4xl sm:text-6xl md:text-8xl lg:text-[10rem] font-bold tracking-tighter uppercase mb-6 leading-none text-foreground dark:mix-blend-overlay dark:text-white drop-shadow-2xl">
-            <div className="block">{renderSplitText("Mohammed")}</div>
-            <div className="block text-secondary dark:text-white/90">{renderSplitText("Fawaz")}</div>
+          <h1
+            ref={nameRef}
+            className="text-4xl sm:text-6xl md:text-8xl lg:text-[10rem] font-bold tracking-tighter uppercase mb-6 leading-none text-foreground dark:mix-blend-overlay dark:text-white drop-shadow-2xl"
+            aria-label="Mohammed Fawaz"
+          >
+            <div className="block" aria-hidden="true">{renderSplitText("Mohammed")}</div>
+            <div className="block text-secondary dark:text-white/90" aria-hidden="true">{renderSplitText("Fawaz")}</div>
           </h1>
 
           <p

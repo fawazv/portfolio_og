@@ -62,8 +62,9 @@ export default function Navbar() {
             href="/"
             onClick={handleLogoClick}
             className="text-xl font-bold tracking-tighter uppercase z-50 text-foreground dark:text-white"
+            aria-label="Fawaz — Home"
           >
-            Fawaz<span className="font-serif italic normal-case text-secondary opacity-80">.</span>
+            Fawaz<span className="font-serif italic normal-case text-secondary opacity-80" aria-hidden="true">.</span>
           </Link>
 
           {/* Desktop Nav */}
@@ -84,6 +85,7 @@ export default function Navbar() {
                 href="/resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Download Resume (opens in new tab)"
                 className="hidden xl:inline-flex items-center justify-center px-4 py-1 text-sm font-bold uppercase tracking-wide bg-white text-black hover:bg-white/90 transition-colors rounded-sm"
               >
                 Resume
@@ -97,8 +99,10 @@ export default function Navbar() {
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="z-50 p-2 text-foreground dark:text-white"
+              aria-expanded={isMobileMenuOpen}
+              aria-label="Toggle navigation menu"
             >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {isMobileMenuOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
             </button>
           </div>
         </div>
@@ -130,7 +134,8 @@ export default function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-4xl font-bold uppercase tracking-tighter hover:text-secondary transition-colors text-foreground/50"
+                aria-label="Download Resume (opens in new tab)"
+                className="text-4xl font-bold uppercase tracking-tighter hover:text-secondary transition-colors text-foreground/70"
               >
                 Resume
               </a>

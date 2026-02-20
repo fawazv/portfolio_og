@@ -17,12 +17,12 @@ export default function Footer() {
           {/* Left — Logo + Tagline */}
           <div className="space-y-4">
             <h3 className="text-2xl font-bold uppercase tracking-tighter text-foreground">
-              Fawaz<span className="font-serif italic normal-case text-secondary opacity-80">.</span>
+              Fawaz<span className="font-serif italic normal-case text-secondary opacity-80" aria-hidden="true">.</span>
             </h3>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
               Full Stack Developer crafting scalable systems and cinematic web experiences.
             </p>
-            <p className="text-xs text-muted-foreground/60 uppercase tracking-widest mt-6">
+            <p className="text-xs text-muted-foreground/80 uppercase tracking-widest mt-6">
               © {currentYear} Mohammed Fawaz. All rights reserved.
             </p>
           </div>
@@ -40,14 +40,14 @@ export default function Footer() {
                 className="inline-flex items-center gap-2 text-sm font-medium text-foreground/70 hover:text-foreground transition-colors group w-fit"
                 aria-label="Download Resume (opens in new tab)"
               >
-                <Download size={14} className="group-hover:-translate-y-0.5 transition-transform" />
+                <Download size={14} className="group-hover:-translate-y-0.5 transition-transform" aria-hidden="true" />
                 Download Resume
               </a>
               <a
                 href="mailto:fawazv.business@gmail.com"
                 className="inline-flex items-center gap-2 text-sm font-medium text-foreground/70 hover:text-foreground transition-colors group w-fit"
               >
-                <Mail size={14} className="group-hover:scale-110 transition-transform" />
+                <Mail size={14} className="group-hover:scale-110 transition-transform" aria-hidden="true" />
                 fawazv.business@gmail.com
               </a>
               <a
@@ -71,18 +71,18 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="LinkedIn profile (opens in new tab)"
-                  className="p-2.5 border border-foreground/10 rounded-full hover:border-foreground/40 hover:bg-foreground/5 transition-all text-foreground/60 hover:text-foreground"
+                  className="p-2.5 border border-foreground/10 rounded-full hover:border-foreground/40 hover:bg-foreground/5 transition-all text-foreground/80 hover:text-foreground"
                 >
-                  <Linkedin size={18} strokeWidth={1.5} />
+                  <Linkedin size={18} strokeWidth={1.5} aria-hidden="true" />
                 </a>
                 <a
                   href="https://github.com/fawazv/"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="GitHub profile (opens in new tab)"
-                  className="p-2.5 border border-foreground/10 rounded-full hover:border-foreground/40 hover:bg-foreground/5 transition-all text-foreground/60 hover:text-foreground"
+                  className="p-2.5 border border-foreground/10 rounded-full hover:border-foreground/40 hover:bg-foreground/5 transition-all text-foreground/80 hover:text-foreground"
                 >
-                  <Github size={18} strokeWidth={1.5} />
+                  <Github size={18} strokeWidth={1.5} aria-hidden="true" />
                 </a>
               </div>
             </div>
@@ -94,7 +94,7 @@ export default function Footer() {
               className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors group mt-4"
             >
               <span className="p-1.5 border border-foreground/10 rounded-full group-hover:border-foreground/40 group-hover:bg-foreground/5 transition-all">
-                <ArrowUp size={14} className="group-hover:-translate-y-0.5 transition-transform" />
+                <ArrowUp size={14} className="group-hover:-translate-y-0.5 transition-transform" aria-hidden="true" />
               </span>
               Back to Top
             </button>
