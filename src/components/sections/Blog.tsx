@@ -91,10 +91,10 @@ export default function Blog() {
       <div className="container mx-auto px-6">
         <div className="flex items-end justify-between mb-16">
           <RevealHeader className="text-4xl md:text-6xl font-bold uppercase tracking-tighter">
-            Insights
+            Case Studies
           </RevealHeader>
           <div className="hidden md:block text-sm font-bold uppercase tracking-widest text-muted-foreground">
-            Read my latest thoughts
+            Deep dives into my projects
           </div>
         </div>
 

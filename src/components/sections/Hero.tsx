@@ -151,6 +151,11 @@ export default function Hero() {
             Full Stack Developer
           </p>
 
+          {/* Value Proposition Tagline */}
+          <p className="text-sm md:text-base font-serif italic text-foreground/50 dark:text-white/40 mt-3 mr-1 tracking-wide">
+            Building scalable systems with React, Node.js &amp; Cloud Architecture
+          </p>
+
           {/* CTA Buttons */}
           <div
             ref={ctaRef}

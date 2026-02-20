@@ -23,12 +23,50 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Premium Developer Portfolio",
-  description: "A cinematic developer portfolio.",
+  metadataBase: new URL("https://fawazv.online"),
+  title: "Mohammed Fawaz | Full Stack Developer — React, Node.js, Microservices",
+  description:
+    "Full Stack Developer specializing in React, Next.js, Node.js & Microservices architecture. Open to remote & hybrid roles. View projects and get in touch.",
+  authors: [{ name: "Mohammed Fawaz" }],
+  keywords: [
+    "Full Stack Developer", "React Developer", "Next.js", "Node.js",
+    "Microservices", "TypeScript", "Docker", "AWS", "Kerala", "India",
+  ],
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://fawazv.online",
+    siteName: "Mohammed Fawaz — Portfolio",
+    title: "Mohammed Fawaz | Full Stack Developer — React, Node.js, Microservices",
+    description:
+      "Full Stack Developer specializing in React, Next.js, Node.js & Microservices. Open to remote & hybrid roles.",
+    images: [
+      {
+        url: "/og-image.webp",
+        width: 1200,
+        height: 630,
+        alt: "Mohammed Fawaz — Full Stack Developer Portfolio",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Mohammed Fawaz | Full Stack Developer",
+    description:
+      "Full Stack Developer specializing in React, Next.js, Node.js & Microservices. Open to remote & hybrid roles.",
+    images: ["/og-image.webp"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true },
+  },
+  alternates: {
+    canonical: "https://fawazv.online",
+  },
 };
 
 import CustomCursor from "@/components/ui/cursor";
-
 import Background from "@/components/ui/background";
 import SmoothScroll from "@/components/ui/smooth-scroll";
 
@@ -39,6 +77,32 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: "Mohammed Fawaz",
+              jobTitle: "Full Stack Developer",
+              url: "https://fawazv.online",
+              email: "fawazv.business@gmail.com",
+              description:
+                "Full Stack Developer specializing in React, Next.js, Node.js, and Microservices architecture.",
+              image: "https://fawazv.online/portrait.webp",
+              sameAs: [
+                "https://github.com/fawazv/",
+                "https://www.linkedin.com/in/mohammed-fawaz-216314280/",
+              ],
+              knowsAbout: [
+                "React", "Next.js", "Node.js", "TypeScript",
+                "Microservices", "Docker", "AWS", "MongoDB", "PostgreSQL",
+              ],
+            }),
+          }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} antialiased`}
       >

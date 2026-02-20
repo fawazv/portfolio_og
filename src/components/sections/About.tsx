@@ -5,9 +5,15 @@ import { RevealHeader } from "@/components/ui/reveal-header";
 import Image from "next/image";
 import { useRef } from "react";
 
+const stats = [
+  { value: "5+", label: "Projects Shipped" },
+  { value: "1000+", label: "Hours of Code" },
+  { value: "5+", label: "Microservices Built" },
+  { value: "10+", label: "Technologies Mastered" },
+];
+
 export default function About() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
@@ -33,18 +39,45 @@ export default function About() {
             </RevealHeader>
 
             <motion.div
-              className="space-y-6 text-lg md:text-xl text-muted-foreground leading-relaxed max-w-lg"
+              className="space-y-5 text-lg md:text-xl text-muted-foreground leading-relaxed max-w-lg"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3, duration: 0.8 }}
             >
               <p>
-                I'm a self-taught Full Stack Developer who pivoted from a background in Commerce to the world of Code.
+                Self-taught Full Stack Developer who pivoted from a B.Com degree to building production-grade systems in under a year. I've shipped 5+ projects across e-commerce, microservices, and cloud storage, dedicating 1000+ hours to mastering the MERN stack and modern DevOps practices.
               </p>
               <p>
-                My journey is defined by a relentless curiosity—from studying accounting to debugging distributed systems. I build scalable applications with a focus on performance, clean architecture, and cinematic user experiences.
+                I specialize in distributed backends — breaking monoliths into Node.js microservices, containerizing with Docker, managing async communication via RabbitMQ, and deploying on AWS EC2/S3. On the frontend, I pair React &amp; Next.js with GSAP and Framer Motion to build interfaces that feel as good as they perform.
               </p>
+            </motion.div>
+
+            {/* Stats Bar */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.45, duration: 0.8 }}
+              className="grid grid-cols-2 sm:grid-cols-4 gap-6 py-6 border-y border-black/8 dark:border-white/8"
+            >
+              {stats.map((stat, i) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.5 + i * 0.08 }}
+                  className="text-center sm:text-left"
+                >
+                  <div className="text-2xl md:text-3xl font-black tracking-tighter text-foreground">
+                    {stat.value}
+                  </div>
+                  <div className="text-xs font-bold uppercase tracking-widest text-muted-foreground mt-1">
+                    {stat.label}
+                  </div>
+                </motion.div>
+              ))}
             </motion.div>
 
             <motion.div
@@ -73,7 +106,7 @@ export default function About() {
             >
               <motion.div style={{ y }} className="absolute inset-0 h-[120%] w-full -top-[10%]">
                 <Image
-                  src="/portrait.jpg"
+                  src="/portrait.webp"
                   alt="Mohammed Fawaz — Full Stack Developer based in Kerala, India"
                   fill
                   className="object-cover object-top grayscale hover:grayscale-0 transition-all duration-700"

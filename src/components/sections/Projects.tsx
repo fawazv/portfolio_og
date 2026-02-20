@@ -10,6 +10,15 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
+interface Project {
+  title: string;
+  category: string;
+  image: string;
+  description: string;
+  liveUrl: string;
+  githubUrl: string;
+}
+
 const projects = [
   {
     title: "Elite Hotel",
@@ -126,14 +135,14 @@ export default function Projects() {
   );
 }
 
-const ProjectCard = memo(function ProjectCard({ project, index }: { project: any, index: number }) {
+const ProjectCard = memo(function ProjectCard({ project, index }: { project: Project; index: number }) {
   return (
     <div className="group relative w-full h-[50vh] md:h-[60vh] rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
           src={project.image}
-          alt={project.title}
+          alt={`${project.title} — ${project.category} project screenshot`}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 60vw, 50vw"
           className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -165,12 +174,24 @@ const ProjectCard = memo(function ProjectCard({ project, index }: { project: any
           {/* Action Buttons - Always visible on mobile, fade in/slide up on desktop hover */}
           <div className="flex items-center gap-6 md:opacity-0 md:translate-y-4 md:group-hover:opacity-100 md:group-hover:translate-y-0 transition-all duration-500">
             {project.liveUrl && (
-              <a href={project.liveUrl} className="flex items-center gap-2 text-white hover:text-neon-blue transition-colors uppercase text-sm font-bold tracking-wider">
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`View live demo of ${project.title} (opens in new tab)`}
+                className="flex items-center gap-2 text-white hover:text-neon-blue transition-colors uppercase text-sm font-bold tracking-wider"
+              >
                 View Project <ArrowRight size={16} />
               </a>
             )}
             {project.liveUrl && <div className="h-4 w-px bg-white/20" />}
-            <a href={project.githubUrl} className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors uppercase text-sm font-bold tracking-wider">
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`View ${project.title} source code on GitHub (opens in new tab)`}
+              className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors uppercase text-sm font-bold tracking-wider"
+            >
               <Github size={20} />
               <span>Source</span>
             </a>
