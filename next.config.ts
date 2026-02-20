@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
+
 const nextConfig: NextConfig = {
-  /* config options here */
   images: {
     remotePatterns: [
       {
@@ -9,9 +12,9 @@ const nextConfig: NextConfig = {
         hostname: 'picsum.photos',
       },
     ],
-    // Allow high quality for hero images
-    qualities: [75, 90, 100],
+    formats: ['image/avif', 'image/webp'],
+    qualities: [75, 85, 90],
   },
 };
 
-export default nextConfig;
+export default withBundleAnalyzer(nextConfig);
