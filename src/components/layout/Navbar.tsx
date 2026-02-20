@@ -36,7 +36,6 @@ export default function Navbar() {
   const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (pathname === "/") {
       e.preventDefault();
-      e.preventDefault();
       window.scrollTo({
         top: 0,
         behavior: "smooth",
@@ -64,7 +63,7 @@ export default function Navbar() {
             onClick={handleLogoClick}
             className="text-xl font-bold tracking-tighter uppercase z-50 text-foreground dark:text-white"
           >
-            Dev<span className="opacity-50">.Portfolio</span>
+            Fawaz<span className="font-serif italic normal-case text-secondary opacity-80">.</span>
           </Link>
 
           {/* Desktop Nav */}
@@ -131,7 +130,7 @@ export default function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-4xl font-bold uppercase tracking-tighter hover:text-secondary transition-colors text-white/50"
+                className="text-4xl font-bold uppercase tracking-tighter hover:text-secondary transition-colors text-foreground/50"
               >
                 Resume
               </a>

@@ -14,6 +14,7 @@ export default function Hero() {
   const imageRef = useRef<HTMLDivElement>(null);
   const nameRef = useRef<HTMLHeadingElement>(null);
   const roleRef = useRef<HTMLParagraphElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
@@ -21,6 +22,7 @@ export default function Hero() {
     // 1. Initial State Setup
     gsap.set(".char-reveal", { y: 100, opacity: 0, rotateX: -45 });
     gsap.set(roleRef.current, { y: 20, opacity: 0 });
+    gsap.set(ctaRef.current, { y: 20, opacity: 0 });
     gsap.set(scrollRef.current, { opacity: 0 });
     // Optimized: Removed filter blur animation as it causes significant paint overhead
     gsap.set(imageRef.current, { scale: 1.1, opacity: 0 });
@@ -45,6 +47,11 @@ export default function Hero() {
         opacity: 1,
         duration: 1,
       }, "-=0.8")
+      .to(ctaRef.current, {
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+      }, "-=0.5")
       .to(scrollRef.current, {
         opacity: 1,
         duration: 1,
@@ -137,6 +144,39 @@ export default function Hero() {
           >
             Full Stack Developer
           </p>
+
+          {/* CTA Buttons */}
+          <div
+            ref={ctaRef}
+            className="flex flex-wrap gap-4 mt-8 justify-end opacity-0"
+          >
+            <a
+              href="#projects"
+              className="px-7 py-3 text-sm font-bold uppercase tracking-widest rounded-full
+                bg-white/10 backdrop-blur-md border border-white/20
+                text-foreground dark:text-white
+                hover:bg-white/20 hover:border-white/40
+                shadow-[0_0_20px_-5px_rgba(255,255,255,0.1)]
+                hover:shadow-[0_0_30px_-5px_rgba(255,255,255,0.25)]
+                transition-all duration-300"
+            >
+              Explore My Work
+            </a>
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Download Resume (opens in new tab)"
+              className="px-7 py-3 text-sm font-bold uppercase tracking-widest rounded-full
+                border border-foreground/20 dark:border-white/30
+                text-foreground/70 dark:text-white/70
+                hover:border-foreground dark:hover:border-white
+                hover:text-foreground dark:hover:text-white
+                transition-all duration-300"
+            >
+              Download Resume
+            </a>
+          </div>
         </div>
       </div>
 

@@ -69,14 +69,14 @@ export default function About() {
           <div className="relative order-1 lg:order-2">
             <motion.div
               style={{ opacity }}
-              className="relative h-[500px] w-full md:h-[700px] overflow-hidden rounded-full lg:rounded-none lg:mask-image-fade"
+              className="relative h-[500px] w-full md:h-[700px] overflow-hidden rounded-2xl"
             >
               <motion.div style={{ y }} className="absolute inset-0 h-[120%] w-full -top-[10%]">
                 <Image
-                  src="/about-visual.png"
-                  alt="About Me Visual"
+                  src="/portrait.jpg"
+                  alt="Mohammed Fawaz — Full Stack Developer based in Kerala, India"
                   fill
-                  className="object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                  className="object-cover object-top grayscale hover:grayscale-0 transition-all duration-700"
                   priority
                 />
               </motion.div>
