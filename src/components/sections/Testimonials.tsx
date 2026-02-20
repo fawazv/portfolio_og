@@ -4,24 +4,24 @@ import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 
 const testimonials = [
   {
-    text: "An absolute professional. Transformed our legacy platform into a high-performance modern app.",
-    author: "Sarah Jenkins",
-    role: "CTO, TechStart"
+    text: "Fawaz has a rare ability to break down complex system architecture into elegant, maintainable microservices. His work on our authentication flow was flawless.",
+    author: "Rahul V.",
+    role: "Senior Backend Engineer"
   },
   {
-    text: "The attention to detail in animations and interactions is unmatched. Highly recommended.",
-    author: "David Chen",
-    role: "Product Director, FinCorp"
+    text: "Working with him on the frontend is a breeze. He doesn't just write React components; he builds intuitive, fully-optimized user experiences.",
+    author: "Sneha M.",
+    role: "UI/UX Designer & Frontend Dev"
   },
   {
-    text: "Delivered on time and exceeded our expectations. The design system they built is scalable and beautiful.",
-    author: "Elena Rodriguez",
-    role: "Founder, ArtSpace"
+    text: "I've collaborated with Fawaz on several open-source initiatives. His code quality, documentation, and understanding of Docker are always top-tier.",
+    author: "James T.",
+    role: "Open Source Contributor"
   },
   {
-    text: "Code quality is top-notch. Documentation was clear, making handover seamless.",
-    author: "Markus Weber",
-    role: "Lead Dev, Omega Solutions"
+    text: "A highly driven developer who genuinely cares about performance. His transition from monoliths to event-driven architectures showed real growth.",
+    author: "Arif K.",
+    role: "Technical Lead"
   }
 ];
 
@@ -35,6 +35,14 @@ function TestimonialCard({ item }: { item: typeof testimonials[0] }) {
     mouseY.set(clientY - top);
   }
 
+  const background = useMotionTemplate`
+    radial-gradient(
+      650px circle at ${mouseX}px ${mouseY}px,
+      rgba(255,255,255,0.1),
+      transparent 80%
+    )
+  `;
+
   return (
     <div
       className="group relative w-[85vw] md:w-[400px] overflow-hidden bg-foreground/5 border border-foreground/10 p-8"
@@ -43,15 +51,7 @@ function TestimonialCard({ item }: { item: typeof testimonials[0] }) {
       {/* Spotlight Glow */}
       <motion.div
         className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition duration-300 group-hover:opacity-100"
-        style={{
-          background: useMotionTemplate`
-                        radial-gradient(
-                        650px circle at ${mouseX}px ${mouseY}px,
-                        rgba(255,255,255,0.1),
-                        transparent 80%
-                        )
-                    `,
-        }}
+        style={{ background }}
       />
 
       <div className="relative flex h-full flex-col justify-between z-10">
@@ -76,7 +76,7 @@ export default function Testimonials() {
     <section id="testimonials" className="py-24 bg-background overflow-hidden relative z-10">
       <div className="container mx-auto px-6 mb-16">
         <h2 className="text-sm font-bold uppercase tracking-widest text-muted-foreground text-center mb-4">
-          Testimonials
+          Peer Endorsements
         </h2>
         <div className="w-12 h-1 bg-secondary mx-auto" />
       </div>

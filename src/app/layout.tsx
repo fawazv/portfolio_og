@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://fawazv.online"),
   title: "Mohammed Fawaz | Full Stack Developer — React, Node.js, Microservices",
   description:
-    "Full Stack Developer specializing in React, Next.js, Node.js & Microservices architecture. Open to remote & hybrid roles. View projects and get in touch.",
+    "Full Stack Developer specializing in React, Next.js, Node.js & Microservices architecture. View projects and get in touch.",
   authors: [{ name: "Mohammed Fawaz" }],
   keywords: [
     "Full Stack Developer", "React Developer", "Next.js", "Node.js",

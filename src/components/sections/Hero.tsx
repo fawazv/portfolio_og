@@ -15,6 +15,7 @@ export default function Hero() {
   const imageRef = useRef<HTMLDivElement>(null);
   const nameRef = useRef<HTMLHeadingElement>(null);
   const roleRef = useRef<HTMLParagraphElement>(null);
+  const taglineRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
 
   const { resolvedTheme } = useTheme();
@@ -27,6 +28,7 @@ export default function Hero() {
     // 1. Initial State Setup
     gsap.set(".char-reveal", { y: 100, opacity: 0, rotateX: -45 });
     gsap.set(roleRef.current, { y: 20, opacity: 0 });
+    gsap.set(taglineRef.current, { y: 20, opacity: 0 });
     gsap.set(ctaRef.current, { y: 20, opacity: 0 });
     gsap.set(scrollRef.current, { opacity: 0 });
     // Optimized: Removed filter blur animation as it causes significant paint overhead
@@ -48,6 +50,11 @@ export default function Hero() {
         ease: "power4.out",
       }, "-=1.2")
       .to(roleRef.current, {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+      }, "-=0.8")
+      .to(taglineRef.current, {
         y: 0,
         opacity: 1,
         duration: 1,
@@ -156,7 +163,7 @@ export default function Hero() {
           </p>
 
           {/* Value Proposition Tagline */}
-          <p className="text-sm md:text-base font-serif italic text-foreground/50 dark:text-white/40 mt-3 mr-1 tracking-wide">
+          <p ref={taglineRef} className="text-sm md:text-base font-serif italic text-foreground/50 dark:text-white/40 mt-3 mr-1 tracking-wide opacity-0">
             Building scalable systems with React, Node.js &amp; Cloud Architecture
           </p>
 

@@ -80,21 +80,51 @@ export default function About() {
               ))}
             </motion.div>
 
+            {/* Job Seeking Micro-Sections */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.5, duration: 0.8 }}
+              className="space-y-6"
             >
-              <a
-                href="#contact"
-                className="inline-flex items-center gap-2 relative group overflow-hidden"
-              >
-                <span className="block text-lg font-bold uppercase tracking-widest border-b border-foreground/30 pb-1 group-hover:border-secondary transition-colors duration-300">
-                  Get in Touch
-                </span>
-                <span className="transform group-hover:translate-x-1 transition-transform duration-300 text-secondary">→</span>
-              </a>
+              <div>
+                <h3 className="text-sm font-bold uppercase tracking-widest text-secondary mb-2">
+                  What I&apos;m Looking For
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Fast-paced environments where I can build scalable systems from the ground up, contributing as a Full Stack or Backend Engineer.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-sm font-bold uppercase tracking-widest text-secondary mb-2">
+                  Presently Learning
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Expanding my stack with React Native for cross-platform mobile apps, and Python for robust backend and AI integrations.
+                </p>
+              </div>
+
+              <div className="pt-6 flex flex-wrap gap-6 items-center">
+                <a
+                  href="/resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-secondary text-secondary-foreground font-bold uppercase tracking-widest text-sm hover:bg-secondary/90 transition-colors shadow-[0_0_20px_-5px_var(--secondary)]"
+                >
+                  Download Resume
+                </a>
+                <a
+                  href="#contact"
+                  className="inline-flex items-center gap-2 relative group overflow-hidden"
+                >
+                  <span className="block text-sm font-bold uppercase tracking-widest border-b border-foreground/30 pb-1 group-hover:border-foreground transition-colors duration-300">
+                    Get in Touch
+                  </span>
+                  <span className="transform group-hover:translate-x-1 transition-transform duration-300 text-foreground">→</span>
+                </a>
+              </div>
             </motion.div>
           </motion.div>
 
