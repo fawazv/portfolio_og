@@ -60,10 +60,22 @@ export default function Skills() {
           {skillCategories.map((category, catIndex) => (
             <motion.div
               key={category.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: catIndex * 0.08, duration: 0.6 }}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-50px" }}
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                show: {
+                  opacity: 1,
+                  y: 0,
+                  transition: {
+                    duration: 0.6,
+                    delay: catIndex * 0.1,
+                    staggerChildren: 0.03,
+                    delayChildren: 0.2
+                  }
+                }
+              }}
             >
               {/* Category Header */}
               <div className="flex items-center gap-4 mb-6">
@@ -79,10 +91,10 @@ export default function Skills() {
                 {category.skills.map((skill, index) => (
                   <motion.div
                     key={skill}
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: catIndex * 0.06 + index * 0.03, duration: 0.4 }}
+                    variants={{
+                      hidden: { opacity: 0, y: 16 },
+                      show: { opacity: 1, y: 0, transition: { duration: 0.4 } }
+                    }}
                     className="group cosmos-card rounded-full px-4 py-2 cursor-default hover:border-violet-500/50 hover:shadow-[0_0_12px_rgba(139,92,246,0.12)] dark:hover:shadow-[0_0_12px_rgba(139,92,246,0.2)] transition-all duration-300"
                   >
                     <span className="text-sm font-mono text-[#6B6F8A] dark:text-[#7B82A8] group-hover:text-space dark:group-hover:text-white transition-colors duration-300">
@@ -125,6 +137,7 @@ export default function Skills() {
             className="flex gap-4 w-max"
             animate={{ x: ["0%", "-33.33%"] }}
             transition={{ duration: 18, ease: "linear", repeat: Infinity }}
+            style={{ willChange: "transform" }}
           >
             {marqueeItems.map((tool, i) => (
               <div
