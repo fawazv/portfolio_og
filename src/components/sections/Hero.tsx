@@ -5,7 +5,6 @@ import Image from "next/image";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useTheme } from "next-themes";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -17,10 +16,6 @@ export default function Hero() {
   const roleRef = useRef<HTMLParagraphElement>(null);
   const taglineRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
-
-  const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
 
   useGSAP(() => {
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
@@ -109,38 +104,38 @@ export default function Hero() {
       ref={containerRef}
       className="relative h-screen min-h-screen w-full overflow-hidden flex items-center justify-center bg-background"
     >
-      {/* Background Image — Conditional: only load the active theme's image */}
+      {/* Background Image — Loaded immediately, displayed conditionally via CSS */}
       <div ref={imageRef} className="absolute inset-0 z-0 w-full h-full will-change-transform opacity-0">
-        {mounted && resolvedTheme === "light" && (
-          <>
-            <Image
-              src="/lightmode.webp"
-              alt="Minimal architectural abstract background"
-              fill
-              sizes="100vw"
-              className="object-cover object-[25%_50%] md:object-center"
-              priority
-              quality={85}
-            />
-          </>
-        )}
 
-        {mounted && resolvedTheme === "dark" && (
-          <>
-            <Image
-              src="/darkmode.webp"
-              alt="Liquid metal abstract dark background"
-              fill
-              sizes="100vw"
-              className="object-cover object-[25%_50%] md:object-center"
-              priority
-              quality={85}
-            />
-            {/* Vignette & Overlay for text readability */}
-            <div className="absolute inset-0 bg-black/20" aria-hidden="true" />
-            <div className="absolute inset-0 bg-linear-to-t from-background via-transparent to-black/40" aria-hidden="true" />
-          </>
-        )}
+        {/* Light Mode Image */}
+        <div className="dark:hidden absolute inset-0 w-full h-full">
+          <Image
+            src="/lightmode.png"
+            alt="Minimal architectural abstract background"
+            fill
+            sizes="100vw"
+            className="object-cover object-[25%_50%] md:object-center"
+            priority
+            quality={85}
+          />
+        </div>
+
+        {/* Dark Mode Image */}
+        <div className="hidden dark:block absolute inset-0 w-full h-full">
+          <Image
+            src="/darkmode.png"
+            alt="Liquid metal abstract dark background"
+            fill
+            sizes="100vw"
+            className="object-cover object-[25%_50%] md:object-center"
+            priority
+            quality={85}
+          />
+          {/* Vignette & Overlay for text readability */}
+          <div className="absolute inset-0 bg-black/20" aria-hidden="true" />
+          <div className="absolute inset-0 bg-linear-to-t from-background via-transparent to-black/40" aria-hidden="true" />
+        </div>
+
       </div>
 
       {/* Content Overlay */}
