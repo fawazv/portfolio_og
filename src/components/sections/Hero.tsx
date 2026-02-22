@@ -109,12 +109,18 @@ export default function Hero() {
       ref={containerRef}
       className="relative h-screen min-h-screen w-full overflow-hidden flex items-center justify-center bg-background"
     >
+      {/* Ambient Orb Background — Dark Cosmos depth layer */}
+      <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
+        <div className="absolute top-20 left-1/4 w-[600px] h-[600px] bg-violet-400/8 dark:bg-violet-600/15 rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-cyan-400/6 dark:bg-cyan-500/10 rounded-full blur-[100px]" />
+      </div>
+
       {/* Background Image — Conditional: only load the active theme's image */}
       <div ref={imageRef} className="absolute inset-0 z-0 w-full h-full will-change-transform opacity-0">
         {mounted && resolvedTheme === "light" && (
           <>
             <Image
-              src="/lightmode.webp"
+              src="/lightmode.png"
               alt="Minimal architectural abstract background"
               fill
               sizes="100vw"
@@ -128,7 +134,7 @@ export default function Hero() {
         {mounted && resolvedTheme === "dark" && (
           <>
             <Image
-              src="/darkmode.webp"
+              src="/darkmode.png"
               alt="Liquid metal abstract dark background"
               fill
               sizes="100vw"
@@ -148,23 +154,23 @@ export default function Hero() {
         <div className="w-full max-w-none perspective-1000">
           <h1
             ref={nameRef}
-            className="text-4xl sm:text-6xl md:text-8xl lg:text-[10rem] font-bold tracking-tighter uppercase mb-6 leading-none text-foreground dark:mix-blend-overlay dark:text-white drop-shadow-2xl"
+            className="text-4xl sm:text-6xl md:text-8xl lg:text-[10rem] font-bold tracking-tighter uppercase mb-6 leading-none drop-shadow-2xl"
             aria-label="Mohammed Fawaz"
           >
-            <div className="block" aria-hidden="true">{renderSplitText("Mohammed")}</div>
-            <div className="block text-secondary dark:text-white/90" aria-hidden="true">{renderSplitText("Fawaz")}</div>
+            <div className="block text-space dark:text-[#F0F0FF]" aria-hidden="true">{renderSplitText("Mohammed")}</div>
+            <div className="block text-violet-600 dark:text-violet-400" aria-hidden="true">{renderSplitText("Fawaz")}</div>
           </h1>
 
           <p
             ref={roleRef}
-            className="text-lg md:text-2xl font-light tracking-[0.2em] uppercase text-foreground/80 dark:text-white/70 max-w-2xl ml-auto mr-0 md:backdrop-blur-xs py-2 px-4 rounded-full border border-white/10 opacity-0"
+            className="font-mono text-sm tracking-widest text-violet-600 dark:text-cyan-400 max-w-2xl ml-auto mr-0 backdrop-blur-md py-2 px-4 rounded-full border border-violet-500/20 dark:border-violet-500/25 bg-violet-500/8 dark:bg-violet-500/10 opacity-0"
           >
             Full Stack Developer
           </p>
 
           {/* Value Proposition Tagline */}
-          <p ref={taglineRef} className="text-sm md:text-base font-serif italic text-foreground/50 dark:text-white/40 mt-3 mr-1 tracking-wide opacity-0">
-            Building scalable systems with React, Node.js &amp; Cloud Architecture
+          <p ref={taglineRef} className="font-mono text-xs tracking-wider text-[#6B6F8A] dark:text-[#7B82A8] mt-3 mr-1 opacity-0">
+            &gt; Building scalable systems with React, Node.js &amp; Cloud Architecture
           </p>
 
           {/* CTA Buttons */}
@@ -174,13 +180,7 @@ export default function Hero() {
           >
             <a
               href="#projects"
-              className="px-7 py-3 text-sm font-bold uppercase tracking-widest rounded-full
-                bg-white/10 backdrop-blur-md border border-white/20
-                text-foreground dark:text-white
-                hover:bg-white/20 hover:border-white/40
-                shadow-[0_0_20px_-5px_rgba(255,255,255,0.1)]
-                hover:shadow-[0_0_30px_-5px_rgba(255,255,255,0.25)]
-                transition-all duration-300"
+              className="glow-btn-violet px-8 py-3 text-sm font-semibold tracking-wide rounded-full bg-violet-600 hover:bg-violet-500 text-white transition-all duration-300"
             >
               Explore My Work
             </a>
@@ -189,12 +189,7 @@ export default function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Download Resume (opens in new tab)"
-              className="px-7 py-3 text-sm font-bold uppercase tracking-widest rounded-full
-                border border-foreground/20 dark:border-white/30
-                text-foreground/70 dark:text-white/70
-                hover:border-foreground dark:hover:border-white
-                hover:text-foreground dark:hover:text-white
-                transition-all duration-300"
+              className="px-8 py-3 text-sm font-semibold tracking-wide rounded-full border border-violet-500/40 text-violet-600 dark:text-violet-300 hover:border-violet-500 dark:hover:border-violet-400 hover:bg-violet-500/10 transition-all duration-300"
             >
               Download Resume
             </a>
@@ -207,8 +202,8 @@ export default function Hero() {
         ref={scrollRef}
         className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 opacity-0"
       >
-        <span className="text-[10px] uppercase tracking-widest text-muted-foreground animate-pulse">Scroll</span>
-        <div className="w-px h-16 bg-linear-to-b from-transparent via-foreground/50 to-transparent dark:via-white/50" />
+        <span className="text-[10px] uppercase tracking-widest text-violet-500/40 dark:text-violet-400/50 animate-pulse">Scroll</span>
+        <div className="w-px h-16 bg-linear-to-b from-transparent via-violet-500/30 dark:via-violet-400/50 to-transparent" />
       </div>
 
     </section>

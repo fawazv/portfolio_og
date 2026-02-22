@@ -93,7 +93,11 @@ export default function Journey() {
   }, { scope: containerRef });
 
   return (
-    <section id="journey" className="bg-background relative">
+    <section id="journey" className="bg-background relative overflow-hidden">
+      {/* Dot Grid Overlay */}
+      <div className="absolute inset-0 dot-grid pointer-events-none" aria-hidden="true" />
+      {/* Ambient orb — cyan tint for variety */}
+      <div className="absolute bottom-1/4 left-0 w-[500px] h-[500px] bg-cyan-500/8 rounded-full blur-[120px] pointer-events-none" aria-hidden="true" />
       <div
         ref={containerRef}
         className="container mx-auto px-6 flex flex-col md:flex-row min-h-screen"
@@ -103,43 +107,43 @@ export default function Journey() {
           ref={leftRef}
           className="w-full md:w-1/2 flex flex-col justify-center relative"
         >
-          <RevealHeader className="text-4xl md:text-6xl font-bold uppercase tracking-tighter mb-8 md:mb-0 text-foreground/20">
-            My Journey
+          <RevealHeader className="text-4xl md:text-6xl font-bold uppercase tracking-tighter mb-8 md:mb-0">
+            My <span className="gradient-text">Journey</span>
           </RevealHeader>
-          <div className="w-24 h-1 bg-secondary mt-4 hidden md:block" />
+          <div className="w-24 h-px bg-linear-to-r from-violet-500 to-cyan-400 mt-4 hidden md:block" />
         </div>
 
         {/* Right Column - Scrolling Content */}
         <div ref={rightRef} className="w-full md:w-1/2 flex flex-col justify-center py-20 md:py-32 relative">
 
           {/* Thread/Timeline Line */}
-          <div className="absolute left-0 top-24 bottom-20 w-[2px] bg-black/5 dark:bg-white/5 hidden md:block overflow-hidden rounded-full">
-            <div className="timeline-line-fill w-full h-full bg-secondary origin-top shadow-[0_0_15px_var(--secondary)]" />
+          <div className="absolute left-0 top-24 bottom-20 w-[2px] bg-violet-500/10 hidden md:block overflow-hidden rounded-full">
+            <div className="timeline-line-fill w-full h-full bg-linear-to-b from-violet-500/40 via-cyan-400/20 to-transparent origin-top shadow-[0_0_15px_rgba(139,92,246,0.4)]" />
           </div>
 
           <div className="space-y-24 pl-0 md:pl-12">
             {journey.map((item, index) => (
               <div
                 key={index}
-                className="journey-item relative flex flex-col gap-4 border-l-2 md:border-l-0 border-black/10 dark:border-white/10 pl-8 md:pl-0"
+                className="journey-item relative flex flex-col gap-4 border-l-2 md:border-l-0 border-violet-500/15 pl-8 md:pl-0"
               >
                 {/* Mobile Glow Border */}
-                <div className="absolute left-[-2px] top-0 h-full w-[2px] bg-secondary md:hidden origin-top scale-y-0 transition-transform duration-1000" />
+                <div className="absolute left-[-2px] top-0 h-full w-[2px] bg-violet-500 md:hidden origin-top scale-y-0 transition-transform duration-1000" />
 
-                <div className="relative">
+                <div className="relative cosmos-card rounded-2xl p-6">
                   {/* Desktop Dot */}
-                  <div className="absolute -left-[54px] top-2 w-3 h-3 bg-background border-2 border-secondary rounded-full hidden md:block z-10 box-content shadow-[0_0_10px_var(--secondary)]" />
+                  <div className="absolute -left-[70px] top-4 w-3 h-3 bg-violet-500 rounded-full hidden md:block z-10 shadow-[0_0_8px_rgba(124,58,237,0.3)] dark:shadow-[0_0_12px_rgba(139,92,246,0.6)]" />
 
-                  <span className="text-secondary font-bold text-sm uppercase tracking-widest block mb-1">
+                  <span className="font-mono text-xs tracking-wider text-violet-600/70 dark:text-cyan-400/70 block mb-2">
                     {item.year}
                   </span>
-                  <h3 className="text-3xl md:text-4xl font-bold uppercase tracking-tight mb-2">
+                  <h3 className="text-2xl md:text-3xl font-semibold uppercase tracking-tight mb-1 text-space dark:text-[#F0F0FF]">
                     {item.role}
                   </h3>
-                  <p className="text-lg font-medium text-muted-foreground uppercase mb-4 tracking-wide">
+                  <p className="text-sm font-mono text-[#6B6F8A] dark:text-[#7B82A8] uppercase mb-3 tracking-wide">
                     {item.company}
                   </p>
-                  <p className="text-muted-foreground leading-relaxed max-w-lg">
+                  <p className="text-[#6B6F8A] dark:text-[#7B82A8] text-sm leading-relaxed max-w-lg">
                     {item.description}
                   </p>
                 </div>
