@@ -134,14 +134,14 @@ export default function About() {
           <div className="relative order-1 lg:order-2">
             <motion.div
               style={{ opacity }}
-              className="relative h-[500px] w-full md:h-[700px] overflow-hidden rounded-3xl ring-1 ring-violet-500/20 hover:ring-violet-500/50 transition-all duration-700"
+              className="relative h-[350px] sm:h-[450px] w-full md:h-[700px] overflow-hidden rounded-3xl ring-1 ring-violet-500/20 hover:ring-violet-500/50 transition-all duration-700"
             >
               <motion.div style={{ y }} className="absolute inset-0 h-[120%] w-full -top-[10%]">
                 <Image
                   src="/portrait.webp"
                   alt="Mohammed Fawaz — Full Stack Developer based in Kerala, India"
                   fill
-                  className="object-cover object-top grayscale transition-all duration-700"
+                  className="object-cover object-center sm:object-top mt-12 sm:mt-0 grayscale transition-all duration-700"
                   priority
                 />
               </motion.div>

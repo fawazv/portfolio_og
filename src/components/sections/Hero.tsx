@@ -114,7 +114,7 @@ export default function Hero() {
             alt="Minimal architectural abstract background"
             fill
             sizes="100vw"
-            className="object-cover object-[25%_50%] md:object-center"
+            className="object-cover object-[15%_50%] sm:object-[20%_50%] md:object-center"
             priority
             quality={85}
           />
@@ -127,7 +127,7 @@ export default function Hero() {
             alt="Liquid metal abstract dark background"
             fill
             sizes="100vw"
-            className="object-cover object-[25%_50%] md:object-center"
+            className="object-cover object-[15%_50%] sm:object-[20%_50%] md:object-center"
             priority
             quality={85}
           />
