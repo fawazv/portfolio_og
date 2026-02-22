@@ -120,7 +120,7 @@ export default function Blog() {
                   src={post.image}
                   alt={post.title}
                   fill
-                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  className="object-cover transition-transform duration-300 ease-out group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-black/50 lg:bg-black/40 lg:group-hover:bg-black/50 transition-colors duration-500" />
                 <div className="absolute inset-0 bg-linear-to-t from-space/95 via-space/30 to-transparent" />

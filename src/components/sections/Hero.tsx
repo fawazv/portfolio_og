@@ -32,14 +32,16 @@ export default function Hero() {
     // 2. Cinematic Entrance Sequence
     tl.to(imageRef.current, {
       scale: 1,
-      opacity: 1, // Use opacity instead of blur for performance
-      duration: 2.0, // Slightly faster
+      opacity: 1,
+      force3D: true,
+      duration: 2.0,
       ease: "power2.inOut",
     })
       .to(".char-reveal", {
         y: 0,
         opacity: 1,
         rotateX: 0,
+        force3D: true,
         stagger: 0.05,
         duration: 1.2,
         ease: "power4.out",
@@ -67,20 +69,22 @@ export default function Hero() {
     // 3. Scroll Parallax Effect
     // 3. Scroll Parallax Effect
     gsap.to(imageRef.current, {
-      y: 100, // Reduced movement to keep image steadier
+      y: window.innerWidth < 768 ? 40 : 100, // Reduced movement to keep image steadier & better perf on mobile
       ease: "none",
       willChange: "transform", // Hint browser
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",
         end: "bottom top",
-        scrub: true,
+        scrub: window.innerWidth < 768 ? false : true, // disable scrub on mobile for performance
+        toggleActions: window.innerWidth < 768 ? "play none none reverse" : undefined,
       },
     });
 
     gsap.to(nameRef.current, {
       y: -50,
       opacity: 0,
+      force3D: true,
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",
@@ -143,7 +147,7 @@ export default function Hero() {
         <div className="w-full max-w-none perspective-1000">
           <h1
             ref={nameRef}
-            className="text-4xl sm:text-6xl md:text-8xl lg:text-[10rem] font-bold tracking-tighter uppercase mb-6 leading-none text-foreground dark:text-white drop-shadow-2xl"
+            className="text-4xl sm:text-6xl md:text-8xl lg:text-[10rem] font-bold tracking-tighter uppercase mb-6 leading-none text-foreground dark:text-white md:drop-shadow-2xl"
             aria-label="Mohammed Fawaz"
           >
             <div className="block" aria-hidden="true">{renderSplitText("Mohammed")}</div>

@@ -16,7 +16,13 @@ export default function SmoothScroll() {
             smoothWheel: true,
             wheelMultiplier: 1,
             touchMultiplier: 2,
+            syncTouch: false,
         });
+
+        // Disable smooth scroll on mobile to improve performance and prevent stuttering
+        if (window.innerWidth < 768 || 'ontouchstart' in window) {
+            lenis.stop();
+        }
 
         // Sync Lenis scroll with ScrollTrigger
         lenis.on('scroll', ScrollTrigger.update);

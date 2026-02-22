@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { RevealHeader } from "@/components/ui/reveal-header";
 import Image from "next/image";
 import { useRef } from "react";
@@ -14,12 +14,14 @@ const stats = [
 
 export default function About() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const shouldReduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
+  // On mobile/reduced motion, clamp parallax to avoid jank
+  const y = useTransform(scrollYProgress, [0, 1], shouldReduceMotion ? ["0%", "0%"] : ["-10%", "10%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.9, 1], [0, 1, 1, 0]);
 
   return (
@@ -30,10 +32,10 @@ export default function About() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           {/* Text Content */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 1, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
             className="space-y-8 order-2 lg:order-1"
           >
             <RevealHeader className="text-5xl md:text-7xl font-bold uppercase tracking-tighter text-foreground leading-[0.9]">
@@ -42,10 +44,10 @@ export default function About() {
 
             <motion.div
               className="space-y-5 text-base md:text-lg text-[#6B6F8A] dark:text-[#7B82A8] leading-relaxed max-w-lg"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.3, duration: 0.8 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
             >
               <p>
                 Self-taught Full Stack Developer who pivoted from a B.Com degree to building production-grade systems in under a year. I've shipped 5+ projects across e-commerce, microservices, and cloud storage, dedicating 1000+ hours to mastering the MERN stack and modern DevOps practices.

@@ -74,11 +74,12 @@ export default function Journey() {
     const items = gsap.utils.toArray(".journey-item");
     items.forEach((item: any, i) => {
       gsap.fromTo(item,
-        { opacity: 0, x: 50 },
+        { opacity: 0, x: 40 },
         {
           opacity: 1,
           x: 0,
-          duration: 1,
+          force3D: true,
+          duration: 0.6,
           scrollTrigger: {
             trigger: item,
             start: "top 85%",

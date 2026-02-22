@@ -134,9 +134,9 @@ export default function Skills() {
           <div className="absolute right-0 top-0 bottom-0 w-24 bg-linear-to-l from-background to-transparent z-10 pointer-events-none" />
 
           <motion.div
-            className="flex gap-4 w-max"
+            className="marquee-track flex gap-4 w-max"
             animate={{ x: ["0%", "-33.33%"] }}
-            transition={{ duration: 18, ease: "linear", repeat: Infinity }}
+            transition={{ duration: 25, ease: "linear", repeat: Infinity }}
             style={{ willChange: "transform" }}
           >
             {marqueeItems.map((tool, i) => (

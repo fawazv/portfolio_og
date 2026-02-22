@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
+import { useRef } from "react";
 
 const testimonials = [
   {
@@ -26,10 +27,15 @@ const testimonials = [
 ];
 
 function TestimonialCard({ item }: { item: typeof testimonials[0] }) {
+  const cardRef = useRef<HTMLDivElement>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
+  // Only enable spotlight effect on non-touch devices
+  const isTouchDevice = typeof window !== "undefined" && ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+
   function handleMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
+    if (isTouchDevice) return;
     const { left, top } = currentTarget.getBoundingClientRect();
     mouseX.set(clientX - left);
     mouseY.set(clientY - top);
@@ -89,9 +95,9 @@ export default function Testimonials() {
         <div className="absolute right-0 top-0 bottom-0 w-32 bg-linear-to-l from-background to-transparent z-20" />
 
         <motion.div
-          className="flex gap-8 w-max"
+          className="marquee-track flex gap-8 w-max"
           animate={{ x: ["0%", "-50%"] }}
-          transition={{ repeat: Infinity, ease: "linear", duration: 30 }}
+          transition={{ repeat: Infinity, ease: "linear", duration: 35 }}
           style={{ willChange: "transform" }}
         >
           {[...testimonials, ...testimonials].map((item, index) => (
