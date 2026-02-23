@@ -8,9 +8,21 @@ export default function SmoothScroll() {
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
 
+        // Skip Lenis entirely on touch/mobile — native scroll is faster and
+        // a stopped Lenis instance still intercepts touch events, blocking scroll.
+        const isTouchDevice = window.innerWidth < 768 || 'ontouchstart' in window;
+        if (isTouchDevice) {
+            // Still sync ScrollTrigger on mobile using native scroll
+            window.addEventListener('scroll', ScrollTrigger.update, { passive: true });
+            gsap.ticker.lagSmoothing(0);
+            return () => {
+                window.removeEventListener('scroll', ScrollTrigger.update);
+            };
+        }
+
         const lenis = new Lenis({
             duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Default easing
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             orientation: "vertical",
             gestureOrientation: "vertical",
             smoothWheel: true,
@@ -18,11 +30,6 @@ export default function SmoothScroll() {
             touchMultiplier: 2,
             syncTouch: false,
         });
-
-        // Disable smooth scroll on mobile to improve performance and prevent stuttering
-        if (window.innerWidth < 768 || 'ontouchstart' in window) {
-            lenis.stop();
-        }
 
         // Sync Lenis scroll with ScrollTrigger
         lenis.on('scroll', ScrollTrigger.update);
