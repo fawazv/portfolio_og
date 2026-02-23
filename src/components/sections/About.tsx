@@ -144,7 +144,6 @@ export default function About() {
                   alt="Mohammed Fawaz — Full Stack Developer based in Kerala, India"
                   fill
                   className="object-cover object-center sm:object-top mt-12 sm:mt-0 grayscale transition-all duration-700"
-                  priority
                 />
               </motion.div>
 

@@ -71,8 +71,6 @@ export default function Skills() {
                   transition: {
                     duration: 0.6,
                     delay: catIndex * 0.1,
-                    staggerChildren: 0.03,
-                    delayChildren: 0.2
                   }
                 }
               }}
@@ -89,18 +87,14 @@ export default function Skills() {
               {/* Skill Pills */}
               <div className="flex flex-wrap gap-3 md:gap-4">
                 {category.skills.map((skill, index) => (
-                  <motion.div
+                  <div
                     key={skill}
-                    variants={{
-                      hidden: { opacity: 0, y: 16 },
-                      show: { opacity: 1, y: 0, transition: { duration: 0.4 } }
-                    }}
                     className="group cosmos-card rounded-full px-4 py-2 cursor-default hover:border-violet-500/50 hover:shadow-[0_0_12px_rgba(139,92,246,0.12)] dark:hover:shadow-[0_0_12px_rgba(139,92,246,0.2)] transition-all duration-300"
                   >
                     <span className="text-sm font-mono text-[#6B6F8A] dark:text-[#7B82A8] group-hover:text-space dark:group-hover:text-white transition-colors duration-300">
                       {skill}
                     </span>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </motion.div>
@@ -133,11 +127,8 @@ export default function Skills() {
           <div className="absolute left-0 top-0 bottom-0 w-24 bg-linear-to-r from-background to-transparent z-10 pointer-events-none" />
           <div className="absolute right-0 top-0 bottom-0 w-24 bg-linear-to-l from-background to-transparent z-10 pointer-events-none" />
 
-          <motion.div
-            className="marquee-track flex gap-4 w-max"
-            animate={{ x: ["0%", "-33.33%"] }}
-            transition={{ duration: 25, ease: "linear", repeat: Infinity }}
-            style={{ willChange: "transform" }}
+          <div
+            className="marquee-track flex gap-4 w-max animate-marquee-slide"
           >
             {marqueeItems.map((tool, i) => (
               <div
@@ -149,7 +140,7 @@ export default function Skills() {
                 </span>
               </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </motion.div>
     </section>

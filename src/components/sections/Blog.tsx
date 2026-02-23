@@ -11,7 +11,7 @@ const posts = [
     category: "Journey",
     readTime: "5 min read",
     title: "From Commerce to Code: My Transition",
-    image: "/images/insights/commerce_to_code.png",
+    image: "/images/insights/commerce_to_code.webp",
     excerpt: "How I pivoted from a B.Com degree to Full Stack Development in under a year. The challenges, the late nights, and the breakthroughs.",
     content: `My transition from a B.Com graduate to a Full Stack Developer was one of the most challenging yet rewarding years of my life. 
     
@@ -23,7 +23,7 @@ In under a year, through intensive self-study, bootcamps, and building projects 
     category: "Tech",
     readTime: "8 min read",
     title: "Understanding Microservices Architecture",
-    image: "/images/insights/microservices_architecture.png",
+    image: "/images/insights/microservices_architecture.webp",
     excerpt: "A deep dive into how I built the Elite Hotel backend using Node.js services, Docker, and RabbitMQ for asynchronous communication.",
     content: `When building the Elite Hotel backend, I realized that a monolithic architecture wouldn't scale for the complex booking and notification systems I envisioned. 
 
@@ -38,7 +38,7 @@ Docker played a crucial role in containerizing these services, ensuring consiste
     category: "Tech",
     readTime: "6 min read",
     title: "Why I picked Next.js for Nxtcart",
-    image: "/images/insights/nextjs_ecommerce.png",
+    image: "/images/insights/nextjs_ecommerce.webp",
     excerpt: "Comparing Create React App (CRA) vs Next.js. Why Server Side Rendering (SSR) and SEO mattered for my e-commerce project.",
     content: `For Nxtcart, an e-commerce platform, performance and SEO were non-negotiable. 
 
@@ -55,7 +55,7 @@ The result was a blazing-fast, SEO-optimized shopping experience that felt profe
     category: "Design",
     readTime: "4 min read",
     title: "The Art of Minimalist UI",
-    image: "/images/insights/minimalist_ui.png",
+    image: "/images/insights/minimalist_ui.webp",
     excerpt: "Why 'Less is More' isn't just a trend, but a necessity for modern web applications. Exploring whitespace, typography, and functional colors.",
     content: `Minimalism in UI design is often misunderstood as simply removing elements. In reality, it's about prioritizing what matters most to the user.
 
@@ -70,7 +70,7 @@ By stripping away the non-essential, we enhance the essential.`
     category: "Tech",
     readTime: "7 min read",
     title: "Scaling with Docker & K8s",
-    image: "/images/insights/docker_k8s.png",
+    image: "/images/insights/docker_k8s.webp",
     excerpt: "Moving from a single VPS to a container orchestration strategy. How Docker simplified my deployment pipeline.",
     content: `As my applications grew in complexity, "it works on my machine" became a frequent blocker. Deployment was manual, error-prone, and inconsistent.
 

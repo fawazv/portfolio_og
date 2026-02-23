@@ -2,7 +2,6 @@
 
 import { memo, useRef } from "react";
 import Image from "next/image";
-import { RevealHeader } from "@/components/ui/reveal-header";
 import { Github, ArrowRight } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -23,7 +22,7 @@ const projects = [
   {
     title: "Elite Hotel",
     category: "Full Stack System",
-    image: "/images/projects/elite-hotel.png",
+    image: "/images/projects/elite-hotel.webp",
     description: "Microservices-based Hotel Management System with secure authentication, billing, and integrated payments using Node.js, Express, and Docker.",
     liveUrl: "",
     githubUrl: "https://github.com/fawazv/Elite-hotel"
@@ -31,7 +30,7 @@ const projects = [
   {
     title: "Nxtcart",
     category: "E-commerce Platform",
-    image: "/images/projects/nxtcart.png",
+    image: "/images/projects/nxtcart.webp",
     description: "Full-stack e-commerce application with customer features, authentication used Auth.js, payments via Stripe/PayPal, and an admin dashboard.",
     liveUrl: "https://nxt-cart.vercel.app/",
     githubUrl: "https://github.com/fawazv/nxt-cart"
@@ -39,7 +38,7 @@ const projects = [
   {
     title: "Dropbox Clone",
     category: "Cloud Architecture",
-    image: "/images/projects/dropbox-clone.png",
+    image: "/images/projects/dropbox-clone.webp",
     description: "High-performance file storage app built with Next.js and Firebase featuring drag-and-drop uploads, smart caching, and secure authentication.",
     liveUrl: "https://dropbox-clone-peach-seven.vercel.app/",
     githubUrl: "https://github.com/fawazv/dropbox-clone"
@@ -47,7 +46,7 @@ const projects = [
   {
     title: "Blog Platform",
     category: "Distributed System",
-    image: "/images/projects/blog-platform.png",
+    image: "/images/projects/blog-platform.webp",
     description: "Scalable blog platform with Node.js, Express, MongoDB, RabbitMQ, and Docker, featuring microservices architecture and CI/CD pipelines.",
     liveUrl: "",
     githubUrl: "https://github.com/fawazv/Blog-microservice"
@@ -55,7 +54,7 @@ const projects = [
   {
     title: "Pixabay Gallery",
     category: "Frontend Experience",
-    image: "/images/projects/pixabay-gallery.png",
+    image: "/images/projects/pixabay-gallery.webp",
     description: "Responsive image gallery built with React, Vite, and Tailwind CSS. Features infinite scroll, masonry layout, and advanced search.",
     liveUrl: "",
     githubUrl: "https://github.com/fawazv/1.-react-tailwind-pixabay-gallery"
@@ -107,9 +106,9 @@ export default function Projects() {
         {/* Header - Now part of flex flow, no absolute positioning */}
         <div className="container mx-auto px-6 mb-12">
           <div className="pl-6">
-            <RevealHeader className="text-5xl md:text-8xl font-black uppercase tracking-tighter mb-4 gradient-text">
+            <h2 className="text-5xl md:text-8xl font-black uppercase tracking-tighter mb-4 gradient-text">
               Selected Works
-            </RevealHeader>
+            </h2>
             <div className="flex items-center gap-4 opacity-90 pl-2">
               <div className="w-24 h-1 bg-linear-to-r from-violet-500 to-cyan-400 rounded-full" />
               <p className="text-[#6B6F8A] dark:text-[#7B82A8] font-mono text-sm tracking-widest uppercase">Interactive Gallery</p>

@@ -24,6 +24,7 @@
   --animate-slow-zoom: slow-zoom 20s linear infinite;
   --animate-float: float 4s ease-in-out infinite;
   --animate-glow-pulse: glow-pulse 3s ease-in-out infinite;
+  --animate-marquee-slide: marquee-slide 25s linear infinite;
 
   @keyframes fade-in {
     0% {
@@ -82,6 +83,15 @@
 
     50% {
       box-shadow: 0 0 20px rgba(6, 182, 212, 0.4), 0 0 60px rgba(6, 182, 212, 0.15);
+    }
+  }
+
+  @keyframes marquee-slide {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-33.33%);
     }
   }
 }

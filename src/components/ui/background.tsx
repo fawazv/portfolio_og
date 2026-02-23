@@ -6,7 +6,7 @@ export default function Background() {
     return (
         <div className="fixed inset-0 z-[-1] pointer-events-none">
             <Image
-                src="/background-glass.png"
+                src="/background-glass.webp"
                 alt="Background"
                 fill
                 className="object-cover opacity-50 dark:opacity-50 blur-[2px] scale-105 saturate-0 dark:saturate-100"

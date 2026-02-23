@@ -11,6 +11,7 @@ gsap.registerPlugin(ScrollTrigger);
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const parallaxRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const nameRef = useRef<HTMLHeadingElement>(null);
   const roleRef = useRef<HTMLParagraphElement>(null);
@@ -67,8 +68,7 @@ export default function Hero() {
       }, "-=0.5");
 
     // 3. Scroll Parallax Effect
-    // 3. Scroll Parallax Effect
-    gsap.to(imageRef.current, {
+    gsap.to(parallaxRef.current, {
       y: window.innerWidth < 768 ? 40 : 100, // Reduced movement to keep image steadier & better perf on mobile
       ease: "none",
       willChange: "transform", // Hint browser
@@ -109,37 +109,39 @@ export default function Hero() {
       className="relative h-screen min-h-screen w-full overflow-hidden flex items-center justify-center bg-background"
     >
       {/* Background Image — Loaded immediately, displayed conditionally via CSS */}
-      <div ref={imageRef} className="absolute inset-0 z-0 w-full h-full will-change-transform opacity-0">
+      <div ref={parallaxRef} className="absolute inset-0 z-0 w-full h-full will-change-transform">
+        <div ref={imageRef} className="absolute inset-0 w-full h-full opacity-0 origin-center">
 
-        {/* Light Mode Image */}
-        <div className="dark:hidden absolute inset-0 w-full h-full">
-          <Image
-            src="/lightmode.png"
-            alt="Minimal architectural abstract background"
-            fill
-            sizes="100vw"
-            className="object-cover object-[15%_50%] sm:object-[20%_50%] md:object-center"
-            priority
-            quality={85}
-          />
+          {/* Light Mode Image */}
+          <div className="dark:hidden absolute inset-0 w-full h-full">
+            <Image
+              src="/lightmode.webp"
+              alt="Minimal architectural abstract background"
+              fill
+              sizes="100vw"
+              className="object-cover object-[15%_50%] sm:object-[20%_50%] md:object-center"
+              priority
+              quality={85}
+            />
+          </div>
+
+          {/* Dark Mode Image */}
+          <div className="hidden dark:block absolute inset-0 w-full h-full">
+            <Image
+              src="/darkmode.webp"
+              alt="Liquid metal abstract dark background"
+              fill
+              sizes="100vw"
+              className="object-cover object-[15%_50%] sm:object-[20%_50%] md:object-center"
+              priority
+              quality={85}
+            />
+            {/* Vignette & Overlay for text readability */}
+            <div className="absolute inset-0 bg-black/20" aria-hidden="true" />
+            <div className="absolute inset-0 bg-linear-to-t from-background via-transparent to-black/40" aria-hidden="true" />
+          </div>
+
         </div>
-
-        {/* Dark Mode Image */}
-        <div className="hidden dark:block absolute inset-0 w-full h-full">
-          <Image
-            src="/darkmode.png"
-            alt="Liquid metal abstract dark background"
-            fill
-            sizes="100vw"
-            className="object-cover object-[15%_50%] sm:object-[20%_50%] md:object-center"
-            priority
-            quality={85}
-          />
-          {/* Vignette & Overlay for text readability */}
-          <div className="absolute inset-0 bg-black/20" aria-hidden="true" />
-          <div className="absolute inset-0 bg-linear-to-t from-background via-transparent to-black/40" aria-hidden="true" />
-        </div>
-
       </div>
 
       {/* Content Overlay */}
