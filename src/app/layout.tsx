@@ -4,7 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import NoiseOverlay from "@/components/ui/noise-overlay";
+import dynamic from "next/dynamic";
 
 const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta",
@@ -65,9 +65,9 @@ export const metadata: Metadata = {
   },
 };
 
-import CustomCursor from "@/components/ui/cursor";
-import Background from "@/components/ui/background";
-import SmoothScroll from "@/components/ui/smooth-scroll";
+import { ClientProviders } from "@/components/providers/client-providers";
+
+const Background = dynamic(() => import("@/components/ui/background"));
 
 export default function RootLayout({
   children,
@@ -118,10 +118,8 @@ export default function RootLayout({
             Skip to content
           </a>
 
-          <SmoothScroll />
+          <ClientProviders />
           <Background />
-          <NoiseOverlay />
-          <CustomCursor />
           <Navbar />
           <main id="main-content">
             {children}
