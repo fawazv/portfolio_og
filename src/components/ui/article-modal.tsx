@@ -54,7 +54,7 @@ export function ArticleModal({ isOpen, onClose, article }: ArticleModalProps) {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        className="absolute inset-0 bg-white/80 dark:bg-black/80 backdrop-blur-sm"
+                        className="absolute inset-0 bg-white/80 dark:bg-black/80 backdrop-blur-xl"
                     />
 
                     {/* Modal Content */}
@@ -81,17 +81,18 @@ export function ArticleModal({ isOpen, onClose, article }: ArticleModalProps) {
                             </button>
                         </div>
 
+                        {/* Scrollable Area */}
                         <div
                             className="flex-1 overflow-y-auto custom-scrollbar overscroll-contain"
                             data-lenis-prevent
                         >
-                            <div className="relative h-64 md:h-96 w-full mb-8 shrink-0 aspect-video">
+                            <div className="relative h-64 md:h-96 w-full mb-8">
                                 <Image
                                     src={article.image}
                                     alt={article.title}
                                     fill
-                                    sizes="(max-width: 768px) 100vw, 896px"
                                     className="object-cover"
+                                    priority
                                 />
                                 <div className="absolute inset-0 bg-linear-to-t from-white dark:from-black to-transparent" />
                             </div>

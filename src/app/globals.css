@@ -24,17 +24,6 @@
   --animate-slow-zoom: slow-zoom 20s linear infinite;
   --animate-float: float 4s ease-in-out infinite;
   --animate-glow-pulse: glow-pulse 3s ease-in-out infinite;
-  --animate-marquee: marquee 25s linear infinite;
-
-  @keyframes marquee {
-    0% {
-      transform: translateX(0%);
-    }
-
-    100% {
-      transform: translateX(-33.33%);
-    }
-  }
 
   @keyframes fade-in {
     0% {
@@ -154,12 +143,6 @@ body {
 *:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 4px;
-}
-
-/* Rendering Performance */
-section:not(#hero) {
-  content-visibility: auto;
-  contain-intrinsic-size: 1000px;
 }
 
 /* Glassmorphism Utility */
@@ -332,8 +315,4 @@ html.lenis body {
   will-change: transform;
   transform: translateZ(0);
   backface-visibility: hidden;
-}
-
-.animate-marquee {
-  animation: var(--animate-marquee);
 }

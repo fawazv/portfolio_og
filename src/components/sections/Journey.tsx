@@ -72,7 +72,7 @@ export default function Journey() {
 
     // Universal: Item Reveal (works on both but simple on mobile)
     const items = gsap.utils.toArray(".journey-item");
-    items.forEach((item: any, _i: number) => {
+    items.forEach((item: any) => {
       gsap.fromTo(item,
         { opacity: 0, x: 40 },
         {

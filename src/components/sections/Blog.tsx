@@ -116,7 +116,6 @@ export default function Blog() {
                     src={post.image}
                     alt={post.title}
                     fill
-                    sizes={index === 0 ? "(max-width: 768px) 100vw, 66vw" : "(max-width: 768px) 100vw, 33vw"}
                     className="object-cover transition-transform duration-300 ease-out group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-black/50 lg:bg-black/40 lg:group-hover:bg-black/50 transition-colors duration-500" />

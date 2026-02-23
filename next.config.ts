@@ -13,7 +13,7 @@ const nextConfig: NextConfig = {
       },
     ],
     formats: ['image/avif', 'image/webp'],
-    qualities: [75, 85, 90, 100],
+    qualities: [60, 75, 85, 90, 100],
   },
 };
 

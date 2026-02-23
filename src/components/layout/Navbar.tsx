@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { MagneticButton } from "@/components/ui/magnetic-button";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -23,17 +24,10 @@ export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    let ticking = false;
     const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          setIsScrolled(window.scrollY > 50);
-          ticking = false;
-        });
-        ticking = true;
-      }
+      setIsScrolled(window.scrollY > 50);
     };
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -55,7 +49,7 @@ export default function Navbar() {
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out px-6 py-4 border-b",
           isScrolled
-            ? "bg-white/80 dark:bg-space/90 backdrop-blur-md border-violet-500/10 py-3"
+            ? "bg-white/80 dark:bg-space/90 backdrop-blur-xl border-violet-500/10 py-3"
             : "bg-transparent border-transparent py-5"
         )}
         initial={{ y: -100 }}
@@ -76,17 +70,16 @@ export default function Navbar() {
           {/* Desktop Nav */}
           <div className="hidden xl:flex items-center gap-8">
             {navItems.map((item) => (
-              <div key={item.name} className="relative group">
+              <MagneticButton key={item.name}>
                 <Link
                   href={item.href}
-                  className="relative text-sm font-medium text-[#6B6F8A] dark:text-[#7B82A8] hover:text-space dark:hover:text-white transition-all duration-300 px-2 py-1 block
-                    group-hover:-translate-y-0.5
+                  className="relative text-sm font-medium text-[#6B6F8A] dark:text-[#7B82A8] hover:text-space dark:hover:text-white transition-colors px-2 py-1 block
                     after:block after:h-px after:bg-linear-to-r after:from-violet-500 after:to-cyan-400
-                    after:scale-x-0 group-hover:after:scale-x-100 after:transition-transform after:origin-left"
+                    after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:origin-left"
                 >
                   {item.name}
                 </Link>
-              </div>
+              </MagneticButton>
             ))}
             <div className="pl-4 border-l border-violet-500/20 flex gap-4 items-center">
               <ThemeToggle />

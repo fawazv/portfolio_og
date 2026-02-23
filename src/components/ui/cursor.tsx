@@ -8,12 +8,8 @@ export default function Cursor() {
     const followerRef = useRef<HTMLDivElement>(null);
     const mousePos = useRef({ x: 0, y: 0 });
     const rafId = useRef<number>(0);
-    const isMoving = useRef(false);
-    const idleTimeout = useRef<NodeJS.Timeout>(null);
 
     const updateCursorDot = useCallback(() => {
-        if (!isMoving.current) return; // Pause loop when idle
-
         if (cursorRef.current) {
             cursorRef.current.style.transform = `translate(${mousePos.current.x}px, ${mousePos.current.y}px) translate(-50%, -50%)`;
         }
@@ -30,18 +26,6 @@ export default function Cursor() {
         rafId.current = requestAnimationFrame(updateCursorDot);
 
         const moveCursor = (e: MouseEvent) => {
-            // Wake up loop if asleep
-            if (!isMoving.current) {
-                isMoving.current = true;
-                rafId.current = requestAnimationFrame(updateCursorDot);
-            }
-
-            // Reset idle timeout
-            if (idleTimeout.current) clearTimeout(idleTimeout.current);
-            idleTimeout.current = setTimeout(() => {
-                isMoving.current = false;
-            }, 2000); // 2 second idle pause
-
             // Dot: update ref directly (RAF reads it)
             mousePos.current.x = e.clientX;
             mousePos.current.y = e.clientY;
@@ -88,7 +72,6 @@ export default function Cursor() {
 
         return () => {
             cancelAnimationFrame(rafId.current);
-            if (idleTimeout.current) clearTimeout(idleTimeout.current);
             window.removeEventListener("mousemove", moveCursor);
             links.forEach(link => {
                 link.removeEventListener("mouseenter", handleHoverStart);

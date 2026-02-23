@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 import { cn } from "@/lib/utils";
 
 interface RevealHeaderProps {
@@ -9,40 +10,22 @@ interface RevealHeaderProps {
 }
 
 export function RevealHeader({ children, className }: RevealHeaderProps) {
-  const ref = useRef<HTMLHeadingElement>(null);
-  const [isInView, setIsInView] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsInView(true);
-          if (ref.current) observer.unobserve(ref.current);
-        }
-      },
-      { rootMargin: "-10px" } // Fire slightly before it comes into view
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-10%" });
 
   return (
     <h2
       ref={ref}
       className={cn("relative overflow-hidden", className)}
     >
-      <span
-        className={cn(
-          "block transition-transform duration-800 ease-[cubic-bezier(0.33,1,0.68,1)]",
-          isInView ? "translate-y-0" : "translate-y-full"
-        )}
+      <motion.span
+        initial={{ y: "100%" }}
+        animate={isInView ? { y: 0 } : { y: "100%" }}
+        transition={{ duration: 0.8, ease: [0.33, 1, 0.68, 1] }} // Cubic bezier for "cinematic" feel
+        className="block"
       >
         {children}
-      </span>
+      </motion.span>
     </h2>
   );
 }

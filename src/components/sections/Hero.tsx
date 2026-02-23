@@ -34,7 +34,7 @@ export default function Hero() {
       scale: 1,
       opacity: 1,
       force3D: true,
-      duration: 1.5,
+      duration: 2.0,
       ease: "power2.inOut",
     })
       .to(".char-reveal", {
@@ -42,29 +42,29 @@ export default function Hero() {
         opacity: 1,
         rotateX: 0,
         force3D: true,
-        stagger: 0.04,
-        duration: 1.0,
+        stagger: 0.05,
+        duration: 1.2,
         ease: "power4.out",
-      }, "-=0.8")
+      }, "-=1.2")
       .to(roleRef.current, {
         y: 0,
         opacity: 1,
-        duration: 0.8,
-      }, "-=0.6")
+        duration: 1,
+      }, "-=0.8")
       .to(taglineRef.current, {
         y: 0,
         opacity: 1,
-        duration: 0.8,
-      }, "-=0.6")
+        duration: 1,
+      }, "-=0.8")
       .to(ctaRef.current, {
         y: 0,
         opacity: 1,
-        duration: 0.6,
-      }, "-=0.4")
+        duration: 0.8,
+      }, "-=0.5")
       .to(scrollRef.current, {
         opacity: 1,
-        duration: 0.8,
-      }, "-=0.4");
+        duration: 1,
+      }, "-=0.5");
 
     // 3. Scroll Parallax Effect
     // 3. Scroll Parallax Effect
@@ -114,7 +114,7 @@ export default function Hero() {
         {/* Light Mode Image */}
         <div className="dark:hidden absolute inset-0 w-full h-full">
           <Image
-            src="/lightmode.webp"
+            src="/lightmode.png"
             alt="Minimal architectural abstract background"
             fill
             sizes="100vw"
@@ -127,7 +127,7 @@ export default function Hero() {
         {/* Dark Mode Image */}
         <div className="hidden dark:block absolute inset-0 w-full h-full">
           <Image
-            src="/darkmode.webp"
+            src="/darkmode.png"
             alt="Liquid metal abstract dark background"
             fill
             sizes="100vw"
