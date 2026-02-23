@@ -94,16 +94,14 @@ export default function Testimonials() {
         <div className="absolute left-0 top-0 bottom-0 w-32 bg-linear-to-r from-background to-transparent z-20" />
         <div className="absolute right-0 top-0 bottom-0 w-32 bg-linear-to-l from-background to-transparent z-20" />
 
-        <motion.div
-          className="marquee-track flex gap-8 w-max"
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ repeat: Infinity, ease: "linear", duration: 35 }}
-          style={{ willChange: "transform" }}
+        <div
+          className="marquee-track animate-marquee flex gap-8 w-max"
+          style={{ animationDuration: '35s' }}
         >
           {[...testimonials, ...testimonials].map((item, index) => (
             <TestimonialCard key={index} item={item} />
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

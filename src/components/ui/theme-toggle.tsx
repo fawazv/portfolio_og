@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Moon, Sun } from "lucide-react"
+import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes"
 import { motion } from "framer-motion"
 
@@ -32,7 +32,7 @@ export function ThemeToggle() {
       >
         <Sun className="h-5 w-5 text-black" />
       </motion.div>
-      
+
       <motion.div
         initial={false}
         animate={{

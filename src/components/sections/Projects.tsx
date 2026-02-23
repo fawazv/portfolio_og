@@ -85,7 +85,7 @@ export default function Projects() {
           pin: true,
           scrub: 1,
           start: "top top",
-          end: () => `+=${Math.max(containerRef.current!.scrollWidth - window.innerWidth, 2000)}`,
+          end: () => `+= ${Math.max(containerRef.current!.scrollWidth - window.innerWidth, 2000)} `,
           invalidateOnRefresh: true,
           anticipatePin: 1,
         },
@@ -139,7 +139,7 @@ const ProjectCard = memo(function ProjectCard({ project, index }: { project: Pro
   return (
     <div className="group relative w-full h-[50vh] md:h-[60vh] rounded-3xl overflow-hidden border border-violet-500/15 shadow-2xl group-hover:shadow-[0_0_60px_rgba(139,92,246,0.2)] transition-shadow duration-500">
       {/* Background Image */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 aspect-video">
         <Image
           src={project.image}
           alt={`${project.title} — ${project.category} project screenshot`}
@@ -189,7 +189,7 @@ const ProjectCard = memo(function ProjectCard({ project, index }: { project: Pro
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={`View ${project.title} source code on GitHub (opens in new tab)`}
+              aria-label={`View ${project.title} source code on GitHub(opens in new tab)`}
               className="flex items-center gap-2 text-[#7B82A8] hover:text-white transition-colors uppercase text-sm font-mono font-medium tracking-wider"
             >
               <Github size={20} />

@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { RevealHeader } from "@/components/ui/reveal-header";
-import { gsap } from "gsap";
+import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -72,7 +72,7 @@ export default function Journey() {
 
     // Universal: Item Reveal (works on both but simple on mobile)
     const items = gsap.utils.toArray(".journey-item");
-    items.forEach((item: any, i) => {
+    items.forEach((item: any, _i: number) => {
       gsap.fromTo(item,
         { opacity: 0, x: 40 },
         {
