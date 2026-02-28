@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef, useEffect, useCallback } from "react";
+import gsap from "gsap";
 import { cn } from "@/lib/utils";
 
 interface MagneticButtonProps {
@@ -12,34 +12,40 @@ interface MagneticButtonProps {
 
 export function MagneticButton({ children, className, onClick }: MagneticButtonProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  // gsap.quickTo returns a setter; we cache both axes
+  const xTo = useRef<ReturnType<typeof gsap.quickTo> | null>(null);
+  const yTo = useRef<ReturnType<typeof gsap.quickTo> | null>(null);
 
-  const handleMouse = (e: React.MouseEvent) => {
-    const { clientX, clientY } = e;
-    const { height, width, left, top } = ref.current!.getBoundingClientRect();
-    const middleX = clientX - (left + width / 2);
-    const middleY = clientY - (top + height / 2);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    xTo.current = gsap.quickTo(el, "x", { duration: 0.4, ease: "power3.out" });
+    yTo.current = gsap.quickTo(el, "y", { duration: 0.4, ease: "power3.out" });
+  }, []);
 
-    setPosition({ x: middleX * 0.2, y: middleY * 0.2 });
-  };
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    const el = ref.current;
+    if (!el || !xTo.current || !yTo.current) return;
+    const { height, width, left, top } = el.getBoundingClientRect();
+    xTo.current((e.clientX - (left + width / 2)) * 0.2);
+    yTo.current((e.clientY - (top + height / 2)) * 0.2);
+  }, []);
 
-  const reset = () => {
-    setPosition({ x: 0, y: 0 });
-  };
-
-  const { x, y } = position;
+  const handleMouseLeave = useCallback(() => {
+    if (!xTo.current || !yTo.current) return;
+    xTo.current(0);
+    yTo.current(0);
+  }, []);
 
   return (
-    <motion.div
+    <div
       ref={ref}
-      onMouseMove={handleMouse}
-      onMouseLeave={reset}
-      animate={{ x, y }}
-      transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
       className={cn("relative cursor-pointer", className)}
       onClick={onClick}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }

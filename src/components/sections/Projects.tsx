@@ -90,8 +90,7 @@ export default function Projects() {
         },
       });
 
-      // Force refresh to ensure accurate sizing
-      setTimeout(() => ScrollTrigger.refresh(), 100);
+      // invalidateOnRefresh:true above already handles recalculation on resize
     });
 
   }, { scope: sectionRef });

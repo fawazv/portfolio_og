@@ -1,10 +1,13 @@
 "use client";
 
-import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { RevealHeader } from "@/components/ui/reveal-header";
-import { useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { ArticleModal } from "@/components/ui/article-modal";
 import Image from "next/image";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const posts = [
   {
@@ -85,64 +88,85 @@ While Kubernetes (K8s) adds complexity, understanding the basics of container or
 
 export default function Blog() {
   const [selectedPost, setSelectedPost] = useState<typeof posts[0] | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Single stagger animation for all blog cards (replaces 5 ScrollReveal wrappers)
+      gsap.fromTo(
+        ".blog-card",
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          ease: "power2.out",
+          stagger: 0.08,
+          scrollTrigger: {
+            trigger: ".blog-grid",
+            start: "top 85%",
+            once: true,
+          },
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section id="blog" className="py-24 bg-background border-t border-violet-500/10 relative overflow-hidden">
+    <section id="blog" ref={sectionRef} className="py-24 bg-background border-t border-violet-500/10 relative overflow-hidden">
       <div className="absolute inset-0 dot-grid pointer-events-none" aria-hidden="true" />
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-violet-600/8 rounded-full blur-3xl pointer-events-none" aria-hidden="true" />
       <div className="container mx-auto px-6 relative z-10">
-        <ScrollReveal className="flex items-end justify-between mb-16">
+        <div className="flex items-end justify-between mb-16">
           <RevealHeader className="text-4xl md:text-6xl font-bold uppercase tracking-tighter">
             Case <span className="gradient-text">Studies</span>
           </RevealHeader>
           <div className="hidden md:block text-xs font-mono uppercase tracking-widest text-[#7B82A8]">
             Deep dives into my projects
           </div>
-        </ScrollReveal>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[400px]">
+        <div className="blog-grid grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[400px]">
           {posts.map((post, index) => (
-            <ScrollReveal
+            <article
               key={index}
-              delay={index * 80}
-              className={`${index === 0 ? "md:col-span-2" : "md:col-span-1"}`}
+              className={`blog-card group relative h-full overflow-hidden rounded-3xl cursor-pointer cosmos-card border-violet-500/15 hover:shadow-[0_0_40px_rgba(139,92,246,0.15)] transition-shadow duration-500 ${index === 0 ? "md:col-span-2" : "md:col-span-1"}`}
+              onClick={() => setSelectedPost(post)}
+              style={{ opacity: 0 }}
             >
-              <article
-                className="group relative h-full overflow-hidden rounded-3xl cursor-pointer cosmos-card border-violet-500/15 hover:shadow-[0_0_40px_rgba(139,92,246,0.15)] transition-shadow duration-500"
-                onClick={() => setSelectedPost(post)}
-              >
-                <div className="absolute inset-0 z-0">
-                  <Image
-                    src={post.image}
-                    alt={post.title}
-                    fill
-                    className="object-cover transition-transform duration-300 ease-out group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-black/50 lg:bg-black/40 lg:group-hover:bg-black/50 transition-colors duration-500" />
-                  <div className="absolute inset-0 bg-linear-to-t from-space/95 via-space/30 to-transparent" />
-                </div>
+              <div className="absolute inset-0 z-0">
+                <Image
+                  src={post.image}
+                  alt={post.title}
+                  fill
+                  className="object-cover transition-transform duration-300 ease-out group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black/50 lg:bg-black/40 lg:group-hover:bg-black/50 transition-colors duration-500" />
+                <div className="absolute inset-0 bg-linear-to-t from-space/95 via-space/30 to-transparent" />
+              </div>
 
-                <div className="absolute inset-0 z-10 p-8 flex flex-col justify-end">
-                  <div className="flex items-center gap-3 text-xs font-mono uppercase tracking-widest text-[#7B82A8] mb-3">
-                    <span className="px-2 py-1 border border-violet-500/30 rounded-full bg-violet-500/15 text-violet-300 backdrop-blur-md">{post.category}</span>
-                    <span>{post.readTime}</span>
-                  </div>
-                  <h3 className={`font-bold text-violet-300 lg:text-white mb-3 leading-tight lg:group-hover:text-violet-300 transition-colors ${index === 0 ? "text-3xl md:text-4xl" : "text-xl md:text-2xl"}`}>
-                    {post.title}
-                  </h3>
-                  {index === 0 && (
-                    <p className="text-[#C0C4D8] text-base md:text-lg font-light line-clamp-2 max-w-xl">
-                      {post.excerpt}
-                    </p>
-                  )}
-                  <div className="mt-6 transform translate-y-0 opacity-100 lg:translate-y-4 lg:opacity-0 lg:group-hover:translate-y-0 lg:group-hover:opacity-100 transition-all duration-300">
-                    <span className="text-sm font-mono uppercase tracking-wider text-cyan-400 flex items-center gap-2">
-                      Read Article <span>→</span>
-                    </span>
-                  </div>
+              <div className="absolute inset-0 z-10 p-8 flex flex-col justify-end">
+                <div className="flex items-center gap-3 text-xs font-mono uppercase tracking-widest text-[#7B82A8] mb-3">
+                  <span className="px-2 py-1 border border-violet-500/30 rounded-full bg-violet-500/15 text-violet-300 backdrop-blur-md">{post.category}</span>
+                  <span>{post.readTime}</span>
                 </div>
-              </article>
-            </ScrollReveal>
+                <h3 className={`font-bold text-violet-300 lg:text-white mb-3 leading-tight lg:group-hover:text-violet-300 transition-colors ${index === 0 ? "text-3xl md:text-4xl" : "text-xl md:text-2xl"}`}>
+                  {post.title}
+                </h3>
+                {index === 0 && (
+                  <p className="text-[#C0C4D8] text-base md:text-lg font-light line-clamp-2 max-w-xl">
+                    {post.excerpt}
+                  </p>
+                )}
+                <div className="mt-6 transform translate-y-0 opacity-100 lg:translate-y-4 lg:opacity-0 lg:group-hover:translate-y-0 lg:group-hover:opacity-100 transition-all duration-300">
+                  <span className="text-sm font-mono uppercase tracking-wider text-cyan-400 flex items-center gap-2">
+                    Read Article <span>→</span>
+                  </span>
+                </div>
+              </div>
+            </article>
           ))}
         </div>
 

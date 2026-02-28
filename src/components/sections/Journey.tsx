@@ -70,24 +70,24 @@ export default function Journey() {
       }
     });
 
-    // Universal: Item Reveal (works on both but simple on mobile)
-    const items = gsap.utils.toArray(".journey-item");
-    items.forEach((item: any) => {
-      gsap.fromTo(item,
-        { opacity: 0, x: 40 },
-        {
-          opacity: 1,
-          x: 0,
-          force3D: true,
-          duration: 0.6,
-          scrollTrigger: {
-            trigger: item,
-            start: "top 85%",
-            toggleActions: "play none none reverse"
-          }
+    // Single stagger batch for all journey items (replaces 4 individual ScrollTriggers)
+    gsap.fromTo(
+      ".journey-item",
+      { opacity: 0, x: 40 },
+      {
+        opacity: 1,
+        x: 0,
+        force3D: true,
+        duration: 0.5,
+        ease: "power2.out",
+        stagger: 0.12,
+        scrollTrigger: {
+          trigger: rightRef.current,
+          start: "top 80%",
+          once: true,
         }
-      );
-    });
+      }
+    );
 
     return () => mm.revert();
 

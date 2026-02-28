@@ -1,8 +1,11 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { cn } from "@/lib/utils";
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface RevealHeaderProps {
   children: React.ReactNode;
@@ -10,22 +13,40 @@ interface RevealHeaderProps {
 }
 
 export function RevealHeader({ children, className }: RevealHeaderProps) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-10%" });
+  const wrapperRef = useRef<HTMLHeadingElement>(null);
+  const innerRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const wrapper = wrapperRef.current;
+    const inner = innerRef.current;
+    if (!wrapper || !inner) return;
+
+    // Set initial state via GSAP (not inline style) to avoid flash/race condition
+    gsap.set(inner, { yPercent: 100 });
+
+    gsap.to(inner, {
+      yPercent: 0,
+      duration: 0.8,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: wrapper,
+        start: "top 90%",
+        once: true,
+      },
+    });
+
+    return () => {
+      ScrollTrigger.getAll()
+        .filter((st) => st.trigger === wrapper)
+        .forEach((st) => st.kill());
+    };
+  }, []);
 
   return (
-    <h2
-      ref={ref}
-      className={cn("relative overflow-hidden", className)}
-    >
-      <motion.span
-        initial={{ y: "100%" }}
-        animate={isInView ? { y: 0 } : { y: "100%" }}
-        transition={{ duration: 0.8, ease: [0.33, 1, 0.68, 1] }} // Cubic bezier for "cinematic" feel
-        className="block"
-      >
+    <h2 ref={wrapperRef} className={cn("relative overflow-hidden", className)}>
+      <span ref={innerRef} className="block">
         {children}
-      </motion.span>
+      </span>
     </h2>
   );
 }

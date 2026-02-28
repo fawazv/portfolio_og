@@ -22,12 +22,11 @@ export default function Hero() {
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
     // 1. Initial State Setup
-    gsap.set(".char-reveal", { y: 100, opacity: 0, rotateX: -45 });
+    gsap.set(".char-reveal", { yPercent: 110, opacity: 0 });
     gsap.set(roleRef.current, { y: 20, opacity: 0 });
     gsap.set(taglineRef.current, { y: 20, opacity: 0 });
     gsap.set(ctaRef.current, { y: 20, opacity: 0 });
     gsap.set(scrollRef.current, { opacity: 0 });
-    // Optimized: Removed filter blur animation as it causes significant paint overhead
     gsap.set(imageRef.current, { scale: 1.1, opacity: 0 });
 
     // 2. Cinematic Entrance Sequence
@@ -39,13 +38,12 @@ export default function Hero() {
       ease: "power2.inOut",
     })
       .to(".char-reveal", {
-        y: 0,
+        yPercent: 0,
         opacity: 1,
-        rotateX: 0,
         force3D: true,
-        stagger: 0.05,
-        duration: 1.2,
-        ease: "power4.out",
+        stagger: 0.04,
+        duration: 0.9,
+        ease: "power3.out",
       }, "-=1.2")
       .to(roleRef.current, {
         y: 0,
@@ -68,16 +66,19 @@ export default function Hero() {
       }, "-=0.5");
 
     // 3. Scroll Parallax Effect
+    // Cache innerWidth once to avoid multiple forced layout reads
+    const vw = window.innerWidth;
+    const isMobile = vw < 768;
     gsap.to(parallaxRef.current, {
-      y: window.innerWidth < 768 ? 40 : 100, // Reduced movement to keep image steadier & better perf on mobile
+      y: isMobile ? 40 : 100,
       ease: "none",
-      willChange: "transform", // Hint browser
+      // willChange handled by CSS class will-change-transform on wrapper
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",
         end: "bottom top",
-        scrub: window.innerWidth < 768 ? false : true, // disable scrub on mobile for performance
-        toggleActions: window.innerWidth < 768 ? "play none none reverse" : undefined,
+        scrub: isMobile ? false : true,
+        toggleActions: isMobile ? "play none none reverse" : undefined,
       },
     });
 
@@ -97,7 +98,7 @@ export default function Hero() {
 
   const renderSplitText = (text: string) => {
     return text.split("").map((char, index) => (
-      <span key={index} className="char-reveal inline-block origin-bottom transform-3d opacity-0">
+      <span key={index} className="char-reveal inline-block overflow-hidden opacity-0">
         {char === " " ? "\u00A0" : char}
       </span>
     ));
@@ -201,7 +202,7 @@ export default function Hero() {
         ref={scrollRef}
         className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 opacity-0"
       >
-        <span className="text-[10px] uppercase tracking-widest text-[#6B6F8A] dark:text-[#7B82A8] animate-pulse">Scroll</span>
+        <span className="text-[10px] uppercase tracking-widest text-[#6B6F8A] dark:text-[#7B82A8]">Scroll</span>
         <div className="w-px h-16 bg-linear-to-b from-transparent via-violet-500/50 dark:via-cyan-400/50 to-transparent" />
       </div>
 

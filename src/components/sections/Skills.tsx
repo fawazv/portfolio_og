@@ -1,6 +1,10 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef, useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const skillCategories = [
   {
@@ -9,7 +13,7 @@ const skillCategories = [
     skills: [
       "JavaScript (ES6+)", "TypeScript", "React.js", "Next.js",
       "HTML5", "CSS3", "Tailwind CSS", "Vite", "Material UI",
-      "Shadcn UI", "Bootstrap", "Framer Motion", "Redux Toolkit", "Context API"
+      "Shadcn UI", "Bootstrap", "GSAP", "Redux Toolkit", "Context API"
     ]
   },
   {
@@ -27,24 +31,48 @@ const skillCategories = [
     dot: "bg-emerald-400",
     skills: ["Docker", "Nginx", "AWS EC2", "AWS S3", "Google Cloud", "Firebase"]
   },
+  {
+    name: "Tools",
+    dot: "bg-orange-400",
+    skills: ["Git", "Postman", "Figma", "VS Code", "GitHub", "Insomnia", "Notion"]
+  },
 ];
 
-const toolsSkills = ["Git", "Postman", "Figma", "VS Code", "GitHub", "Insomnia", "Notion"];
-
 export default function Skills() {
-  // Duplicate for seamless marquee loop
-  const marqueeItems = [...toolsSkills, ...toolsSkills, ...toolsSkills];
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ".skill-category",
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: "power2.out",
+          stagger: 0.1,
+          scrollTrigger: {
+            trigger: ".skills-grid",
+            start: "top 85%",
+            once: true,
+          },
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
     <section
       id="skills"
+      ref={sectionRef}
       className="py-24 bg-background border-y border-violet-500/10 relative overflow-hidden"
     >
-      {/* Dot Grid Overlay */}
       <div className="absolute inset-0 dot-grid pointer-events-none" aria-hidden="true" />
-      {/* Ambient orb */}
       <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[500px] h-[500px] bg-violet-400/6 dark:bg-violet-600/10 rounded-full blur-[120px] pointer-events-none" aria-hidden="true" />
-      {/* Section Header */}
+
       <div className="container mx-auto px-6 mb-14">
         <div className="flex items-center gap-6">
           <h2 className="text-violet-600 dark:text-violet-400 font-mono text-xs tracking-[0.3em] uppercase whitespace-nowrap">
@@ -54,28 +82,10 @@ export default function Skills() {
         </div>
       </div>
 
-      {/* Skill Categories */}
       <div className="container mx-auto px-6">
-        <div className="space-y-14">
-          {skillCategories.map((category, catIndex) => (
-            <motion.div
-              key={category.name}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: "-50px" }}
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                show: {
-                  opacity: 1,
-                  y: 0,
-                  transition: {
-                    duration: 0.6,
-                    delay: catIndex * 0.1,
-                  }
-                }
-              }}
-            >
-              {/* Category Header */}
+        <div className="skills-grid space-y-14">
+          {skillCategories.map((category) => (
+            <div key={category.name} className="skill-category" style={{ opacity: 0 }}>
               <div className="flex items-center gap-4 mb-6">
                 <span className={`w-1.5 h-1.5 rounded-full ${category.dot} shrink-0`} />
                 <h3 className="text-xs font-mono uppercase tracking-[0.2em] text-[#6B6F8A] dark:text-[#7B82A8] whitespace-nowrap">
@@ -83,13 +93,11 @@ export default function Skills() {
                 </h3>
                 <div className="flex-1 h-px bg-violet-500/10" />
               </div>
-
-              {/* Skill Pills */}
               <div className="flex flex-wrap gap-3 md:gap-4">
-                {category.skills.map((skill, index) => (
+                {category.skills.map((skill) => (
                   <div
                     key={skill}
-                    className="group cosmos-card rounded-full px-4 py-2 cursor-default hover:border-violet-500/50 hover:shadow-[0_0_12px_rgba(139,92,246,0.12)] dark:hover:shadow-[0_0_12px_rgba(139,92,246,0.2)] transition-all duration-300"
+                    className="group skill-pill rounded-full px-4 py-2 cursor-default hover:border-violet-500/50 transition-colors duration-200"
                   >
                     <span className="text-sm font-mono text-[#6B6F8A] dark:text-[#7B82A8] group-hover:text-space dark:group-hover:text-white transition-colors duration-300">
                       {skill}
@@ -97,52 +105,10 @@ export default function Skills() {
                   </div>
                 ))}
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
-
-      {/* Tools Marquee Row */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.35, duration: 0.6 }}
-        className="mt-20 overflow-hidden"
-      >
-        {/* Category label */}
-        <div className="container mx-auto px-6 mb-6">
-          <div className="flex items-center gap-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-orange-400 shrink-0" />
-            <h3 className="text-xs font-mono uppercase tracking-[0.2em] text-[#6B6F8A] dark:text-[#7B82A8] whitespace-nowrap">
-              Tools
-            </h3>
-            <div className="flex-1 h-px bg-violet-500/10" />
-          </div>
-        </div>
-
-        {/* Scrolling strip */}
-        <div className="relative w-full">
-          {/* Fade edges */}
-          <div className="absolute left-0 top-0 bottom-0 w-24 bg-linear-to-r from-background to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-24 bg-linear-to-l from-background to-transparent z-10 pointer-events-none" />
-
-          <div
-            className="marquee-track flex gap-4 w-max animate-marquee-slide"
-          >
-            {marqueeItems.map((tool, i) => (
-              <div
-                key={`${tool}-${i}`}
-                className="cosmos-card rounded-full px-5 py-2.5 shrink-0 hover:border-violet-500/50 hover:shadow-[0_0_12px_rgba(139,92,246,0.12)] dark:hover:shadow-[0_0_12px_rgba(139,92,246,0.2)] transition-all duration-300 cursor-default group"
-              >
-                <span className="text-sm font-mono text-[#6B6F8A] dark:text-[#7B82A8] group-hover:text-space dark:group-hover:text-white transition-colors duration-300">
-                  {tool}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </motion.div>
     </section>
   );
 }

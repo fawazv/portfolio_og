@@ -3,7 +3,6 @@
 import * as React from "react"
 import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
-import { motion } from "framer-motion"
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme()
@@ -15,35 +14,38 @@ export function ThemeToggle() {
 
   if (!mounted) return null
 
+  const isDark = theme === "dark"
+
   return (
     <button
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      onClick={() => setTheme(isDark ? "light" : "dark")}
       className="relative p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
       aria-label="Toggle theme"
     >
-      <motion.div
-        initial={false}
-        animate={{
-          scale: theme === "dark" ? 0 : 1,
-          opacity: theme === "dark" ? 0 : 1,
+      {/* Sun icon — visible in dark mode to switch to light */}
+      <span
+        className="absolute inset-0 flex items-center justify-center p-2 transition-all duration-200"
+        style={{
+          opacity: isDark ? 0 : 1,
+          transform: isDark ? "scale(0)" : "scale(1)",
         }}
-        transition={{ duration: 0.2 }}
-        className="absolute inset-0 flex items-center justify-center p-2"
+        aria-hidden={isDark}
       >
         <Sun className="h-5 w-5 text-black" />
-      </motion.div>
+      </span>
 
-      <motion.div
-        initial={false}
-        animate={{
-          scale: theme === "dark" ? 1 : 0,
-          opacity: theme === "dark" ? 1 : 0,
+      {/* Moon icon — visible in light mode to switch to dark */}
+      <span
+        className="flex items-center justify-center transition-all duration-200"
+        style={{
+          opacity: isDark ? 1 : 0,
+          transform: isDark ? "scale(1)" : "scale(0)",
         }}
-        transition={{ duration: 0.2 }}
-        className="flex items-center justify-center"
+        aria-hidden={!isDark}
       >
         <Moon className="h-5 w-5 text-white" />
-      </motion.div>
+      </span>
+
       <span className="sr-only">Toggle theme</span>
     </button>
   )

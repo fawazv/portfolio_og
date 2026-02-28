@@ -1,32 +1,51 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { cn } from "@/lib/utils";
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface ScrollRevealProps {
     children: React.ReactNode;
     className?: string;
-    delay?: number; // Delay in milliseconds
+    delay?: number;
 }
 
 export function ScrollReveal({ children, className, delay = 0 }: ScrollRevealProps) {
-    const ref = useRef(null);
-    const isInView = useInView(ref, { once: true, margin: "-10%" });
+    const ref = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const el = ref.current;
+        if (!el) return;
+
+        // Set initial state via GSAP to avoid race condition with inline styles
+        gsap.set(el, { y: 30, opacity: 0 });
+
+        gsap.to(el, {
+            y: 0,
+            opacity: 1,
+            duration: 0.6,
+            delay: delay / 1000,
+            ease: "power2.out",
+            scrollTrigger: {
+                trigger: el,
+                start: "top 90%",
+                once: true,
+            },
+        });
+
+        return () => {
+            ScrollTrigger.getAll()
+                .filter((st) => st.trigger === el)
+                .forEach((st) => st.kill());
+        };
+    }, [delay]);
 
     return (
-        <motion.div
-            ref={ref}
-            initial={{ y: 50, opacity: 0 }}
-            animate={isInView ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }}
-            transition={{
-                duration: 0.8,
-                ease: [0.33, 1, 0.68, 1], // Cinematic ease matching reveal-header
-                delay: delay / 1000 // Convert ms to seconds for Framer Motion
-            }}
-            className={cn(className)}
-        >
+        <div ref={ref} className={cn(className)}>
             {children}
-        </motion.div>
+        </div>
     );
 }

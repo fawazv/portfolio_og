@@ -1,9 +1,13 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef, useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { RevealHeader } from "@/components/ui/reveal-header";
 import { useState } from "react";
 import { Github, Linkedin } from "lucide-react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Contact() {
     const [formData, setFormData] = useState({
@@ -18,6 +22,31 @@ export default function Contact() {
     }>({ type: null, message: "" });
     const [focusedField, setFocusedField] = useState<string | null>(null);
     const [errors, setErrors] = useState<Record<string, string>>({});
+
+    const formCardRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            if (formCardRef.current) {
+                gsap.fromTo(
+                    formCardRef.current,
+                    { opacity: 0, x: 20 },
+                    {
+                        opacity: 1,
+                        x: 0,
+                        duration: 0.7,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: formCardRef.current,
+                            start: "top 85%",
+                            once: true,
+                        },
+                    }
+                );
+            }
+        });
+        return () => ctx.revert();
+    }, []);
 
     const validate = () => {
         const newErrors: Record<string, string> = {};
@@ -37,46 +66,34 @@ export default function Contact() {
     ) => {
         const { id, value } = e.target;
         setFormData((prev) => ({ ...prev, [id]: value }));
-        // Clear individual field error on change
         if (errors[id]) setErrors((prev) => ({ ...prev, [id]: "" }));
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
         const validationErrors = validate();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
             return;
         }
-
         setIsSubmitting(true);
         setSubmitStatus({ type: null, message: "" });
-
         try {
             const res = await fetch("/api/contact", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),
             });
-
             const data = await res.json();
-
             if (res.ok) {
                 setSubmitStatus({ type: "success", message: "Message sent! I'll get back to you soon." });
                 setFormData({ name: "", email: "", message: "" });
                 setErrors({});
             } else {
-                setSubmitStatus({
-                    type: "error",
-                    message: data.error || "Something went wrong. Please try emailing me directly.",
-                });
+                setSubmitStatus({ type: "error", message: data.error || "Something went wrong. Please try emailing me directly." });
             }
         } catch {
-            setSubmitStatus({
-                type: "error",
-                message: "Network error. Please check your connection or email me directly.",
-            });
+            setSubmitStatus({ type: "error", message: "Network error. Please check your connection or email me directly." });
         } finally {
             setIsSubmitting(false);
         }
@@ -139,12 +156,10 @@ export default function Contact() {
                     </div>
 
                     {/* Right Form */}
-                    <motion.div
-                        initial={{ opacity: 0, x: 20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.2 }}
+                    <div
+                        ref={formCardRef}
                         className="cosmos-card p-5 md:p-12 rounded-3xl shadow-2xl"
+                        style={{ opacity: 0 }}
                     >
                         <form
                             className="space-y-12"
@@ -217,7 +232,7 @@ export default function Contact() {
                                 </div>
                             )}
                         </form>
-                    </motion.div>
+                    </div>
                 </div>
             </div>
         </section>
