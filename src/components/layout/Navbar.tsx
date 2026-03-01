@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
-import { MagneticButton } from "@/components/ui/magnetic-button";
+
 import { cn } from "@/lib/utils";
 import gsap from "gsap";
 
@@ -104,16 +104,15 @@ export default function Navbar() {
           {/* Desktop Nav */}
           <div className="hidden xl:flex items-center gap-8">
             {navItems.map((item) => (
-              <MagneticButton key={item.name}>
-                <Link
-                  href={item.href}
-                  className="relative text-sm font-medium text-[#6B6F8A] dark:text-[#7B82A8] hover:text-space dark:hover:text-white transition-colors px-2 py-1 block
+              <Link
+                key={item.name}
+                href={item.href}
+                className="relative text-sm font-medium text-[#6B6F8A] dark:text-[#7B82A8] hover:text-space dark:hover:text-white transition-colors px-2 py-1 block
                     after:block after:h-px after:bg-linear-to-r after:from-violet-500 after:to-cyan-400
                     after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:origin-left"
-                >
-                  {item.name}
-                </Link>
-              </MagneticButton>
+              >
+                {item.name}
+              </Link>
             ))}
             <div className="pl-4 border-l border-violet-500/20 flex gap-4 items-center">
               <ThemeToggle />

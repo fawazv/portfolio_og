@@ -18,30 +18,24 @@ const stats = [
 export default function About() {
   const containerRef = useRef<HTMLDivElement>(null);
   const imageContainerRef = useRef<HTMLDivElement>(null);
-  const imageInnerRef = useRef<HTMLDivElement>(null);
   const textColRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Single ScrollTrigger for image fade + parallax (merged 2 triggers → 1)
-      const imageTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1,
-        },
-      });
-      imageTl.fromTo(
+      // Simple one-shot opacity reveal — no continuous scrub
+      gsap.fromTo(
         imageContainerRef.current,
         { opacity: 0 },
-        { opacity: 1, duration: 0.3 }, // first 30% of scroll range
-      );
-      imageTl.fromTo(
-        imageInnerRef.current,
-        { yPercent: -10 },
-        { yPercent: 10, duration: 1 },
-        0 // run in parallel from start
+        {
+          opacity: 1,
+          duration: 0.6,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: imageContainerRef.current,
+            start: "top 85%",
+            once: true,
+          },
+        }
       );
 
       // Single unified reveal for text column + children (merged 3 triggers → 1)
@@ -175,7 +169,7 @@ export default function About() {
               className="relative h-[350px] sm:h-[450px] w-full md:h-[700px] overflow-hidden rounded-3xl ring-1 ring-violet-500/20 hover:ring-violet-500/50 transition-all duration-700"
               style={{ opacity: 0 }}
             >
-              <div ref={imageInnerRef} className="absolute inset-0 h-[120%] w-full -top-[10%]">
+              <div className="absolute inset-0 h-full w-full">
                 <Image
                   src="/portrait.webp"
                   alt="Mohammed Fawaz — Full Stack Developer based in Kerala, India"

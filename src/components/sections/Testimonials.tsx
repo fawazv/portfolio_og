@@ -30,45 +30,9 @@ const testimonials = [
 ];
 
 function TestimonialCard({ item }: { item: typeof testimonials[0] }) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const spotlightRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const card = cardRef.current;
-    const spotlight = spotlightRef.current;
-    if (!card || !spotlight) return;
-
-    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-    if (isTouch) return;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const { left, top } = card.getBoundingClientRect();
-      spotlight.style.background = `radial-gradient(500px circle at ${e.clientX - left}px ${e.clientY - top}px, rgba(139,92,246,0.08), transparent 80%)`;
-    };
-    const handleMouseEnter = () => { spotlight.style.opacity = "1"; };
-    const handleMouseLeave = () => { spotlight.style.opacity = "0"; };
-
-    card.addEventListener("mousemove", handleMouseMove, { passive: true });
-    card.addEventListener("mouseenter", handleMouseEnter);
-    card.addEventListener("mouseleave", handleMouseLeave);
-    return () => {
-      card.removeEventListener("mousemove", handleMouseMove);
-      card.removeEventListener("mouseenter", handleMouseEnter);
-      card.removeEventListener("mouseleave", handleMouseLeave);
-    };
-  }, []);
-
   return (
-    <div
-      ref={cardRef}
-      className="group relative cosmos-card rounded-2xl w-[85vw] md:w-[420px] shrink-0 overflow-hidden border-violet-500/15 p-8"
-    >
-      <div
-        ref={spotlightRef}
-        className="pointer-events-none absolute -inset-px rounded-2xl transition-opacity duration-300"
-        style={{ opacity: 0 }}
-      />
-      <div className="relative flex h-full flex-col justify-between z-10">
+    <div className="cosmos-card rounded-2xl w-[85vw] md:w-[420px] shrink-0 overflow-hidden border-violet-500/15 p-8">
+      <div className="flex h-full flex-col justify-between">
         <span className="text-5xl font-serif text-violet-500/20 dark:text-violet-500/30 leading-none block mb-2">&ldquo;</span>
         <p className="text-base md:text-lg font-light tracking-tight mb-8 text-[#4A4F6A] dark:text-[#C0C4D8] leading-relaxed">
           {item.text}
@@ -117,8 +81,16 @@ export default function Testimonials() {
       onLeaveBack: () => tweenRef.current?.pause(),
     });
 
+    // Pause on hover so users can read cards at their own pace
+    const handleMouseEnter = () => tweenRef.current?.pause();
+    const handleMouseLeave = () => tweenRef.current?.play();
+    track.addEventListener("mouseenter", handleMouseEnter);
+    track.addEventListener("mouseleave", handleMouseLeave);
+
     return () => {
       tweenRef.current?.kill();
+      track.removeEventListener("mouseenter", handleMouseEnter);
+      track.removeEventListener("mouseleave", handleMouseLeave);
     };
   }, []);
 

@@ -70,20 +70,20 @@ export default function Journey() {
       }
     });
 
-    // Single stagger batch for all journey items (replaces 4 individual ScrollTriggers)
+    // Single stagger batch for all journey items
     gsap.fromTo(
       ".journey-item",
-      { opacity: 0, x: 40 },
+      { opacity: 0, y: 40 },
       {
         opacity: 1,
-        x: 0,
+        y: 0,
         force3D: true,
-        duration: 0.5,
+        duration: 0.6,
         ease: "power2.out",
-        stagger: 0.12,
+        stagger: 0.2,
         scrollTrigger: {
           trigger: rightRef.current,
-          start: "top 80%",
+          start: "top 75%",
           once: true,
         }
       }
