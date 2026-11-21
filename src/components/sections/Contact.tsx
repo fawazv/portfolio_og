@@ -5,7 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { RevealHeader } from "@/components/ui/reveal-header";
 import { useState } from "react";
-import { Github, Linkedin } from "lucide-react";
+import { Github, Instagram, Linkedin } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -117,7 +117,7 @@ export default function Contact() {
                                 Let&apos;s <br /> <span className="gradient-text">Talk.</span>
                             </RevealHeader>
                             <p className="text-xl text-muted-foreground max-w-sm font-light">
-                                Have a role or project in mind? Let&apos;s build something great together.
+                                A role, an AI workflow or a video project in mind? Let&apos;s build it together.
                             </p>
                         </div>
 
@@ -142,6 +142,15 @@ export default function Contact() {
                                         aria-label="LinkedIn profile (opens in new tab)"
                                     >
                                         <Linkedin size={28} strokeWidth={1.5} />
+                                    </a>
+                                    <a
+                                        href="https://www.instagram.com/_.fawaz_v/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-accent hover:text-foreground transition-colors"
+                                        aria-label="Instagram profile (opens in new tab)"
+                                    >
+                                        <Instagram size={28} strokeWidth={1.5} />
                                     </a>
                                     <a
                                         href="https://github.com/fawazv/"

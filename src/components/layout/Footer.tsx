@@ -1,6 +1,6 @@
 "use client";
 
-import { Github, Linkedin, ArrowUp, Mail, Download } from "lucide-react";
+import { Github, Linkedin, ArrowUp, Mail, Download, Instagram } from "lucide-react";
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -27,7 +27,7 @@ export default function Footer() {
               <span className="gradient-text">Fawaz</span><span className="font-serif italic normal-case text-accent" aria-hidden="true">.</span>
             </h3>
             <p className="text-sm text-muted-foreground font-light leading-relaxed max-w-xs">
-              Full Stack Developer crafting scalable systems and cinematic web experiences.
+              Full-stack developer and content creator, building software, videos and the AI agents behind them.
             </p>
             <p className="text-xs text-muted-foreground font-mono tracking-wider uppercase mt-6">
               © {currentYear} Mohammed Fawaz. All rights reserved.
@@ -81,6 +81,15 @@ export default function Footer() {
                   className="p-2.5 border border-line dark:border-line rounded-full hover:border-foreground/30 dark:hover:border-foreground/30 hover:bg-sage/25 dark:hover:bg-sage/25 transition-all text-muted-foreground hover:text-accent"
                 >
                   <Linkedin size={18} strokeWidth={1.5} aria-hidden="true" />
+                </a>
+                <a
+                  href="https://www.instagram.com/_.fawaz_v/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram profile (opens in new tab)"
+                  className="p-2.5 border border-line dark:border-line rounded-full hover:border-foreground/30 dark:hover:border-foreground/30 hover:bg-sage/25 dark:hover:bg-sage/25 transition-all text-muted-foreground hover:text-accent"
+                >
+                  <Instagram size={18} strokeWidth={1.5} aria-hidden="true" />
                 </a>
                 <a
                   href="https://github.com/fawazv/"

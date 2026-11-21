@@ -2,6 +2,7 @@ import Image from "next/image";
 import { ArrowRight, Download } from "lucide-react";
 import { ScrollStatement } from "@/components/ui/scroll-statement";
 import { Scribble } from "@/components/ui/scribble";
+import { TransitionLink } from "@/components/ui/transition-link";
 
 /*
  * About — opens with the F1 statement (lights up word by word on scroll),
@@ -18,7 +19,7 @@ export default function About() {
           <p className="mb-6 font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">In one sentence</p>
           <ScrollStatement
             className="font-serif text-[clamp(2.2rem,5.4vw,4.75rem)] font-normal leading-[1.05] tracking-[-0.025em] text-foreground"
-            text="I studied commerce, taught myself to code in 2024, and now I build *distributed backends* and the interfaces on top of them."
+            text="I studied commerce, taught myself to code in 2024, and now I build *software, videos* and the AI agents that make both."
           />
         </div>
 
@@ -45,6 +46,26 @@ export default function About() {
                 PostgreSQL underneath, deployed on AWS EC2 and S3. On the front end I use React and Next.js, with GSAP
                 when motion helps.
               </p>
+              <p>
+                I also make reels in Malayalam and English as{" "}
+                <a
+                  href="https://www.instagram.com/_.fawaz_v/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-medium text-foreground underline decoration-tomato decoration-2 underline-offset-4 hover:text-accent"
+                >
+                  @_.fawaz_v
+                </a>
+                , and I edit them myself. Lately that means building workflows with AI agents: my{" "}
+                <TransitionLink
+                  href="/work/ai-video-editor"
+                  className="font-medium text-foreground underline decoration-tomato decoration-2 underline-offset-4 hover:text-accent"
+                >
+                  AI video editor
+                </TransitionLink>{" "}
+                runs on Claude Code and turns one raw take into a captioned, on-brand reel that I review choice by
+                choice.
+              </p>
             </div>
 
             <dl className="grid gap-6 border-t border-line pt-8 sm:grid-cols-2">
@@ -52,13 +73,13 @@ export default function About() {
                 <dt className="font-mono text-xs uppercase tracking-[0.18em] text-accent">What I&apos;m looking for</dt>
                 <dd className="leading-relaxed text-foreground">
                   A full-stack or backend role on a team that ships often, where I can own services from the database
-                  up.
+                  up. Also open to AI workflow and video projects.
                 </dd>
               </div>
               <div className="flex flex-col gap-2">
                 <dt className="font-mono text-xs uppercase tracking-[0.18em] text-accent">Learning now</dt>
                 <dd className="leading-relaxed text-foreground">
-                  React Native for mobile apps, and Python for backend scripts and AI tooling.
+                  React Native for mobile apps, Python for AI tooling, and agent skills and workflows for Claude Code.
                 </dd>
               </div>
             </dl>
@@ -89,7 +110,7 @@ export default function About() {
             <div className="relative aspect-[4/5] overflow-hidden rounded-[28px] bg-sage-soft dark:bg-surface">
               <Image
                 src="/portrait.webp"
-                alt="Mohammed Fawaz, full-stack developer based in Kerala, India"
+                alt="Mohammed Fawaz, full-stack developer and content creator based in Kerala, India"
                 fill
                 sizes="(max-width: 1024px) 90vw, 520px"
                 className="object-cover object-top grayscale"

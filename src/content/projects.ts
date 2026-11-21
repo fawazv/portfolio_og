@@ -2,7 +2,9 @@
  * Projects — single source for the work cards (home) and the case-study pages
  * (/work/[slug]). Every claim here comes from the project's own repository:
  * README, docker-compose.yml, package.json, CI workflows, or the project notes
- * (nxt-cart/PROJECT_EXPLANATION.md). Nothing is invented; keep it that way.
+ * (nxt-cart/PROJECT_EXPLANATION.md). The AI video editor comes from its own
+ * project files (CLAUDE.md, MY-GUIDE.md, docs/WORKFLOW.md) and the real run on
+ * the "Claude killed video editors?" reel. Nothing is invented; keep it that way.
  */
 
 export type Project = {
@@ -14,7 +16,10 @@ export type Project = {
   summary: string;
   image: string;
   liveUrl?: string;
-  githubUrl: string;
+  /** Omitted when the code isn't public */
+  githubUrl?: string;
+  /** A how-to guide on this site (/guides/...) */
+  guideUrl?: string;
   /** Three checkable numbers or facts */
   facts: { value: string; label: string }[];
   /** "What it is" — a short paragraph */
@@ -27,6 +32,46 @@ export type Project = {
 };
 
 export const projects: Project[] = [
+  {
+    slug: "ai-video-editor",
+    title: "AI Video Editor",
+    year: "2026",
+    kind: "AI agent workflow",
+    summary:
+      "A Claude Code workflow that turns one raw talking-head take into a captioned, on-brand reel, and checks its own work before I see it.",
+    image: "/images/projects/ai-video-editor.webp",
+    guideUrl: "/guides/claude-video-editing",
+    facts: [
+      { value: "76 → 65.6 s", label: "raw take to finished reel" },
+      { value: "39", label: "choices rated on the storyboard" },
+      { value: "3", label: "review rounds" },
+    ],
+    overview:
+      "I make reels in Malayalam and English. Instead of opening an editor, I drop the take in a folder and describe the edit. Claude cuts the dead air, captions my exact words, adds motion graphics in my brand, face-tracked effects and sound, then builds a storyboard page where I rate every single choice Keep, Maybe or Drop. Nothing is rendered for delivery until every item is Keep or Drop.",
+    built: [
+      "Claude Code drives the whole run, steered by a set of agent skills: HyperFrames, face-tracked effects, motion and caption rules, and my own editing playbook.",
+      "Speech to text with whisper.cpp for English and a separate model for Malayalam; I correct the Malayalam words once and a script aligns them back onto the timings.",
+      "ffmpeg does the cuts, colour grade and voice level before the edit. Every cut is a whole number of frames, so sound and picture both run exactly 65.633 s.",
+      "HyperFrames renders the edit from HTML, so each caption and graphic sits on an exact frame.",
+      "earshot measures sound, because Claude can't hear: every effect comes from my own packs and is checked by measurement, and a moment with no fitting sound is left as a gap for me.",
+      "Python scripts build the storyboard and Brand Lab review pages, and a delivery check tests frame count, black or frozen frames, loudness (−14 LUFS) and true peak.",
+    ],
+    decisions: [
+      {
+        title: "A human rates every choice",
+        body: "The agent proposes; I decide. Each cut, caption, graphic, effect and sound gets its own preview on the storyboard, and only a submitted round of ratings moves the edit forward.",
+      },
+      {
+        title: "My brand as values, not vibes",
+        body: "Colours, fonts, caption and title style live in brand/brand.json, made from reference reels I like and approved sample by sample in the Brand Lab. Every video starts from it.",
+      },
+      {
+        title: "Only my own pictures and sounds",
+        body: "The agent never generates or downloads images or sounds. It asks for exactly what an effect needs, blurs names and notifications, strips location data and never touches the originals.",
+      },
+    ],
+    stack: ["Claude Code", "Agent skills", "HyperFrames", "ffmpeg", "whisper.cpp", "Python", "Node.js", "earshot"],
+  },
   {
     slug: "elite-hotel",
     title: "Elite Hotel",

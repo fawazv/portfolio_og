@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Mohammed Fawaz — Full Stack Developer Portfolio";
+export const alt = "Mohammed Fawaz — Developer, Content Creator & AI Workflows";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -31,7 +31,7 @@ const LIVE = "#2F7A3E";
 export default async function OpenGraphImage() {
   const serifText = "Mohammed Fawaz";
   const sansText =
-    "Fawaz.Full-stack developer · Kerala, IndiaNode.js services, React on topOpen to work5 projects shipped2 live demosfawazv.online·";
+    "Fawaz.Full-stack developer · Kerala, IndiaDeveloper · content creator · AI agent workflowsOpen to work6 projects built2 live demosfawazv.online·";
   const [serif, sans, sansBold] = await Promise.all([
     loadGoogleFont("Instrument+Serif", serifText),
     loadGoogleFont("Host+Grotesk:wght@400", sansText),
@@ -96,14 +96,14 @@ export default async function OpenGraphImage() {
               </span>
             </div>
             <div style={{ display: "flex", fontSize: 38, color: "rgba(27,30,25,0.8)", letterSpacing: -0.5 }}>
-              Full-stack developer · Node.js services, React on top
+              Developer · content creator · AI agent workflows
             </div>
           </div>
 
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 24 }}>
             <div style={{ display: "flex", gap: 28 }}>
               <span style={{ display: "flex", gap: 8 }}>
-                <span style={{ fontWeight: 600 }}>5</span> projects shipped
+                <span style={{ fontWeight: 600 }}>6</span> projects built
               </span>
               <span style={{ display: "flex", gap: 8 }}>
                 <span style={{ fontWeight: 600 }}>2</span> live demos

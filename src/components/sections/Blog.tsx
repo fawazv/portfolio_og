@@ -5,6 +5,9 @@ import { useRef, useState, useEffect } from "react";
 import { ArticleModal } from "@/components/ui/article-modal";
 import Image from "next/image";
 import gsap from "gsap";
+import { ArrowRight } from "lucide-react";
+import { TransitionLink } from "@/components/ui/transition-link";
+import { guides } from "@/content/guides";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -169,6 +172,19 @@ export default function Blog() {
             </article>
           ))}
         </div>
+
+        {guides[0] && (
+          <TransitionLink
+            href={`/guides/${guides[0].slug}`}
+            className="group mt-6 flex items-center justify-between gap-6 rounded-3xl bg-sage p-6 text-ink transition-transform duration-300 hover:-translate-y-0.5 md:p-10"
+          >
+            <span className="flex min-w-0 flex-col gap-2">
+              <span className="font-mono text-xs uppercase tracking-[0.16em] text-ink/70">New guide · {guides[0].readTime}</span>
+              <span className="font-serif text-[clamp(1.75rem,4vw,3rem)] leading-[1.05] tracking-[-0.02em]">{guides[0].shortTitle}</span>
+            </span>
+            <ArrowRight size={32} className="shrink-0 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+          </TransitionLink>
+        )}
 
         <ArticleModal
           isOpen={!!selectedPost}

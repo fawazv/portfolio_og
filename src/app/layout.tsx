@@ -30,29 +30,30 @@ const instrumentSerif = Instrument_Serif({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://fawazv.online"),
-  title: "Mohammed Fawaz | Full Stack Developer — React, Node.js, Microservices",
+  title: "Mohammed Fawaz | Full Stack Developer, Content Creator & AI Workflows",
   description:
-    "Full Stack Developer specializing in React, Next.js, Node.js & Microservices architecture. View projects and get in touch.",
+    "Full Stack Developer (React, Next.js, Node.js, microservices) and content creator who builds AI agent workflows, including an AI video editor on Claude Code.",
   authors: [{ name: "Mohammed Fawaz" }],
   keywords: [
     "Full Stack Developer", "React Developer", "Next.js", "Node.js",
     "Microservices", "TypeScript", "Docker", "AWS", "Kerala", "India",
+    "Content Creator", "Video Editor", "AI Agents", "Claude Code", "AI Workflows",
   ],
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://fawazv.online",
     siteName: "Mohammed Fawaz — Portfolio",
-    title: "Mohammed Fawaz | Full Stack Developer — React, Node.js, Microservices",
+    title: "Mohammed Fawaz | Full Stack Developer, Content Creator & AI Workflows",
     description:
-      "Full Stack Developer specializing in React, Next.js, Node.js & Microservices. Open to remote & hybrid roles.",
+      "Full Stack Developer (React, Next.js, Node.js, microservices) and content creator who builds AI agent workflows, including an AI video editor on Claude Code.",
     // Image comes from src/app/opengraph-image.tsx
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mohammed Fawaz | Full Stack Developer",
+    title: "Mohammed Fawaz | Developer, Creator & AI Workflows",
     description:
-      "Full Stack Developer specializing in React, Next.js, Node.js & Microservices. Open to remote & hybrid roles.",
+      "Full Stack Developer (React, Next.js, Node.js, microservices) and content creator who builds AI agent workflows, including an AI video editor on Claude Code.",
     // Image comes from src/app/twitter-image.tsx
   },
   robots: {
@@ -89,19 +90,21 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Person",
               name: "Mohammed Fawaz",
-              jobTitle: "Full Stack Developer",
+              jobTitle: "Full Stack Developer and Content Creator",
               url: "https://fawazv.online",
               email: "fawazv.business@gmail.com",
               description:
-                "Full Stack Developer specializing in React, Next.js, Node.js, and Microservices architecture.",
+                "Full Stack Developer (React, Next.js, Node.js, microservices) and content creator who builds AI agent workflows, including an AI video editor on Claude Code.",
               image: "https://fawazv.online/portrait.webp",
               sameAs: [
                 "https://github.com/fawazv/",
                 "https://www.linkedin.com/in/mohammed-fawaz-216314280/",
+                "https://www.instagram.com/_.fawaz_v/",
               ],
               knowsAbout: [
                 "React", "Next.js", "Node.js", "TypeScript",
                 "Microservices", "Docker", "AWS", "MongoDB", "PostgreSQL",
+                "AI agents", "Claude Code", "Video editing", "Content creation",
               ],
             }),
           }}

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ArrowRight, ArrowUpRight, Github } from "lucide-react";
+import { ArrowRight, ArrowUpRight, BookOpen, Github } from "lucide-react";
 import { projects, type Project } from "@/content/projects";
 import { Scribble } from "@/components/ui/scribble";
 import { TransitionLink } from "@/components/ui/transition-link";
@@ -26,7 +26,7 @@ export default function Projects() {
               id="projects-heading"
               className="font-serif text-[clamp(2.5rem,5vw,4.25rem)] font-normal leading-[1] tracking-[-0.03em] text-foreground"
             >
-              Things I&apos;ve <Scribble delay="0.2s">shipped</Scribble>.
+              Things I&apos;ve <Scribble delay="0.2s">built</Scribble>.
             </h2>
           </div>
           <p className="max-w-sm text-muted-foreground md:text-right">
@@ -123,16 +123,28 @@ function WorkCard({ project: p, wide = false }: { project: Project; wide?: boole
               <ArrowUpRight size={15} aria-hidden="true" />
             </a>
           )}
-          <a
-            href={p.githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`${p.title} source on GitHub (opens in new tab)`}
-            className="inline-flex items-center gap-1.5 rounded-full px-3 py-2.5 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
-          >
-            <Github size={15} aria-hidden="true" />
-            Source
-          </a>
+          {p.guideUrl && (
+            <TransitionLink
+              href={p.guideUrl}
+              aria-label={`${p.title}: read the step-by-step guide`}
+              className="inline-flex items-center gap-1.5 rounded-full border border-foreground/25 px-4 py-2.5 text-sm font-semibold text-foreground transition-colors hover:border-foreground/60"
+            >
+              <BookOpen size={15} aria-hidden="true" />
+              Guide
+            </TransitionLink>
+          )}
+          {p.githubUrl && (
+            <a
+              href={p.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${p.title} source on GitHub (opens in new tab)`}
+              className="inline-flex items-center gap-1.5 rounded-full px-3 py-2.5 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
+            >
+              <Github size={15} aria-hidden="true" />
+              Source
+            </a>
+          )}
         </div>
       </div>
     </article>

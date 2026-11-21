@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, ArrowUpRight, Github } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, BookOpen, Github } from "lucide-react";
 import { getProject, projects } from "@/content/projects";
 import { TransitionLink } from "@/components/ui/transition-link";
 
@@ -70,15 +70,26 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
                 <ArrowUpRight size={16} aria-hidden="true" />
               </a>
             )}
-            <a
-              href={p.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-foreground/25 px-6 py-3.5 text-sm font-semibold text-foreground transition-colors hover:border-foreground/60"
-            >
-              <Github size={16} aria-hidden="true" />
-              View source
-            </a>
+            {p.guideUrl && (
+              <TransitionLink
+                href={p.guideUrl}
+                className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3.5 text-sm font-semibold text-on-accent transition-colors hover:bg-accent-hover"
+              >
+                <BookOpen size={16} aria-hidden="true" />
+                Read the step-by-step guide
+              </TransitionLink>
+            )}
+            {p.githubUrl && (
+              <a
+                href={p.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-foreground/25 px-6 py-3.5 text-sm font-semibold text-foreground transition-colors hover:border-foreground/60"
+              >
+                <Github size={16} aria-hidden="true" />
+                View source
+              </a>
+            )}
           </div>
         </header>
 
