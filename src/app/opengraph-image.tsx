@@ -31,7 +31,7 @@ const LIVE = "#2F7A3E";
 
 // Share card for LinkedIn, X and messaging apps.
 export default async function OpenGraphImage() {
-  const words = "Fawaz.Mohammed FawazFull stack developerNode.js services React Next.js Docker AWSOpen to work Kerala, India fawazv.online·5 projects shipped3 live demos";
+  const words = "Fawaz.Mohammed FawazFull stack developerNode.js services React Next.js Docker AWSOpen to work Kerala, India fawazv.online·5 projects shipped2 live demos";
   const [bold, regular] = await Promise.all([
     loadGoogleFont("Host Grotesk", 600, words),
     loadGoogleFont("Host Grotesk", 400, words),
@@ -126,7 +126,7 @@ export default async function OpenGraphImage() {
                 <span style={{ color: INK, fontWeight: 600 }}>5</span> projects shipped
               </span>
               <span style={{ display: "flex", gap: 8 }}>
-                <span style={{ color: INK, fontWeight: 600 }}>3</span> live demos
+                <span style={{ color: INK, fontWeight: 600 }}>2</span> live demos
               </span>
               <span style={{ display: "flex", alignItems: "center", gap: 10 }}>
                 <span style={{ width: 14, height: 14, borderRadius: 4, background: SAGE }} />
