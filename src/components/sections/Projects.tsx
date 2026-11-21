@@ -69,7 +69,7 @@ export default function Projects() {
     // Only enable horizontal scroll on larger screens for better performance/UX on mobile
     const mm = gsap.matchMedia();
 
-    mm.add("(min-width: 768px)", () => {
+    mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
       if (!containerRef.current) return;
 
       const totalWidth = containerRef.current.scrollWidth;
@@ -101,7 +101,7 @@ export default function Projects() {
       ref={sectionRef}
       className="relative z-20 bg-background overflow-hidden"
     >
-      <div className="py-20 md:h-screen md:flex md:flex-col justify-center">
+      <div className="py-20 md:h-screen md:flex md:flex-col justify-center md:motion-reduce:h-auto">
         {/* Header - Now part of flex flow, no absolute positioning */}
         <div className="container mx-auto px-6 mb-12">
           <div className="pl-6">
@@ -118,15 +118,15 @@ export default function Projects() {
         {/* Projects Container - Added margin top for spacing */}
         <div
           ref={containerRef}
-          className="flex flex-col md:flex-row gap-20 md:gap-32 px-6 md:px-0 md:pl-[10vw]"
+          className="flex flex-col md:flex-row gap-20 md:gap-32 px-6 md:px-0 md:pl-[10vw] md:motion-reduce:flex-col md:motion-reduce:gap-16 md:motion-reduce:px-[10vw]"
         >
           {projects.map((project, index) => (
-            <div key={index} className="shrink-0 w-full md:w-[60vw] lg:w-[50vw]">
+            <div key={index} className="shrink-0 w-full md:w-[60vw] lg:w-[50vw] md:motion-reduce:w-full lg:motion-reduce:w-full">
               <ProjectCard project={project} index={index} />
             </div>
           ))}
           {/* Extra spacer for horizontal scroll end feel */}
-          <div className="shrink-0 w-0 md:w-[10vw]" />
+          <div className="shrink-0 w-0 md:w-[10vw] motion-reduce:hidden" />
         </div>
       </div>
     </section>

@@ -147,26 +147,38 @@ h3 {
   box-shadow: none;
 }
 
-/* Lenis smooth scroll recommended CSS (Lenis is reviewed in B3) */
-html.lenis,
-html.lenis body {
-  height: auto;
+/* Native scrolling (Lenis removed). Anchor jumps glide unless the visitor
+   asks for reduced motion, and land below the fixed nav. */
+html {
+  scroll-behavior: smooth;
 }
 
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
+section[id] {
+  scroll-margin-top: 72px;
 }
 
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
+/* Reading progress under the nav: CSS scroll-driven animation where
+   supported; the Navbar sets --progress from script as a fallback. */
+.scroll-progress {
+  transform-origin: 0 50%;
+  transform: scaleX(var(--progress, 0));
 }
 
-.lenis.lenis-stopped {
-  overflow: hidden;
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    transform: none;
+    animation: scroll-progress linear both;
+    animation-timeline: scroll(root block);
+  }
 }
 
-.lenis.lenis-scrolling iframe {
-  pointer-events: none;
+@keyframes scroll-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
 }
 
 /* Custom scrollbar for the article modal */
@@ -199,10 +211,16 @@ html.lenis body {
 }
 
 /* ============================================
-   Prefers Reduced Motion (CSS side; GSAP and
-   Lenis are handled in B3)
+   Prefers Reduced Motion. CSS side here; GSAP
+   tweens are made instant by ScrollManager and
+   scroll-scrubbed effects are switched off in
+   each section.
    ============================================ */
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   *,
   *::before,
   *::after {
@@ -210,6 +228,11 @@ html.lenis body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  /* The progress bar is feedback, not decoration: keep it scroll-linked. */
+  .scroll-progress {
+    animation-duration: auto !important;
   }
 }
 

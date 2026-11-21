@@ -43,7 +43,7 @@ export default function Journey() {
   useGSAP(() => {
     const mm = gsap.matchMedia();
 
-    mm.add("(min-width: 768px)", () => {
+    mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
       // Desktop: Pinning and Timeline Animation
       ScrollTrigger.create({
         trigger: containerRef.current,

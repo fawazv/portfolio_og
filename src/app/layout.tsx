@@ -65,9 +65,9 @@ export const metadata: Metadata = {
   },
 };
 
-import CustomCursor from "@/components/ui/cursor";
+
 import Background from "@/components/ui/background";
-import SmoothScroll from "@/components/ui/smooth-scroll";
+import ScrollManager from "@/components/ui/scroll-manager";
 
 export default function RootLayout({
   children,
@@ -122,10 +122,9 @@ export default function RootLayout({
             Skip to content
           </a>
 
-          <SmoothScroll />
+          <ScrollManager />
           <Background />
           <NoiseOverlay />
-          <CustomCursor />
           <Navbar />
           <main id="main-content">
             {children}

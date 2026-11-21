@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef } from "react";
 import Image from "next/image";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -65,33 +65,35 @@ export default function Hero() {
         duration: 1,
       }, "-=0.5");
 
-    // 3. Scroll Parallax Effect
-    // Cache innerWidth once to avoid multiple forced layout reads
-    const vw = window.innerWidth;
-    const isMobile = vw < 768;
-    gsap.to(parallaxRef.current, {
-      y: isMobile ? 40 : 100,
-      ease: "none",
-      // willChange handled by CSS class will-change-transform on wrapper
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top top",
-        end: "bottom top",
-        scrub: isMobile ? false : true,
-        toggleActions: isMobile ? "play none none reverse" : undefined,
-      },
-    });
+    // 3. Scroll parallax — only when the visitor hasn't asked for reduced motion
+    const mm = gsap.matchMedia();
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      // Cache innerWidth once to avoid multiple forced layout reads
+      const isMobile = window.innerWidth < 768;
+      gsap.to(parallaxRef.current, {
+        y: isMobile ? 40 : 100,
+        ease: "none",
+        // willChange handled by CSS class will-change-transform on wrapper
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: isMobile ? false : true,
+          toggleActions: isMobile ? "play none none reverse" : undefined,
+        },
+      });
 
-    gsap.to(nameRef.current, {
-      y: -50,
-      opacity: 0,
-      force3D: true,
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top top",
-        end: "50% top",
-        scrub: true,
-      }
+      gsap.to(nameRef.current, {
+        y: -50,
+        opacity: 0,
+        force3D: true,
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top top",
+          end: "50% top",
+          scrub: true,
+        },
+      });
     });
 
   }, { scope: containerRef });

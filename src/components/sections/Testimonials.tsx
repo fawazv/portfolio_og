@@ -29,9 +29,12 @@ const testimonials = [
   }
 ];
 
-function TestimonialCard({ item }: { item: typeof testimonials[0] }) {
+function TestimonialCard({ item, duplicate = false }: { item: typeof testimonials[0]; duplicate?: boolean }) {
   return (
-    <div className="cosmos-card rounded-2xl w-[85vw] md:w-[420px] shrink-0 overflow-hidden border-line p-8">
+    <div
+      className={`cosmos-card rounded-2xl w-[85vw] md:w-[420px] shrink-0 overflow-hidden border-line p-8 ${duplicate ? "motion-reduce:hidden" : ""}`}
+      aria-hidden={duplicate || undefined}
+    >
       <div className="flex h-full flex-col justify-between">
         <span className="text-5xl font-serif text-foreground/15 dark:text-foreground/15 leading-none block mb-2">&ldquo;</span>
         <p className="text-base md:text-lg font-light tracking-tight mb-8 text-foreground/85 leading-relaxed">
@@ -57,6 +60,8 @@ export default function Testimonials() {
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
+    // Reduced motion: no marquee; the cards sit in a wrapped row instead.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const halfWidth = track.scrollWidth / 2;
 
@@ -71,7 +76,7 @@ export default function Testimonials() {
     });
 
     // Pause marquee when section is off-screen
-    ScrollTrigger.create({
+    const visibility = ScrollTrigger.create({
       trigger: sectionRef.current,
       start: "top bottom",
       end: "bottom top",
@@ -89,6 +94,7 @@ export default function Testimonials() {
 
     return () => {
       tweenRef.current?.kill();
+      visibility.kill();
       track.removeEventListener("mouseenter", handleMouseEnter);
       track.removeEventListener("mouseleave", handleMouseLeave);
     };
@@ -108,9 +114,12 @@ export default function Testimonials() {
         <div className="absolute right-0 top-0 bottom-0 w-32 bg-linear-to-l from-background to-transparent z-20 pointer-events-none" />
 
         {/* GSAP translates this element */}
-        <div ref={trackRef} className="flex gap-8 w-max will-change-transform">
+        <div
+          ref={trackRef}
+          className="flex gap-8 w-max will-change-transform motion-reduce:w-auto motion-reduce:flex-wrap motion-reduce:justify-center motion-reduce:px-6"
+        >
           {doubled.map((item, index) => (
-            <TestimonialCard key={index} item={item} />
+            <TestimonialCard key={index} item={item} duplicate={index >= testimonials.length} />
           ))}
         </div>
       </div>

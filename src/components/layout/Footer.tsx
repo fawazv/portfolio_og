@@ -4,7 +4,8 @@ import { Github, Linkedin, ArrowUp, Mail, Download } from "lucide-react";
 
 export default function Footer() {
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    // Smooth by default via CSS scroll-behavior; instant under reduced motion
+    window.scrollTo({ top: 0 });
   };
 
   const currentYear = new Date().getFullYear();

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import Link from "next/link";
 import { RevealHeader } from "@/components/ui/reveal-header";
 
 export default function Error({
@@ -29,17 +30,17 @@ export default function Error({
             <div className="flex flex-col sm:flex-row gap-4">
                 <button
                     onClick={() => reset()}
-                    className="relative group overflow-hidden bg-secondary px-8 py-4 text-sm font-bold uppercase tracking-widest text-secondary-foreground transition-all hover:bg-secondary/90 shadow-[0_0_20px_-5px_var(--secondary)]"
+                    className="relative group overflow-hidden bg-accent px-8 py-4 text-sm font-bold uppercase tracking-widest text-on-accent transition-colors hover:bg-accent-hover"
                 >
                     <span className="relative z-10">Try Again</span>
                 </button>
 
-                <a
+                <Link
                     href="/"
                     className="relative group overflow-hidden border border-foreground/20 px-8 py-4 text-sm font-bold uppercase tracking-widest text-foreground transition-all hover:bg-foreground/5"
                 >
                     <span className="relative z-10">Return Home</span>
-                </a>
+                </Link>
             </div>
         </div>
     );

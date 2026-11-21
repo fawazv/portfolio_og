@@ -131,7 +131,7 @@ export function ArticleModal({ isOpen, onClose, article }: ArticleModalProps) {
                 {/* Scrollable content */}
                 <div
                     className="flex-1 overflow-y-auto custom-scrollbar overscroll-contain"
-                    data-lenis-prevent
+                   
                 >
                     {/* Hero image — shorter on mobile */}
                     <div className="relative h-44 sm:h-56 md:h-80 w-full shrink-0">
