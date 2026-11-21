@@ -95,7 +95,7 @@ export function ArticleModal({ isOpen, onClose, article }: ArticleModalProps) {
                 ref={modalRef}
                 className={[
                     "relative w-full flex flex-col",
-                    "bg-white dark:bg-[#0B0F23]",
+                    "bg-raised",
                     "border-t md:border border-foreground/10",
                     "shadow-2xl overflow-hidden",
                     // Mobile: full height bottom sheet with rounded top corners
@@ -114,7 +114,7 @@ export function ArticleModal({ isOpen, onClose, article }: ArticleModalProps) {
                 {/* Header */}
                 <div className="flex items-center justify-between px-4 py-3 md:px-6 md:py-4 border-b border-foreground/10 bg-white/50 dark:bg-black/30 backdrop-blur-md sticky top-0 z-10 shrink-0">
                     <div className="flex items-center gap-3 text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                        <span className="px-2 py-0.5 rounded-full border border-violet-500/30 bg-violet-500/10 text-violet-600 dark:text-violet-300">
+                        <span className="px-2 py-0.5 rounded-full border border-foreground/30 bg-sage/25 text-accent">
                             {article.category}
                         </span>
                         <span className="hidden sm:inline">{article.readTime}</span>
@@ -142,7 +142,7 @@ export function ArticleModal({ isOpen, onClose, article }: ArticleModalProps) {
                             className="object-cover"
                             priority
                         />
-                        <div className="absolute inset-0 bg-linear-to-t from-white dark:from-[#0B0F23] to-transparent" />
+                        <div className="absolute inset-0 bg-linear-to-t from-raised to-transparent" />
                     </div>
 
                     {/* Article body */}
@@ -151,7 +151,7 @@ export function ArticleModal({ isOpen, onClose, article }: ArticleModalProps) {
                             {article.title}
                         </h2>
 
-                        <p className="text-base md:text-lg text-muted-foreground mb-6 font-medium leading-relaxed italic border-l-2 border-violet-500/50 pl-4">
+                        <p className="text-base md:text-lg text-muted-foreground mb-6 font-medium leading-relaxed italic border-l-2 border-foreground/30 pl-4">
                             {article.excerpt}
                         </p>
 

@@ -115,15 +115,15 @@ export default function Blog() {
   }, []);
 
   return (
-    <section id="blog" ref={sectionRef} className="py-24 bg-background border-t border-violet-500/10 relative overflow-hidden">
+    <section id="blog" ref={sectionRef} className="py-24 bg-background border-t border-line relative overflow-hidden">
       <div className="absolute inset-0 dot-grid pointer-events-none" aria-hidden="true" />
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-violet-600/8 rounded-full blur-3xl pointer-events-none" aria-hidden="true" />
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-sage/25 rounded-full blur-3xl pointer-events-none" aria-hidden="true" />
       <div className="container mx-auto px-6 relative z-10">
         <div className="flex items-end justify-between mb-16">
           <RevealHeader className="text-4xl md:text-6xl font-bold uppercase tracking-tighter">
             Case <span className="gradient-text">Studies</span>
           </RevealHeader>
-          <div className="hidden md:block text-xs font-mono uppercase tracking-widest text-[#7B82A8]">
+          <div className="hidden md:block text-xs font-mono uppercase tracking-widest text-muted-foreground">
             Deep dives into my projects
           </div>
         </div>
@@ -132,7 +132,7 @@ export default function Blog() {
           {posts.map((post, index) => (
             <article
               key={index}
-              className={`blog-card group relative h-full overflow-hidden rounded-3xl cursor-pointer cosmos-card border-violet-500/15 hover:shadow-[0_0_40px_rgba(139,92,246,0.15)] transition-shadow duration-500 ${index === 0 ? "md:col-span-2" : "md:col-span-1"}`}
+              className={`blog-card group relative h-full overflow-hidden rounded-3xl cursor-pointer cosmos-card border-line hover:shadow-[0_0_40px_rgba(139,92,246,0.15)] transition-shadow duration-500 ${index === 0 ? "md:col-span-2" : "md:col-span-1"}`}
               onClick={() => setSelectedPost(post)}
               style={{ opacity: 0 }}
             >
@@ -148,20 +148,20 @@ export default function Blog() {
               </div>
 
               <div className="absolute inset-0 z-10 p-8 flex flex-col justify-end">
-                <div className="flex items-center gap-3 text-xs font-mono uppercase tracking-widest text-[#7B82A8] mb-3">
-                  <span className="px-2 py-1 border border-violet-500/30 rounded-full bg-violet-500/15 text-violet-300 backdrop-blur-md">{post.category}</span>
+                <div className="flex items-center gap-3 text-xs font-mono uppercase tracking-widest text-white/70 mb-3">
+                  <span className="px-2 py-1 border border-white/20 rounded-full bg-white/10 text-sage backdrop-blur-md">{post.category}</span>
                   <span>{post.readTime}</span>
                 </div>
-                <h3 className={`font-bold text-violet-300 lg:text-white mb-3 leading-tight lg:group-hover:text-violet-300 transition-colors ${index === 0 ? "text-3xl md:text-4xl" : "text-xl md:text-2xl"}`}>
+                <h3 className={`font-bold text-sage lg:text-white mb-3 leading-tight lg:group-hover:text-sage transition-colors ${index === 0 ? "text-3xl md:text-4xl" : "text-xl md:text-2xl"}`}>
                   {post.title}
                 </h3>
                 {index === 0 && (
-                  <p className="text-[#C0C4D8] text-base md:text-lg font-light line-clamp-2 max-w-xl">
+                  <p className="text-white/80 text-base md:text-lg font-light line-clamp-2 max-w-xl">
                     {post.excerpt}
                   </p>
                 )}
                 <div className="mt-6 transform translate-y-0 opacity-100 lg:translate-y-4 lg:opacity-0 lg:group-hover:translate-y-0 lg:group-hover:opacity-100 transition-all duration-300">
-                  <span className="text-sm font-mono uppercase tracking-wider text-cyan-400 flex items-center gap-2">
+                  <span className="text-sm font-mono uppercase tracking-wider text-sage flex items-center gap-2">
                     Read Article <span>→</span>
                   </span>
                 </div>

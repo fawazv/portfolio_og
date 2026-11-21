@@ -90,7 +90,7 @@ export default function About() {
             </RevealHeader>
 
             <div
-              className="about-reveal space-y-5 text-base md:text-lg text-[#6B6F8A] dark:text-[#7B82A8] leading-relaxed max-w-lg"
+              className="about-reveal space-y-5 text-base md:text-lg text-muted-foreground leading-relaxed max-w-lg"
               style={{ opacity: 0 }}
             >
               <p>
@@ -115,7 +115,7 @@ export default function About() {
                   <div className="text-3xl font-black tracking-tighter gradient-text">
                     {stat.value}
                   </div>
-                  <div className="text-xs font-mono uppercase tracking-widest text-[#6B6F8A] dark:text-[#7B82A8] mt-1">
+                  <div className="text-xs font-mono uppercase tracking-widest text-muted-foreground mt-1">
                     {stat.label}
                   </div>
                 </div>
@@ -125,18 +125,18 @@ export default function About() {
             {/* Job Seeking */}
             <div className="about-reveal space-y-6" style={{ opacity: 0 }}>
               <div>
-                <h3 className="text-xs font-mono uppercase tracking-[0.2em] text-violet-600 dark:text-cyan-400 mb-2">
+                <h3 className="text-xs font-mono uppercase tracking-[0.2em] text-accent mb-2">
                   What I&apos;m Looking For
                 </h3>
-                <p className="text-[#6B6F8A] dark:text-[#7B82A8] leading-relaxed">
+                <p className="text-muted-foreground leading-relaxed">
                   Fast-paced environments where I can build scalable systems from the ground up, contributing as a Full Stack or Backend Engineer.
                 </p>
               </div>
               <div>
-                <h3 className="text-xs font-mono uppercase tracking-[0.2em] text-violet-600 dark:text-cyan-400 mb-2">
+                <h3 className="text-xs font-mono uppercase tracking-[0.2em] text-accent mb-2">
                   Presently Learning
                 </h3>
-                <p className="text-[#6B6F8A] dark:text-[#7B82A8] leading-relaxed">
+                <p className="text-muted-foreground leading-relaxed">
                   Expanding my stack with React Native for cross-platform mobile apps, and Python for robust backend and AI integrations.
                 </p>
               </div>
@@ -145,7 +145,7 @@ export default function About() {
                   href="/resume.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="glow-btn-violet inline-flex items-center gap-2 px-6 py-3 bg-violet-600 hover:bg-violet-500 text-white font-semibold text-sm rounded-full transition-all"
+                  className="glow-btn-violet inline-flex items-center gap-2 px-6 py-3 bg-accent hover:bg-accent-hover text-on-accent font-semibold text-sm rounded-full transition-all"
                 >
                   Download Resume
                 </a>
@@ -153,10 +153,10 @@ export default function About() {
                   href="#contact"
                   className="inline-flex items-center gap-2 relative group overflow-hidden"
                 >
-                  <span className="block text-sm font-bold uppercase tracking-widest text-violet-600 dark:text-cyan-400 border-b border-violet-500/50 dark:border-cyan-400/50 pb-1 group-hover:border-violet-500 dark:group-hover:border-cyan-400 transition-colors duration-300">
+                  <span className="block text-sm font-bold uppercase tracking-widest text-accent border-b border-accent/50 pb-1 group-hover:border-accent transition-colors duration-300">
                     Get in Touch
                   </span>
-                  <span className="transform group-hover:translate-x-1 transition-transform duration-300 text-violet-600 dark:text-cyan-400">→</span>
+                  <span className="transform group-hover:translate-x-1 transition-transform duration-300 text-accent">→</span>
                 </a>
               </div>
             </div>
@@ -166,7 +166,7 @@ export default function About() {
           <div className="relative order-1 lg:order-2">
             <div
               ref={imageContainerRef}
-              className="relative h-[350px] sm:h-[450px] w-full md:h-[700px] overflow-hidden rounded-3xl ring-1 ring-violet-500/20 hover:ring-violet-500/50 transition-all duration-700"
+              className="relative h-[350px] sm:h-[450px] w-full md:h-[700px] overflow-hidden rounded-3xl ring-1 ring-foreground/15 hover:ring-foreground/40 transition-all duration-700"
               style={{ opacity: 0 }}
             >
               <div className="absolute inset-0 h-full w-full">

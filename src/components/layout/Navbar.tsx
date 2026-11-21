@@ -85,7 +85,7 @@ export default function Navbar() {
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out px-6 py-4 border-b",
           isScrolled
-            ? "bg-white/80 dark:bg-space/90 backdrop-blur-xl border-violet-500/10 py-3"
+            ? "bg-canvas/85 backdrop-blur-xl border-line py-3"
             : "bg-transparent border-transparent py-5"
         )}
         style={{ transform: "translateY(-100px)" }}
@@ -107,21 +107,21 @@ export default function Navbar() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="relative text-sm font-medium text-[#6B6F8A] dark:text-[#7B82A8] hover:text-space dark:hover:text-white transition-colors px-2 py-1 block
-                    after:block after:h-px after:bg-linear-to-r after:from-violet-500 after:to-cyan-400
+                className="relative text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-2 py-1 block
+                    after:block after:h-px after:bg-linear-to-r after:from-accent after:to-accent
                     after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:origin-left"
               >
                 {item.name}
               </Link>
             ))}
-            <div className="pl-4 border-l border-violet-500/20 flex gap-4 items-center">
+            <div className="pl-4 border-l border-line flex gap-4 items-center">
               <ThemeToggle />
               <a
                 href="/resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Download Resume (opens in new tab)"
-                className="hidden xl:inline-flex items-center justify-center px-4 py-1.5 text-sm rounded-full border border-violet-500/30 dark:border-violet-500/50 text-violet-600 dark:text-violet-300 hover:border-violet-500 dark:hover:border-violet-400 hover:bg-violet-500/10 transition-all"
+                className="hidden xl:inline-flex items-center justify-center px-4 py-1.5 text-sm rounded-full border border-foreground/30 dark:border-foreground/30 text-accent hover:border-foreground/30 dark:hover:border-foreground/30 hover:bg-sage/25 transition-all"
               >
                 Resume
               </a>
@@ -133,7 +133,7 @@ export default function Navbar() {
             <ThemeToggle />
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="z-50 p-2 text-foreground dark:text-white"
+              className="z-50 p-2 text-foreground"
               aria-expanded={isMobileMenuOpen}
               aria-label="Toggle navigation menu"
             >
@@ -146,18 +146,18 @@ export default function Navbar() {
       {/* Mobile Menu Overlay — always in DOM, GSAP controls display/opacity */}
       <div
         ref={mobileMenuRef}
-        className="fixed inset-0 z-40 bg-[#F5F5FF] dark:bg-space flex-col items-center justify-center overflow-hidden"
+        className="fixed inset-0 z-40 bg-canvas flex-col items-center justify-center overflow-hidden"
         style={{ display: "none", opacity: 0 }}
       >
         {/* Violet ambient orb */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-violet-400/15 dark:bg-violet-600/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-sage/25 dark:bg-sage/25 rounded-full blur-3xl pointer-events-none" />
         <div className="flex flex-col items-center gap-8 relative z-10">
           {navItems.map((item) => (
             <Link
               key={item.name}
               href={item.href}
               onClick={() => setIsMobileMenuOpen(false)}
-              className="text-3xl font-bold text-[#6B6F8A] dark:text-[#7B82A8] hover:gradient-text transition-all group"
+              className="text-3xl font-bold text-muted-foreground hover:gradient-text transition-all group"
             >
               <span className="group-hover:gradient-text">{item.name}</span>
             </Link>
@@ -168,7 +168,7 @@ export default function Navbar() {
             rel="noopener noreferrer"
             onClick={() => setIsMobileMenuOpen(false)}
             aria-label="Download Resume (opens in new tab)"
-            className="mt-2 px-6 py-2 text-lg rounded-full border border-violet-500/50 text-violet-300 hover:border-violet-400 hover:bg-violet-500/10 transition-all"
+            className="mt-2 px-6 py-2 text-lg rounded-full border border-foreground/30 text-accent hover:border-foreground/60 hover:bg-sage/25 transition-all"
           >
             Resume
           </a>

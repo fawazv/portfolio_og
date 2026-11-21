@@ -109,8 +109,8 @@ export default function Projects() {
               Selected Works
             </h2>
             <div className="flex items-center gap-4 opacity-90 pl-2">
-              <div className="w-24 h-1 bg-linear-to-r from-violet-500 to-cyan-400 rounded-full" />
-              <p className="text-[#6B6F8A] dark:text-[#7B82A8] font-mono text-sm tracking-widest uppercase">Interactive Gallery</p>
+              <div className="w-24 h-1 bg-linear-to-r from-accent to-accent/20 rounded-full" />
+              <p className="text-muted-foreground font-mono text-sm tracking-widest uppercase">Interactive Gallery</p>
             </div>
           </div>
         </div>
@@ -135,7 +135,7 @@ export default function Projects() {
 
 const ProjectCard = memo(function ProjectCard({ project, index }: { project: Project; index: number }) {
   return (
-    <div className="group relative w-full h-[50vh] md:h-[60vh] rounded-3xl overflow-hidden border border-violet-500/15 shadow-2xl group-hover:shadow-[0_0_60px_rgba(139,92,246,0.2)] transition-shadow duration-500">
+    <div className="group relative w-full h-[50vh] md:h-[60vh] rounded-3xl overflow-hidden border border-line shadow-2xl group-hover:shadow-[0_0_60px_rgba(139,92,246,0.2)] transition-shadow duration-500">
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
@@ -153,15 +153,15 @@ const ProjectCard = memo(function ProjectCard({ project, index }: { project: Pro
       <div className="absolute inset-0 bg-linear-to-t from-space via-space/85 to-transparent flex flex-col justify-end p-8 md:p-12">
         <div className="transform transition-transform duration-500 md:group-hover:-translate-y-4">
           <div className="flex items-center gap-4 mb-4">
-            <span className="text-xs font-mono tracking-widest uppercase px-3 py-1 border border-violet-500/30 rounded-full bg-violet-500/15 text-violet-300 backdrop-blur-sm">
+            <span className="text-xs font-mono tracking-widest uppercase px-3 py-1 border border-white/20 rounded-full bg-white/10 text-sage backdrop-blur-sm">
               {project.category}
             </span>
-            <span className="text-6xl font-black text-violet-500/10 pointer-events-none select-none absolute top-8 right-8 md:top-12 md:right-12 z-0">
+            <span className="text-6xl font-black text-foreground/10 pointer-events-none select-none absolute top-8 right-8 md:top-12 md:right-12 z-0">
               0{index + 1}
             </span>
           </div>
 
-          <h3 className="text-4xl md:text-5xl font-bold uppercase tracking-tight mb-4 text-white relative z-10 group-hover:text-violet-300 transition-colors duration-300">
+          <h3 className="text-4xl md:text-5xl font-bold uppercase tracking-tight mb-4 text-white relative z-10 group-hover:text-sage transition-colors duration-300">
             {project.title}
           </h3>
 
@@ -177,7 +177,7 @@ const ProjectCard = memo(function ProjectCard({ project, index }: { project: Pro
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`View live demo of ${project.title} (opens in new tab)`}
-                className="flex items-center gap-2 text-white hover:text-cyan-400 transition-colors uppercase text-sm font-mono font-medium tracking-wider"
+                className="flex items-center gap-2 text-white hover:text-sage transition-colors uppercase text-sm font-mono font-medium tracking-wider"
               >
                 View Project <ArrowRight size={16} />
               </a>
@@ -188,7 +188,7 @@ const ProjectCard = memo(function ProjectCard({ project, index }: { project: Pro
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`View ${project.title} source code on GitHub (opens in new tab)`}
-              className="flex items-center gap-2 text-[#7B82A8] hover:text-white transition-colors uppercase text-sm font-mono font-medium tracking-wider"
+              className="flex items-center gap-2 text-white/70 hover:text-white transition-colors uppercase text-sm font-mono font-medium tracking-wider"
             >
               <Github size={20} />
               <span>Source</span>

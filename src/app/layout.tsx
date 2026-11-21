@@ -1,24 +1,31 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, JetBrains_Mono, Playfair_Display } from "next/font/google";
+import { Host_Grotesk, JetBrains_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import NoiseOverlay from "@/components/ui/noise-overlay";
 
-const plusJakarta = Plus_Jakarta_Sans({
-  variable: "--font-plus-jakarta",
+// Signal Violet type system: Host Grotesk (display + text), JetBrains Mono
+// (labels, data), Instrument Serif italic (one accent word at most per screen).
+const hostGrotesk = Host_Grotesk({
+  variable: "--font-host-grotesk",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
-const playfair = Playfair_Display({
-  variable: "--font-serif",
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
   subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -68,7 +75,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${hostGrotesk.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         <script
           type="application/ld+json"
@@ -96,17 +107,17 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${plusJakarta.variable} ${jetbrainsMono.variable} ${playfair.variable} antialiased`}
+        className="antialiased"
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
-          enableSystem
+          defaultTheme="light"
+          enableSystem={false}
           disableTransitionOnChange
         >
           <a
             href="#main-content"
-            className="sr-only focus:not-sr-only focus:absolute focus:z-9999 focus:p-4 focus:bg-background focus:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-neon-blue"
+            className="sr-only focus:not-sr-only focus:absolute focus:z-9999 focus:p-4 focus:bg-canvas focus:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           >
             Skip to content
           </a>

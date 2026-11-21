@@ -31,7 +31,7 @@ export function ThemeToggle() {
         }}
         aria-hidden={isDark}
       >
-        <Sun className="h-5 w-5 text-black" />
+        <Sun className="h-5 w-5 text-foreground" />
       </span>
 
       {/* Moon icon — visible in light mode to switch to dark */}
@@ -43,7 +43,7 @@ export function ThemeToggle() {
         }}
         aria-hidden={!isDark}
       >
-        <Moon className="h-5 w-5 text-white" />
+        <Moon className="h-5 w-5 text-foreground" />
       </span>
 
       <span className="sr-only">Toggle theme</span>

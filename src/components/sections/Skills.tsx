@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 const skillCategories = [
   {
     name: "Frontend",
-    dot: "bg-violet-400",
+    dot: "bg-accent",
     skills: [
       "JavaScript (ES6+)", "TypeScript", "React.js", "Next.js",
       "HTML5", "CSS3", "Tailwind CSS", "Vite", "Material UI",
@@ -68,17 +68,17 @@ export default function Skills() {
     <section
       id="skills"
       ref={sectionRef}
-      className="py-24 bg-background border-y border-violet-500/10 relative overflow-hidden"
+      className="py-24 bg-background border-y border-line relative overflow-hidden"
     >
       <div className="absolute inset-0 dot-grid pointer-events-none" aria-hidden="true" />
-      <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[500px] h-[500px] bg-violet-400/6 dark:bg-violet-600/10 rounded-full blur-[120px] pointer-events-none" aria-hidden="true" />
+      <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[500px] h-[500px] bg-sage/25 dark:bg-sage/25 rounded-full blur-[120px] pointer-events-none" aria-hidden="true" />
 
       <div className="container mx-auto px-6 mb-14">
         <div className="flex items-center gap-6">
-          <h2 className="text-violet-600 dark:text-violet-400 font-mono text-xs tracking-[0.3em] uppercase whitespace-nowrap">
+          <h2 className="text-accent font-mono text-xs tracking-[0.3em] uppercase whitespace-nowrap">
             Tech Stack
           </h2>
-          <div className="flex-1 h-px bg-linear-to-r from-violet-500/40 to-transparent" />
+          <div className="flex-1 h-px bg-linear-to-r from-foreground/20 to-transparent" />
         </div>
       </div>
 
@@ -88,18 +88,18 @@ export default function Skills() {
             <div key={category.name} className="skill-category" style={{ opacity: 0 }}>
               <div className="flex items-center gap-4 mb-6">
                 <span className={`w-1.5 h-1.5 rounded-full ${category.dot} shrink-0`} />
-                <h3 className="text-xs font-mono uppercase tracking-[0.2em] text-[#6B6F8A] dark:text-[#7B82A8] whitespace-nowrap">
+                <h3 className="text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground whitespace-nowrap">
                   {category.name}
                 </h3>
-                <div className="flex-1 h-px bg-violet-500/10" />
+                <div className="flex-1 h-px bg-sage/25" />
               </div>
               <div className="flex flex-wrap gap-3 md:gap-4">
                 {category.skills.map((skill) => (
                   <div
                     key={skill}
-                    className="group skill-pill rounded-full px-4 py-2 cursor-default hover:border-violet-500/50 transition-colors duration-200"
+                    className="group skill-pill rounded-full px-4 py-2 cursor-default hover:border-foreground/30 transition-colors duration-200"
                   >
-                    <span className="text-sm font-mono text-[#6B6F8A] dark:text-[#7B82A8] group-hover:text-space dark:group-hover:text-white transition-colors duration-300">
+                    <span className="text-sm font-mono text-muted-foreground group-hover:text-foreground transition-colors duration-300">
                       {skill}
                     </span>
                   </div>

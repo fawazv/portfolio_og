@@ -150,22 +150,22 @@ export default function Hero() {
         <div className="w-full max-w-none perspective-1000">
           <h1
             ref={nameRef}
-            className="text-4xl sm:text-6xl md:text-8xl lg:text-[10rem] font-bold tracking-tighter uppercase mb-6 leading-none text-foreground dark:text-white md:drop-shadow-2xl"
+            className="text-4xl sm:text-6xl md:text-8xl lg:text-[10rem] font-bold tracking-tighter uppercase mb-6 leading-none text-foreground md:drop-shadow-2xl"
             aria-label="Mohammed Fawaz"
           >
             <div className="block" aria-hidden="true">{renderSplitText("Mohammed")}</div>
-            <div className="block text-violet-600 dark:text-violet-400 drop-shadow-lg" aria-hidden="true">{renderSplitText("Fawaz")}</div>
+            <div className="block text-accent drop-shadow-lg" aria-hidden="true">{renderSplitText("Fawaz")}</div>
           </h1>
 
           <p
             ref={roleRef}
-            className="text-lg md:text-2xl font-light tracking-[0.2em] uppercase text-violet-600 dark:text-cyan-400 max-w-2xl ml-auto mr-0 md:backdrop-blur-md py-2 px-6 rounded-full border border-violet-500/20 dark:border-cyan-500/20 bg-violet-500/5 dark:bg-cyan-500/10 opacity-0"
+            className="text-lg md:text-2xl font-light tracking-[0.2em] uppercase text-accent max-w-2xl ml-auto mr-0 md:backdrop-blur-md py-2 px-6 rounded-full border border-accent/25 bg-accent/8 opacity-0"
           >
             Full Stack Developer
           </p>
 
           {/* Value Proposition Tagline */}
-          <p ref={taglineRef} className="text-sm md:text-base font-serif italic text-muted-foreground dark:text-[#7B82A8] mt-3 mr-1 tracking-wide opacity-0">
+          <p ref={taglineRef} className="text-sm md:text-base font-serif italic text-muted-foreground mt-3 mr-1 tracking-wide opacity-0">
             Building scalable systems with React, Node.js &amp; Cloud Architecture
           </p>
 
@@ -177,7 +177,7 @@ export default function Hero() {
             <a
               href="#projects"
               className="glow-btn-violet px-8 py-3.5 text-sm font-bold uppercase tracking-widest rounded-full
-                bg-violet-600 hover:bg-violet-500 text-white transition-all duration-300"
+                bg-accent hover:bg-accent-hover text-on-accent transition-all duration-300"
             >
               Explore My Work
             </a>
@@ -187,8 +187,8 @@ export default function Hero() {
               rel="noopener noreferrer"
               aria-label="Download Resume (opens in new tab)"
               className="px-8 py-3.5 text-sm font-bold uppercase tracking-widest rounded-full
-                border border-violet-500/40 text-violet-600 dark:text-violet-300
-                hover:border-violet-500 dark:hover:border-violet-400 hover:bg-violet-500/10
+                border border-foreground/30 text-accent
+                hover:border-foreground/30 dark:hover:border-foreground/30 hover:bg-sage/25
                 transition-all duration-300"
             >
               Download Resume
@@ -202,8 +202,8 @@ export default function Hero() {
         ref={scrollRef}
         className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 opacity-0"
       >
-        <span className="text-[10px] uppercase tracking-widest text-[#6B6F8A] dark:text-[#7B82A8]">Scroll</span>
-        <div className="w-px h-16 bg-linear-to-b from-transparent via-violet-500/50 dark:via-cyan-400/50 to-transparent" />
+        <span className="text-[10px] uppercase tracking-widest text-muted-foreground">Scroll</span>
+        <div className="w-px h-16 bg-linear-to-b from-transparent via-accent/50 to-transparent" />
       </div>
 
     </section>
