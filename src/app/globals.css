@@ -317,6 +317,13 @@ section[id] {
     scroll-behavior: auto !important;
   }
 
+  /* No morphing between pages */
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+
   /* The progress bar is feedback, not decoration: keep it scroll-linked. */
   .scroll-progress {
     animation-duration: auto !important;

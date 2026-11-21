@@ -1,202 +1,140 @@
-"use client";
-
-import { memo, useRef } from "react";
 import Image from "next/image";
-import { Github, ArrowRight } from "lucide-react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
+import { ArrowRight, ArrowUpRight, Github } from "lucide-react";
+import { projects, type Project } from "@/content/projects";
+import { Scribble } from "@/components/ui/scribble";
+import { TransitionLink } from "@/components/ui/transition-link";
 
-gsap.registerPlugin(ScrollTrigger);
+/*
+ * Selected work — Kitchen Table cards. Replaces the pinned horizontal gallery:
+ * no scroll-jacking, and every link (case study, live demo, source) is always
+ * visible and reachable by keyboard. The image shares a view-transition-name
+ * with the case-study hero so it morphs into /work/[slug].
+ */
 
-interface Project {
-  title: string;
-  category: string;
-  image: string;
-  description: string;
-  liveUrl: string;
-  githubUrl: string;
-}
-
-const projects = [
-  {
-    title: "Elite Hotel",
-    category: "Full Stack System",
-    image: "/images/projects/elite-hotel.webp",
-    description: "Microservices-based Hotel Management System with secure authentication, billing, and integrated payments using Node.js, Express, and Docker.",
-    liveUrl: "",
-    githubUrl: "https://github.com/fawazv/Elite-hotel"
-  },
-  {
-    title: "Nxtcart",
-    category: "E-commerce Platform",
-    image: "/images/projects/nxtcart.webp",
-    description: "Full-stack e-commerce application with customer features, authentication used Auth.js, payments via Stripe/PayPal, and an admin dashboard.",
-    liveUrl: "https://nxt-cart.vercel.app/",
-    githubUrl: "https://github.com/fawazv/nxt-cart"
-  },
-  {
-    title: "Dropbox Clone",
-    category: "Cloud Architecture",
-    image: "/images/projects/dropbox-clone.webp",
-    description: "High-performance file storage app built with Next.js and Firebase featuring drag-and-drop uploads, smart caching, and secure authentication.",
-    liveUrl: "https://dropbox-clone-peach-seven.vercel.app/",
-    githubUrl: "https://github.com/fawazv/dropbox-clone"
-  },
-  {
-    title: "Blog Platform",
-    category: "Distributed System",
-    image: "/images/projects/blog-platform.webp",
-    description: "Scalable blog platform with Node.js, Express, MongoDB, RabbitMQ, and Docker, featuring microservices architecture and CI/CD pipelines.",
-    liveUrl: "",
-    githubUrl: "https://github.com/fawazv/Blog-microservice"
-  },
-  {
-    title: "Pixabay Gallery",
-    category: "Frontend Experience",
-    image: "/images/projects/pixabay-gallery.webp",
-    description: "Responsive image gallery built with React, Vite, and Tailwind CSS. Features infinite scroll, masonry layout, and advanced search.",
-    liveUrl: "",
-    githubUrl: "https://github.com/fawazv/1.-react-tailwind-pixabay-gallery"
-  }
-];
+const liveCount = projects.filter((p) => p.liveUrl).length;
 
 export default function Projects() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useGSAP(() => {
-    // Only enable horizontal scroll on larger screens for better performance/UX on mobile
-    const mm = gsap.matchMedia();
-
-    mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
-      if (!containerRef.current) return;
-
-      const totalWidth = containerRef.current.scrollWidth;
-      const viewportWidth = window.innerWidth;
-      const xMovement = -(totalWidth - viewportWidth + 100); // 100px buffer
-
-      gsap.to(containerRef.current, {
-        x: xMovement,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          pin: true,
-          scrub: 1,
-          start: "top top",
-          end: () => `+=${Math.max(containerRef.current!.scrollWidth - window.innerWidth, 2000)}`,
-          invalidateOnRefresh: true,
-          anticipatePin: 1,
-        },
-      });
-
-      // invalidateOnRefresh:true above already handles recalculation on resize
-    });
-
-  }, { scope: sectionRef });
+  const [lead, ...rest] = projects;
 
   return (
-    <section
-      id="projects"
-      ref={sectionRef}
-      className="relative z-20 bg-background overflow-hidden"
-    >
-      <div className="py-20 md:h-screen md:flex md:flex-col justify-center md:motion-reduce:h-auto">
-        {/* Header - Now part of flex flow, no absolute positioning */}
-        <div className="container mx-auto px-6 mb-12">
-          <div className="pl-6">
-            <h2 className="text-5xl md:text-8xl font-black uppercase tracking-tighter mb-4 gradient-text">
-              Selected Works
+    <section id="projects" aria-labelledby="projects-heading" className="relative py-24 md:py-32">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="mb-12 flex flex-col gap-6 md:mb-16 md:flex-row md:items-end md:justify-between">
+          <div className="flex flex-col gap-4">
+            <p className="font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground">Selected work</p>
+            <h2
+              id="projects-heading"
+              className="font-serif text-[clamp(2.5rem,5vw,4.25rem)] font-normal leading-[1] tracking-[-0.03em] text-foreground"
+            >
+              Things I&apos;ve <Scribble delay="0.2s">shipped</Scribble>.
             </h2>
-            <div className="flex items-center gap-4 opacity-90 pl-2">
-              <div className="w-24 h-1 bg-linear-to-r from-accent to-accent/20 rounded-full" />
-              <p className="text-muted-foreground font-mono text-sm tracking-widest uppercase">Interactive Gallery</p>
-            </div>
           </div>
+          <p className="max-w-sm text-muted-foreground md:text-right">
+            {projects.length} projects, {liveCount} with live demos. Each one has a page on how it&apos;s built.
+          </p>
         </div>
 
-        {/* Projects Container - Added margin top for spacing */}
-        <div
-          ref={containerRef}
-          className="flex flex-col md:flex-row gap-20 md:gap-32 px-6 md:px-0 md:pl-[10vw] md:motion-reduce:flex-col md:motion-reduce:gap-16 md:motion-reduce:px-[10vw]"
-        >
-          {projects.map((project, index) => (
-            <div key={index} className="shrink-0 w-full md:w-[60vw] lg:w-[50vw] md:motion-reduce:w-full lg:motion-reduce:w-full">
-              <ProjectCard project={project} index={index} />
-            </div>
+        <ul className="grid grid-cols-[minmax(0,1fr)] gap-6 md:grid-cols-2">
+          <li className="md:col-span-2">
+            <WorkCard project={lead} wide />
+          </li>
+          {rest.map((p) => (
+            <li key={p.slug}>
+              <WorkCard project={p} />
+            </li>
           ))}
-          {/* Extra spacer for horizontal scroll end feel */}
-          <div className="shrink-0 w-0 md:w-[10vw] motion-reduce:hidden" />
-        </div>
+        </ul>
       </div>
     </section>
   );
 }
 
-const ProjectCard = memo(function ProjectCard({ project, index }: { project: Project; index: number }) {
+function WorkCard({ project: p, wide = false }: { project: Project; wide?: boolean }) {
+  const href = `/work/${p.slug}`;
   return (
-    <div className="group relative w-full h-[50vh] md:h-[60vh] rounded-3xl overflow-hidden border border-line shadow-2xl group-hover:shadow-[0_0_60px_rgba(139,92,246,0.2)] transition-shadow duration-500">
-      {/* Background Image */}
-      <div className="absolute inset-0">
-        <Image
-          src={project.image}
-          alt={`${project.title} — ${project.category} project screenshot`}
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 60vw, 50vw"
-          className="object-cover transition-transform duration-700 group-hover:scale-105"
-        />
-        {/* Dark overlay for readability */}
-        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-500" />
-      </div>
+    <article
+      className={`group/card flex h-full flex-col overflow-hidden rounded-[24px] border border-line bg-raised transition-[transform,border-color] duration-300 hover:-translate-y-0.5 hover:border-foreground/20 ${
+        wide ? "lg:grid lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)]" : ""
+      }`}
+    >
+      {/* Image → case study (duplicate of the title link, so hidden from AT and tab order) */}
+      <TransitionLink href={href} tabIndex={-1} aria-hidden="true" className="relative block overflow-hidden bg-surface">
+        <span
+          className={`relative block ${wide ? "aspect-[16/10] lg:aspect-auto lg:h-full lg:min-h-[420px]" : "aspect-[16/10]"}`}
+          style={{ viewTransitionName: `work-${p.slug}` }}
+        >
+          <Image
+            src={p.image}
+            alt=""
+            fill
+            sizes={wide ? "(max-width: 1024px) 100vw, 60vw" : "(max-width: 768px) 100vw, 50vw"}
+            className="object-cover transition-transform duration-500 group-hover/card:scale-[1.03]"
+          />
+        </span>
+      </TransitionLink>
 
-      {/* Content Overlay */}
-      <div className="absolute inset-0 bg-linear-to-t from-space via-space/85 to-transparent flex flex-col justify-end p-8 md:p-12">
-        <div className="transform transition-transform duration-500 md:group-hover:-translate-y-4">
-          <div className="flex items-center gap-4 mb-4">
-            <span className="text-xs font-mono tracking-widest uppercase px-3 py-1 border border-white/20 rounded-full bg-white/10 text-sage backdrop-blur-sm">
-              {project.category}
+      <div className={`flex flex-1 flex-col gap-4 p-6 ${wide ? "lg:justify-center lg:p-10" : ""}`}>
+        <p className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs uppercase tracking-[0.14em] text-muted-foreground">
+          <span>{p.kind}</span>
+          <span aria-hidden="true">·</span>
+          <span>{p.year}</span>
+          {p.liveUrl && (
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-sage-soft px-2 py-0.5 text-[10.5px] text-sage-deep">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#2F7A3E]" aria-hidden="true" />
+              Live
             </span>
-            <span className="text-6xl font-black text-foreground/10 pointer-events-none select-none absolute top-8 right-8 md:top-12 md:right-12 z-0">
-              0{index + 1}
-            </span>
-          </div>
+          )}
+        </p>
 
-          <h3 className="text-4xl md:text-5xl font-bold uppercase tracking-tight mb-4 text-white relative z-10 group-hover:text-sage transition-colors duration-300">
-            {project.title}
-          </h3>
+        <h3 className={`font-serif font-normal leading-[1.02] tracking-[-0.02em] text-foreground ${wide ? "text-5xl" : "text-4xl"}`}>
+          <TransitionLink href={href} className="rounded-sm hover:underline hover:decoration-tomato hover:decoration-2 hover:underline-offset-4">
+            {p.title}
+          </TransitionLink>
+        </h3>
 
-          <p className="text-gray-300 text-lg leading-relaxed mb-6 max-w-2xl relative z-10 line-clamp-3 md:line-clamp-none">
-            {project.description}
-          </p>
+        <p className="max-w-[52ch] leading-relaxed text-muted-foreground">{p.summary}</p>
 
-          {/* Action Buttons - Always visible on mobile, fade in/slide up on desktop hover */}
-          <div className="flex items-center gap-6 md:opacity-0 md:translate-y-4 md:group-hover:opacity-100 md:group-hover:translate-y-0 transition-all duration-500">
-            {project.liveUrl && (
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`View live demo of ${project.title} (opens in new tab)`}
-                className="flex items-center gap-2 text-white hover:text-sage transition-colors uppercase text-sm font-mono font-medium tracking-wider"
-              >
-                View Project <ArrowRight size={16} />
-              </a>
-            )}
-            {project.liveUrl && <div className="h-4 w-px bg-white/20" />}
+        <ul className="flex flex-wrap gap-1.5" aria-label="Stack">
+          {p.stack.slice(0, wide ? 6 : 4).map((s) => (
+            <li key={s} className="rounded-full bg-surface px-2.5 py-1 font-mono text-[11.5px] text-foreground/80">
+              {s}
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-auto flex flex-wrap items-center gap-2 pt-2">
+          <TransitionLink
+            href={href}
+            aria-label={`${p.title} case study`}
+            className="group/btn inline-flex items-center gap-2 rounded-full bg-accent px-4 py-2.5 text-sm font-semibold text-on-accent transition-colors hover:bg-accent-hover"
+          >
+            Case study
+            <ArrowRight size={15} className="transition-transform group-hover/btn:translate-x-0.5" aria-hidden="true" />
+          </TransitionLink>
+          {p.liveUrl && (
             <a
-              href={project.githubUrl}
+              href={p.liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={`View ${project.title} source code on GitHub (opens in new tab)`}
-              className="flex items-center gap-2 text-white/70 hover:text-white transition-colors uppercase text-sm font-mono font-medium tracking-wider"
+              aria-label={`${p.title} live demo (opens in new tab)`}
+              className="inline-flex items-center gap-1.5 rounded-full border border-foreground/25 px-4 py-2.5 text-sm font-semibold text-foreground transition-colors hover:border-foreground/60"
             >
-              <Github size={20} />
-              <span>Source</span>
+              Live demo
+              <ArrowUpRight size={15} aria-hidden="true" />
             </a>
-          </div>
+          )}
+          <a
+            href={p.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${p.title} source on GitHub (opens in new tab)`}
+            className="inline-flex items-center gap-1.5 rounded-full px-3 py-2.5 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
+          >
+            <Github size={15} aria-hidden="true" />
+            Source
+          </a>
         </div>
       </div>
-    </div>
+    </article>
   );
-});
-
+}

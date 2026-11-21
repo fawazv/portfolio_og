@@ -64,6 +64,9 @@ export default function Navbar() {
   const progressRef = useRef<HTMLDivElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const onHome = pathname === "/";
+  // On case-study pages the section links point back to the home page.
+  const hrefFor = (hash: string) => (onHome ? hash : `/${hash}`);
 
   // Entrance: slide down once (instant under reduced motion via ScrollManager)
   useEffect(() => {
@@ -187,11 +190,11 @@ export default function Navbar() {
           {/* Desktop Nav */}
           <div className="hidden xl:flex items-center gap-6">
             {navItems.map((item) => {
-              const isActive = activeId === item.href.slice(1);
+              const isActive = onHome && activeId === item.href.slice(1);
               return (
                 <Link
                   key={item.name}
-                  href={item.href}
+                  href={hrefFor(item.href)}
                   aria-current={isActive ? "location" : undefined}
                   className={cn(
                     "relative text-sm font-medium transition-colors px-2 py-1 block",
@@ -253,11 +256,11 @@ export default function Navbar() {
         <div className="flex flex-col items-center gap-6 relative z-10">
           <StatusChip className="mb-2" />
           {navItems.map((item) => {
-            const isActive = activeId === item.href.slice(1);
+            const isActive = onHome && activeId === item.href.slice(1);
             return (
               <Link
                 key={item.name}
-                href={item.href}
+                href={hrefFor(item.href)}
                 onClick={() => setIsMobileMenuOpen(false)}
                 aria-current={isActive ? "location" : undefined}
                 className={cn(

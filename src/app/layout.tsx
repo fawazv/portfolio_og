@@ -68,6 +68,7 @@ export const metadata: Metadata = {
 
 import Background from "@/components/ui/background";
 import ScrollManager from "@/components/ui/scroll-manager";
+import { ViewTransitionResolver } from "@/components/ui/transition-link";
 
 export default function RootLayout({
   children,
@@ -123,6 +124,7 @@ export default function RootLayout({
           </a>
 
           <ScrollManager />
+          <ViewTransitionResolver />
           <Background />
           <NoiseOverlay />
           <Navbar />
