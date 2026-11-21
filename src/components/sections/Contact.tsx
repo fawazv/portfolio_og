@@ -15,6 +15,8 @@ export default function Contact() {
         email: "",
         message: "",
     });
+    // Honeypot: hidden from people, filled in by bots. The API drops those messages.
+    const [company, setCompany] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitStatus, setSubmitStatus] = useState<{
         type: "success" | "error" | null;
@@ -82,7 +84,7 @@ export default function Contact() {
             const res = await fetch("/api/contact", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formData),
+                body: JSON.stringify({ ...formData, company }),
             });
             const data = await res.json();
             if (res.ok) {
@@ -167,6 +169,18 @@ export default function Contact() {
                             noValidate
                             aria-label="Contact form"
                         >
+                            <div className="absolute -left-[9999px] h-px w-px overflow-hidden" aria-hidden="true">
+                                <label htmlFor="company">Company</label>
+                                <input
+                                    type="text"
+                                    id="company"
+                                    name="company"
+                                    tabIndex={-1}
+                                    autoComplete="off"
+                                    value={company}
+                                    onChange={(e) => setCompany(e.target.value)}
+                                />
+                            </div>
                             <InputField
                                 id="name"
                                 label="What's your name?"

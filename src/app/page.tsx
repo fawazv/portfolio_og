@@ -12,7 +12,7 @@ const Contact = dynamic(() => import("@/components/sections/Contact"));
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
+    <div className="min-h-screen">
       <Hero />
       <About />
       <Skills />
@@ -21,7 +21,7 @@ export default function Home() {
       <Testimonials />
       <Blog />
       <Contact />
-    </main>
+    </div>
   );
 }
 

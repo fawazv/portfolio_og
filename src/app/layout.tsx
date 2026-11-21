@@ -39,21 +39,14 @@ export const metadata: Metadata = {
     title: "Mohammed Fawaz | Full Stack Developer — React, Node.js, Microservices",
     description:
       "Full Stack Developer specializing in React, Next.js, Node.js & Microservices. Open to remote & hybrid roles.",
-    images: [
-      {
-        url: "/og-image.webp",
-        width: 1200,
-        height: 630,
-        alt: "Mohammed Fawaz — Full Stack Developer Portfolio",
-      },
-    ],
+    // Image comes from src/app/opengraph-image.tsx
   },
   twitter: {
     card: "summary_large_image",
     title: "Mohammed Fawaz | Full Stack Developer",
     description:
       "Full Stack Developer specializing in React, Next.js, Node.js & Microservices. Open to remote & hybrid roles.",
-    images: ["/og-image.webp"],
+    // Image comes from src/app/twitter-image.tsx
   },
   robots: {
     index: true,
