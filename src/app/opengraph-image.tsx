@@ -4,11 +4,11 @@ export const alt = "Mohammed Fawaz — Full Stack Developer Portfolio";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-// Load a Google font as TTF for Satori (next/og). Falls back to the default
-// sans-serif if the font cannot be fetched at build time.
-async function loadGoogleFont(family: string, weight: number, text: string) {
+// Load a Google font as TTF for Satori (next/og). `spec` is the css2 family
+// spec, e.g. "Host+Grotesk:wght@400". Falls back to the default sans-serif.
+async function loadGoogleFont(spec: string, text: string) {
   try {
-    const url = `https://fonts.googleapis.com/css2?family=${family.replace(/ /g, "+")}:wght@${weight}&text=${encodeURIComponent(text)}`;
+    const url = `https://fonts.googleapis.com/css2?family=${spec}&text=${encodeURIComponent(text)}`;
     const css = await (await fetch(url)).text();
     const src = css.match(/src: url\((.+?)\) format\('(?:opentype|truetype)'\)/);
     if (!src) return null;
@@ -19,55 +19,49 @@ async function loadGoogleFont(family: string, weight: number, text: string) {
   }
 }
 
-// Sage & Tomato brand (Marker layout)
+// Sage & Tomato brand (Kitchen Table layout)
 const PAPER = "#F6F3EC";
-const OAT = "#ECE7DC";
+const CARD = "#FFFDF8";
 const INK = "#1B1E19";
-const MUTED = "#5D6358";
 const SAGE = "#A9BDA3";
-const MARKER = "#E8694F";
 const TOMATO = "#D9432B";
 const LIVE = "#2F7A3E";
 
 // Share card for LinkedIn, X and messaging apps.
 export default async function OpenGraphImage() {
-  const words = "Fawaz.Mohammed FawazFull stack developerNode.js services React Next.js Docker AWSOpen to work Kerala, India fawazv.online·5 projects shipped2 live demos";
-  const [bold, regular] = await Promise.all([
-    loadGoogleFont("Host Grotesk", 600, words),
-    loadGoogleFont("Host Grotesk", 400, words),
+  const serifText = "Mohammed Fawaz";
+  const sansText =
+    "Fawaz.Full-stack developer · Kerala, IndiaNode.js services, React on topOpen to work5 projects shipped2 live demosfawazv.online·";
+  const [serif, sans, sansBold] = await Promise.all([
+    loadGoogleFont("Instrument+Serif", serifText),
+    loadGoogleFont("Host+Grotesk:wght@400", sansText),
+    loadGoogleFont("Host+Grotesk:wght@600", sansText),
   ]);
   const fonts = [
-    ...(bold ? [{ name: "Host Grotesk", data: bold, weight: 600 as const, style: "normal" as const }] : []),
-    ...(regular ? [{ name: "Host Grotesk", data: regular, weight: 400 as const, style: "normal" as const }] : []),
+    ...(serif ? [{ name: "Instrument Serif", data: serif, weight: 400 as const, style: "normal" as const }] : []),
+    ...(sans ? [{ name: "Host Grotesk", data: sans, weight: 400 as const, style: "normal" as const }] : []),
+    ...(sansBold ? [{ name: "Host Grotesk", data: sansBold, weight: 600 as const, style: "normal" as const }] : []),
   ];
+  const sansFamily = sans ? "Host Grotesk" : "sans-serif";
+  const serifFamily = serif ? "Instrument Serif" : "serif";
 
   return new ImageResponse(
     (
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          background: PAPER,
-          padding: 28,
-          fontFamily: fonts.length ? "Host Grotesk" : "sans-serif",
-        }}
-      >
+      <div style={{ width: "100%", height: "100%", display: "flex", background: PAPER, padding: 30, fontFamily: sansFamily }}>
         <div
           style={{
             flex: 1,
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
-            border: "1px solid rgba(27,30,25,0.12)",
-            borderRadius: 28,
-            padding: "48px 56px",
+            background: SAGE,
+            borderRadius: 30,
+            padding: "46px 56px",
             color: INK,
-            background: PAPER,
           }}
         >
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <div style={{ display: "flex", fontSize: 34, fontWeight: 600, letterSpacing: -1 }}>
+            <div style={{ display: "flex", fontSize: 32, fontWeight: 600, letterSpacing: -1 }}>
               Fawaz<span style={{ color: TOMATO }}>.</span>
             </div>
             <div
@@ -76,7 +70,7 @@ export default async function OpenGraphImage() {
                 alignItems: "center",
                 gap: 12,
                 fontSize: 23,
-                background: OAT,
+                background: CARD,
                 borderRadius: 999,
                 padding: "10px 22px",
               }}
@@ -86,51 +80,33 @@ export default async function OpenGraphImage() {
             </div>
           </div>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
-            <div style={{ display: "flex", alignItems: "flex-end", fontSize: 118, fontWeight: 600, letterSpacing: -6, lineHeight: 1 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+            <div style={{ display: "flex", alignItems: "flex-end", fontFamily: serifFamily, fontSize: 132, lineHeight: 1, letterSpacing: -3 }}>
               <span>Mohammed&nbsp;</span>
-              <span style={{ display: "flex", position: "relative", padding: "0 10px" }}>
-                <span
-                  style={{
-                    position: "absolute",
-                    left: 0,
-                    right: 0,
-                    top: 18,
-                    bottom: 4,
-                    background: MARKER,
-                    borderRadius: 14,
-                    transform: "rotate(-1.2deg)",
-                  }}
-                />
-                <span style={{ position: "relative" }}>Fawaz</span>
+              <span style={{ display: "flex", flexDirection: "column", position: "relative" }}>
+                <span>Fawaz</span>
+                <svg
+                  width="292"
+                  height="30"
+                  viewBox="0 0 200 20"
+                  style={{ position: "absolute", left: -10, bottom: -14 }}
+                >
+                  <path d="M2 13 C 60 3, 130 5, 198 12" fill="none" stroke={TOMATO} strokeWidth="6" strokeLinecap="round" />
+                </svg>
               </span>
             </div>
-            <div style={{ display: "flex", fontSize: 40, fontWeight: 400, color: MUTED, letterSpacing: -1 }}>
-              Full stack developer · Node.js services, React on top
+            <div style={{ display: "flex", fontSize: 38, color: "rgba(27,30,25,0.8)", letterSpacing: -0.5 }}>
+              Full-stack developer · Node.js services, React on top
             </div>
           </div>
 
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              fontSize: 24,
-              color: MUTED,
-              borderTop: "1px solid rgba(27,30,25,0.14)",
-              paddingTop: 22,
-            }}
-          >
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 24 }}>
             <div style={{ display: "flex", gap: 28 }}>
               <span style={{ display: "flex", gap: 8 }}>
-                <span style={{ color: INK, fontWeight: 600 }}>5</span> projects shipped
+                <span style={{ fontWeight: 600 }}>5</span> projects shipped
               </span>
               <span style={{ display: "flex", gap: 8 }}>
-                <span style={{ color: INK, fontWeight: 600 }}>2</span> live demos
-              </span>
-              <span style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <span style={{ width: 14, height: 14, borderRadius: 4, background: SAGE }} />
-                Docker · AWS
+                <span style={{ fontWeight: 600 }}>2</span> live demos
               </span>
             </div>
             <span>fawazv.online</span>
