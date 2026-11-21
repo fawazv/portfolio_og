@@ -207,6 +207,27 @@ h3 {
   }
 }
 
+/* How I build: one event pulse travelling along the RabbitMQ bus */
+.bus-pulse {
+  left: 0;
+  animation: bus-pulse 3.2s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+@keyframes bus-pulse {
+  0% {
+    left: 4%;
+    opacity: 0;
+  }
+  10%,
+  90% {
+    opacity: 1;
+  }
+  100% {
+    left: 96%;
+    opacity: 0;
+  }
+}
+
 /* F1 · scroll-lit statement. Dimmed only once armed by script, so the text
    is fully lit without JS and under reduced motion. */
 .scroll-statement [data-w] {

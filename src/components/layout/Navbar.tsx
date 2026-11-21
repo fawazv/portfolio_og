@@ -11,8 +11,8 @@ import gsap from "gsap";
 
 const navItems = [
   { name: "About", href: "#about" },
-  { name: "Skills", href: "#skills" },
-  { name: "Projects", href: "#projects" },
+  { name: "Work", href: "#projects" },
+  { name: "Stack", href: "#skills" },
   { name: "Journey", href: "#journey" },
   { name: "Testimonials", href: "#testimonials" },
   { name: "Case Studies", href: "#blog" },
@@ -20,6 +20,9 @@ const navItems = [
 ];
 
 const sectionIds = navItems.map((item) => item.href.slice(1));
+
+// Links to pages of their own (not home-page sections)
+const pageItems = [{ name: "Guides", href: "/guides" }];
 
 const istTime = new Intl.DateTimeFormat("en-IN", {
   hour: "2-digit",
@@ -208,6 +211,25 @@ export default function Navbar() {
                 </Link>
               );
             })}
+            {pageItems.map((item) => {
+              const isActive = pathname.startsWith(item.href);
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  aria-current={isActive ? "page" : undefined}
+                  className={cn(
+                    "relative text-sm font-medium transition-colors px-2 py-1 block",
+                    "after:block after:h-0.5 after:mt-0.5 after:rounded-full after:bg-tomato after:origin-left after:transition-transform",
+                    isActive
+                      ? "text-foreground after:scale-x-100"
+                      : "text-muted-foreground hover:text-foreground after:scale-x-0 hover:after:scale-x-100"
+                  )}
+                >
+                  {item.name}
+                </Link>
+              );
+            })}
             <div className="pl-4 border-l border-line flex gap-4 items-center">
               <ThemeToggle />
               <a
@@ -263,6 +285,23 @@ export default function Navbar() {
                 href={hrefFor(item.href)}
                 onClick={() => setIsMobileMenuOpen(false)}
                 aria-current={isActive ? "location" : undefined}
+                className={cn(
+                  "text-3xl font-semibold tracking-tight transition-colors",
+                  isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                {item.name}
+              </Link>
+            );
+          })}
+          {pageItems.map((item) => {
+            const isActive = pathname.startsWith(item.href);
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                onClick={() => setIsMobileMenuOpen(false)}
+                aria-current={isActive ? "page" : undefined}
                 className={cn(
                   "text-3xl font-semibold tracking-tight transition-colors",
                   isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
