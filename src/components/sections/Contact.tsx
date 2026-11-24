@@ -5,7 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { RevealHeader } from "@/components/ui/reveal-header";
 import { useState } from "react";
-import { Github, Linkedin } from "lucide-react";
+import { Github, Instagram, Linkedin } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,6 +15,8 @@ export default function Contact() {
         email: "",
         message: "",
     });
+    // Honeypot: hidden from people, filled in by bots. The API drops those messages.
+    const [company, setCompany] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitStatus, setSubmitStatus] = useState<{
         type: "success" | "error" | null;
@@ -82,7 +84,7 @@ export default function Contact() {
             const res = await fetch("/api/contact", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formData),
+                body: JSON.stringify({ ...formData, company }),
             });
             const data = await res.json();
             if (res.ok) {
@@ -102,7 +104,7 @@ export default function Contact() {
     return (
         <section id="contact" className="py-12 md:py-24 bg-background min-h-screen flex items-center relative overflow-hidden">
             {/* Violet ambient orb */}
-            <div className="absolute top-0 right-0 w-96 h-96 bg-violet-400/6 dark:bg-violet-600/8 rounded-full blur-3xl pointer-events-none" aria-hidden="true" />
+            <div className="absolute top-0 right-0 w-96 h-96 bg-sage/25 dark:bg-sage/25 rounded-full blur-3xl pointer-events-none" aria-hidden="true" />
             {/* Dot grid */}
             <div className="absolute inset-0 dot-grid pointer-events-none" aria-hidden="true" />
             <div className="container mx-auto px-6 relative z-10">
@@ -114,38 +116,47 @@ export default function Contact() {
                             <RevealHeader className="text-4xl sm:text-6xl md:text-8xl font-black uppercase tracking-tighter mb-8 text-foreground leading-[0.9]">
                                 Let&apos;s <br /> <span className="gradient-text">Talk.</span>
                             </RevealHeader>
-                            <p className="text-xl text-[#6B6F8A] dark:text-[#7B82A8] max-w-sm font-light">
-                                Have a role or project in mind? Let&apos;s build something great together.
+                            <p className="text-xl text-muted-foreground max-w-sm font-light">
+                                A role, an AI workflow or a video project in mind? Let&apos;s build it together.
                             </p>
                         </div>
 
                         <div className="space-y-8 mt-12 lg:mt-0">
                             <div>
-                                <h4 className="text-xs font-mono uppercase tracking-widest text-[#6B6F8A] dark:text-[#7B82A8] mb-2">Email</h4>
+                                <h4 className="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-2">Email</h4>
                                 <a
                                     href="mailto:fawazv.business@gmail.com"
-                                    className="text-xl md:text-3xl font-bold hover:text-violet-500 dark:hover:text-violet-400 transition-colors break-all text-space dark:text-[#F0F0FF]"
+                                    className="text-xl md:text-3xl font-bold hover:text-accent transition-colors break-all text-foreground"
                                 >
                                     fawazv.business@gmail.com
                                 </a>
                             </div>
                             <div>
-                                <h4 className="text-xs font-mono uppercase tracking-widest text-[#6B6F8A] dark:text-[#7B82A8] mb-3">Socials</h4>
+                                <h4 className="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-3">Socials</h4>
                                 <div className="flex gap-6">
                                     <a
                                         href="https://www.linkedin.com/in/mohammed-fawaz-216314280/"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="text-violet-600 dark:text-violet-400 hover:text-space dark:hover:text-white transition-colors"
+                                        className="text-accent hover:text-foreground transition-colors"
                                         aria-label="LinkedIn profile (opens in new tab)"
                                     >
                                         <Linkedin size={28} strokeWidth={1.5} />
                                     </a>
                                     <a
+                                        href="https://www.instagram.com/_.fawaz_v/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-accent hover:text-foreground transition-colors"
+                                        aria-label="Instagram profile (opens in new tab)"
+                                    >
+                                        <Instagram size={28} strokeWidth={1.5} />
+                                    </a>
+                                    <a
                                         href="https://github.com/fawazv/"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="text-violet-600 dark:text-violet-400 hover:text-space dark:hover:text-white transition-colors"
+                                        className="text-accent hover:text-foreground transition-colors"
                                         aria-label="GitHub profile (opens in new tab)"
                                     >
                                         <Github size={28} strokeWidth={1.5} />
@@ -167,6 +178,18 @@ export default function Contact() {
                             noValidate
                             aria-label="Contact form"
                         >
+                            <div className="absolute -left-[9999px] h-px w-px overflow-hidden" aria-hidden="true">
+                                <label htmlFor="company">Company</label>
+                                <input
+                                    type="text"
+                                    id="company"
+                                    name="company"
+                                    tabIndex={-1}
+                                    autoComplete="off"
+                                    value={company}
+                                    onChange={(e) => setCompany(e.target.value)}
+                                />
+                            </div>
                             <InputField
                                 id="name"
                                 label="What's your name?"
@@ -190,7 +213,7 @@ export default function Contact() {
                             <div className="relative group">
                                 <label
                                     htmlFor="message"
-                                    className={`absolute left-0 transition-all duration-300 pointer-events-none font-mono uppercase text-xs tracking-widest ${formData.message || focusedField === "message" ? "-top-6 text-violet-500 dark:text-violet-400 text-[10px]" : "top-2 text-[#6B6F8A] dark:text-[#7B82A8]"}`}
+                                    className={`absolute left-0 transition-all duration-300 pointer-events-none font-mono uppercase text-xs tracking-widest ${formData.message || focusedField === "message" ? "-top-6 text-accent text-[10px]" : "top-2 text-muted-foreground"}`}
                                 >
                                     Tell me about your project
                                 </label>
@@ -203,9 +226,9 @@ export default function Contact() {
                                     onBlur={() => setFocusedField(null)}
                                     aria-describedby={errors.message ? "message-error" : undefined}
                                     aria-invalid={!!errors.message}
-                                    className="w-full bg-transparent border-b border-violet-500/15 dark:border-violet-500/20 py-2 text-lg font-medium text-space dark:text-[#F0F0FF] placeholder:text-[#6B6F8A] dark:placeholder:text-[#7B82A8] focus:outline-none transition-colors resize-none focus:border-violet-500/60"
+                                    className="w-full bg-transparent border-b border-line dark:border-line py-2 text-lg font-medium text-foreground placeholder:text-muted-foreground focus:outline-none transition-colors resize-none focus:border-foreground/30"
                                 />
-                                <div className={`absolute bottom-2 left-0 h-[2px] bg-violet-500 transition-all duration-500 ease-out ${focusedField === "message" ? "w-full" : "w-0"}`} />
+                                <div className={`absolute bottom-2 left-0 h-[2px] bg-accent transition-all duration-500 ease-out ${focusedField === "message" ? "w-full" : "w-0"}`} />
                                 {errors.message && (
                                     <p id="message-error" role="alert" className="mt-2 text-xs font-bold text-red-500 uppercase tracking-wide">
                                         {errors.message}
@@ -217,7 +240,7 @@ export default function Contact() {
                                 type="submit"
                                 disabled={isSubmitting}
                                 aria-busy={isSubmitting}
-                                className="glow-btn-violet w-full py-4 bg-violet-600 hover:bg-violet-500 text-white font-semibold tracking-wide text-base rounded-full transition-all duration-300 mt-8 disabled:opacity-60 disabled:cursor-not-allowed"
+                                className="glow-btn-violet w-full py-4 bg-accent hover:bg-accent-hover text-on-accent font-semibold tracking-wide text-base rounded-full transition-all duration-300 mt-8 disabled:opacity-60 disabled:cursor-not-allowed"
                             >
                                 {isSubmitting ? "Sending…" : "Send Message"}
                             </button>
@@ -261,7 +284,7 @@ const InputField = ({
     <div className="relative group">
         <label
             htmlFor={id}
-            className={`absolute left-0 transition-all duration-300 pointer-events-none font-mono uppercase text-xs tracking-widest ${value || focusedField === id ? "-top-6 text-violet-500 dark:text-violet-400 text-[10px]" : "top-2 text-[#6B6F8A] dark:text-[#7B82A8]"}`}
+            className={`absolute left-0 transition-all duration-300 pointer-events-none font-mono uppercase text-xs tracking-widest ${value || focusedField === id ? "-top-6 text-accent text-[10px]" : "top-2 text-muted-foreground"}`}
         >
             {label}
         </label>
@@ -274,9 +297,9 @@ const InputField = ({
             onBlur={() => setFocusedField(null)}
             aria-describedby={error ? `${id}-error` : undefined}
             aria-invalid={!!error}
-            className="w-full bg-transparent border-b border-violet-500/15 dark:border-violet-500/20 py-2 text-lg font-medium text-space dark:text-[#F0F0FF] focus:outline-none transition-colors focus:border-violet-500/60"
+            className="w-full bg-transparent border-b border-line dark:border-line py-2 text-lg font-medium text-foreground focus:outline-none transition-colors focus:border-foreground/30"
         />
-        <div className={`absolute bottom-0 left-0 h-[2px] bg-violet-500 transition-all duration-500 ease-out ${focusedField === id ? "w-full" : "w-0"}`} />
+        <div className={`absolute bottom-0 left-0 h-[2px] bg-accent transition-all duration-500 ease-out ${focusedField === id ? "w-full" : "w-0"}`} />
         {error && (
             <p id={`${id}-error`} role="alert" className="mt-2 text-xs font-bold text-red-500 uppercase tracking-wide">
                 {error}

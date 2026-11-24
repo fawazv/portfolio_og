@@ -1,185 +1,122 @@
-"use client";
-
-import { useRef, useEffect } from "react";
-import { RevealHeader } from "@/components/ui/reveal-header";
 import Image from "next/image";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ArrowRight, Download } from "lucide-react";
+import { ScrollStatement } from "@/components/ui/scroll-statement";
+import { Scribble } from "@/components/ui/scribble";
+import { TransitionLink } from "@/components/ui/transition-link";
 
-gsap.registerPlugin(ScrollTrigger);
-
-const stats = [
-  { value: "5+", label: "Projects Shipped" },
-  { value: "1000+", label: "Hours of Code" },
-  { value: "5+", label: "Microservices Built" },
-  { value: "10+", label: "Technologies Mastered" },
-];
-
+/*
+ * About — opens with the F1 statement (lights up word by word on scroll),
+ * then the story in two paragraphs, what I'm looking for, what I'm learning,
+ * and the portrait. No scroll reveals: the only scroll-driven motion here is
+ * the statement.
+ */
 export default function About() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const imageContainerRef = useRef<HTMLDivElement>(null);
-  const textColRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Simple one-shot opacity reveal — no continuous scrub
-      gsap.fromTo(
-        imageContainerRef.current,
-        { opacity: 0 },
-        {
-          opacity: 1,
-          duration: 0.6,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: imageContainerRef.current,
-            start: "top 85%",
-            once: true,
-          },
-        }
-      );
-
-      // Single unified reveal for text column + children (merged 3 triggers → 1)
-      const textTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: textColRef.current,
-          start: "top 85%",
-          once: true,
-        },
-      });
-
-      // Text column slides in
-      textTl.fromTo(
-        textColRef.current,
-        { opacity: 0, x: -30 },
-        { opacity: 1, x: 0, duration: 0.5, ease: "power2.out" }
-      );
-
-      // Children stagger right after
-      textTl.fromTo(
-        ".about-reveal",
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.4, ease: "power2.out", stagger: 0.08 },
-        "-=0.2"
-      );
-
-      // Stats stagger last
-      textTl.fromTo(
-        ".stat-card",
-        { opacity: 0, y: 10 },
-        { opacity: 1, y: 0, duration: 0.3, ease: "power2.out", stagger: 0.06 },
-        "-=0.2"
-      );
-    }, containerRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <section id="about" ref={containerRef} className="min-h-screen flex items-center justify-center py-20 bg-background relative overflow-hidden">
-      <div className="absolute inset-0 dot-grid pointer-events-none" aria-hidden="true" />
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-          {/* Text Content */}
-          <div
-            ref={textColRef}
-            className="space-y-8 order-2 lg:order-1"
-            style={{ opacity: 0 }}
-          >
-            <RevealHeader className="text-5xl md:text-7xl font-bold uppercase tracking-tighter text-foreground leading-[0.9]">
-              About <br /> <span className="gradient-text font-bold">The Dev</span>
-            </RevealHeader>
+    <section id="about" aria-labelledby="about-heading" className="relative py-24 md:py-32">
+      <div className="container mx-auto px-6">
+        {/* F1 · Statement */}
+        <div className="mx-auto max-w-5xl py-10 md:py-24">
+          <p className="mb-6 font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">In one sentence</p>
+          <ScrollStatement
+            className="font-serif text-[clamp(2.2rem,5.4vw,4.75rem)] font-normal leading-[1.05] tracking-[-0.025em] text-foreground"
+            text="I studied commerce, taught myself to code in 2024, and now I build *software, videos* and the AI agents that make both."
+          />
+        </div>
 
-            <div
-              className="about-reveal space-y-5 text-base md:text-lg text-[#6B6F8A] dark:text-[#7B82A8] leading-relaxed max-w-lg"
-              style={{ opacity: 0 }}
-            >
-              <p>
-                Self-taught Full Stack Developer who pivoted from a B.Com degree to building production-grade systems in under a year. I&apos;ve shipped 5+ projects across e-commerce, microservices, and cloud storage, dedicating 1000+ hours to mastering the MERN stack and modern DevOps practices.
-              </p>
-              <p>
-                I specialize in distributed backends — breaking monoliths into Node.js microservices, containerizing with Docker, managing async communication via RabbitMQ, and deploying on AWS EC2/S3. On the frontend, I pair React &amp; Next.js with GSAP to build interfaces that feel as good as they perform.
-              </p>
+        <div className="mt-16 grid grid-cols-[minmax(0,1fr)] items-start gap-12 md:mt-24 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-20">
+          {/* Story */}
+          <div className="flex flex-col gap-10">
+            <div className="flex flex-col gap-4">
+              <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">About</p>
+              <h2
+                id="about-heading"
+                className="font-serif text-[clamp(2.5rem,5vw,4.25rem)] font-normal leading-[1] tracking-[-0.03em] text-foreground"
+              >
+                From commerce <Scribble delay="0.3s">to code</Scribble>.
+              </h2>
             </div>
 
-            {/* Stats Bar */}
-            <div
-              className="about-stats about-reveal grid grid-cols-2 sm:grid-cols-4 gap-4 py-6"
-              style={{ opacity: 0 }}
-            >
-              {stats.map((stat) => (
-                <div
-                  key={stat.label}
-                  className="stat-card cosmos-card rounded-xl p-4 text-center sm:text-left"
-                  style={{ opacity: 0 }}
-                >
-                  <div className="text-3xl font-black tracking-tighter gradient-text">
-                    {stat.value}
-                  </div>
-                  <div className="text-xs font-mono uppercase tracking-widest text-[#6B6F8A] dark:text-[#7B82A8] mt-1">
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Job Seeking */}
-            <div className="about-reveal space-y-6" style={{ opacity: 0 }}>
-              <div>
-                <h3 className="text-xs font-mono uppercase tracking-[0.2em] text-violet-600 dark:text-cyan-400 mb-2">
-                  What I&apos;m Looking For
-                </h3>
-                <p className="text-[#6B6F8A] dark:text-[#7B82A8] leading-relaxed">
-                  Fast-paced environments where I can build scalable systems from the ground up, contributing as a Full Stack or Backend Engineer.
-                </p>
-              </div>
-              <div>
-                <h3 className="text-xs font-mono uppercase tracking-[0.2em] text-violet-600 dark:text-cyan-400 mb-2">
-                  Presently Learning
-                </h3>
-                <p className="text-[#6B6F8A] dark:text-[#7B82A8] leading-relaxed">
-                  Expanding my stack with React Native for cross-platform mobile apps, and Python for robust backend and AI integrations.
-                </p>
-              </div>
-              <div className="pt-6 flex flex-wrap gap-6 items-center">
+            <div className="flex max-w-[60ch] flex-col gap-5 text-lg leading-relaxed text-muted-foreground">
+              <p>
+                I finished a B.Com at Calicut University in 2023, then spent 2024 teaching myself the MERN stack. A
+                year later I was splitting a hotel booking system into eleven Docker services behind one gateway.
+              </p>
+              <p>
+                Most of my work sits on the backend: Node.js and Express services, RabbitMQ between them, MongoDB and
+                PostgreSQL underneath, deployed on AWS EC2 and S3. On the front end I use React and Next.js, with GSAP
+                when motion helps.
+              </p>
+              <p>
+                I also make reels in Malayalam and English as{" "}
                 <a
-                  href="/resume.pdf"
+                  href="https://www.instagram.com/_.fawaz_v/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="glow-btn-violet inline-flex items-center gap-2 px-6 py-3 bg-violet-600 hover:bg-violet-500 text-white font-semibold text-sm rounded-full transition-all"
+                  className="font-medium text-foreground underline decoration-tomato decoration-2 underline-offset-4 hover:text-accent"
                 >
-                  Download Resume
+                  @_.fawaz_v
                 </a>
-                <a
-                  href="#contact"
-                  className="inline-flex items-center gap-2 relative group overflow-hidden"
+                , and I edit them myself. Lately that means building workflows with AI agents: my{" "}
+                <TransitionLink
+                  href="/work/ai-video-editor"
+                  className="font-medium text-foreground underline decoration-tomato decoration-2 underline-offset-4 hover:text-accent"
                 >
-                  <span className="block text-sm font-bold uppercase tracking-widest text-violet-600 dark:text-cyan-400 border-b border-violet-500/50 dark:border-cyan-400/50 pb-1 group-hover:border-violet-500 dark:group-hover:border-cyan-400 transition-colors duration-300">
-                    Get in Touch
-                  </span>
-                  <span className="transform group-hover:translate-x-1 transition-transform duration-300 text-violet-600 dark:text-cyan-400">→</span>
-                </a>
+                  AI video editor
+                </TransitionLink>{" "}
+                runs on Claude Code and turns one raw take into a captioned, on-brand reel that I review choice by
+                choice.
+              </p>
+            </div>
+
+            <dl className="grid gap-6 border-t border-line pt-8 sm:grid-cols-2">
+              <div className="flex flex-col gap-2">
+                <dt className="font-mono text-xs uppercase tracking-[0.18em] text-accent">What I&apos;m looking for</dt>
+                <dd className="leading-relaxed text-foreground">
+                  A full-stack or backend role on a team that ships often, where I can own services from the database
+                  up. Also open to AI workflow and video projects.
+                </dd>
               </div>
+              <div className="flex flex-col gap-2">
+                <dt className="font-mono text-xs uppercase tracking-[0.18em] text-accent">Learning now</dt>
+                <dd className="leading-relaxed text-foreground">
+                  React Native for mobile apps, Python for AI tooling, and agent skills and workflows for Claude Code.
+                </dd>
+              </div>
+            </dl>
+
+            <div className="flex flex-wrap items-center gap-3">
+              <a
+                href="#contact"
+                className="group inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3.5 text-sm font-semibold text-on-accent transition-[background-color,transform] duration-150 hover:-translate-y-px hover:bg-accent-hover active:translate-y-px"
+              >
+                Get in touch
+                <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+              </a>
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Download resume (opens in new tab)"
+                className="inline-flex items-center gap-2 rounded-full border border-foreground/25 px-6 py-3.5 text-sm font-semibold text-foreground transition-[border-color,transform] duration-150 hover:-translate-y-px hover:border-foreground/60 active:translate-y-px"
+              >
+                <Download size={16} aria-hidden="true" />
+                Resume
+              </a>
             </div>
           </div>
 
-          {/* Image */}
-          <div className="relative order-1 lg:order-2">
-            <div
-              ref={imageContainerRef}
-              className="relative h-[350px] sm:h-[450px] w-full md:h-[700px] overflow-hidden rounded-3xl ring-1 ring-violet-500/20 hover:ring-violet-500/50 transition-all duration-700"
-              style={{ opacity: 0 }}
-            >
-              <div className="absolute inset-0 h-full w-full">
-                <Image
-                  src="/portrait.webp"
-                  alt="Mohammed Fawaz — Full Stack Developer based in Kerala, India"
-                  fill
-                  className="object-cover object-center sm:object-top mt-12 sm:mt-0 grayscale transition-all duration-700"
-                />
-              </div>
-              <div className="absolute inset-0 bg-linear-to-t from-background via-transparent to-transparent opacity-60" />
+          {/* Portrait */}
+          <figure className="relative mx-auto w-full max-w-[520px] lg:sticky lg:top-28">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-[28px] bg-sage-soft dark:bg-surface">
+              <Image
+                src="/portrait.webp"
+                alt="Mohammed Fawaz, full-stack developer and content creator based in Kerala, India"
+                fill
+                sizes="(max-width: 1024px) 90vw, 520px"
+                className="object-cover object-top grayscale"
+              />
             </div>
-          </div>
+          </figure>
         </div>
       </div>
     </section>

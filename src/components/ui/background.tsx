@@ -1,27 +1,7 @@
-"use client";
-import Image from "next/image";
-
+// Page background — Sage & Tomato uses a plain page colour (paper in light,
+// night in dark) from the theme tokens on <body>. The old blurred background
+// photos (background-light/dark.webp, loaded at quality 100) are no longer
+// rendered; the files stay in /public until the clean-up batch.
 export default function Background() {
-    return (
-        <div className="fixed inset-0 z-[-1] pointer-events-none" aria-hidden="true">
-            {/* Light mode — pre-baked: desaturated, blurred, white overlay */}
-            <Image
-                src="/background-light.webp"
-                alt=""
-                fill
-                className="object-cover dark:hidden"
-                quality={100}
-                priority
-            />
-            {/* Dark mode — pre-baked: full colour, blurred, black overlay */}
-            <Image
-                src="/background-dark.webp"
-                alt=""
-                fill
-                className="object-cover hidden dark:block"
-                quality={100}
-                priority
-            />
-        </div>
-    );
+  return null;
 }

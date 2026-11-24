@@ -1,211 +1,220 @@
-"use client";
-
-import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ArrowRight, ArrowUpRight, Download, Instagram } from "lucide-react";
+import { Scribble } from "@/components/ui/scribble";
+import { TransitionLink } from "@/components/ui/transition-link";
+import { projects } from "@/content/projects";
 
-gsap.registerPlugin(ScrollTrigger);
+/*
+ * Hero — "Kitchen Table" layout (Sage & Tomato brand).
+ * An inset sage panel: eyebrow with a rule, a serif headline with one italic
+ * word underlined in tomato, lead and actions on the left; the grayscale
+ * portrait multiplied into the sage on the right, with a card showing the AI
+ * video editor's real pipeline (from its docs/WORKFLOW.md). Below the panel:
+ * three projects and one big number, counted from src/content/projects.ts.
+ *
+ * The sage panel keeps the same colours in both themes (ink on sage, 8.4:1).
+ * The entrance is pure CSS: complete without JavaScript, instant under
+ * reduced motion.
+ */
+
+// The AI video editor's pipeline, in order (docs/WORKFLOW.md in that project)
+const pipeline = ["transcribe", "cut", "captions", "effects", "sound", "storyboard"];
+
+const work = [
+  {
+    slug: "ai-video-editor",
+    title: "AI Video Editor",
+    meta: "Agent",
+    stack: "Claude Code · HyperFrames · ffmpeg",
+    image: "/images/projects/ai-video-editor.webp",
+  },
+  {
+    slug: "elite-hotel",
+    title: "Elite Hotel",
+    meta: "11 services",
+    stack: "Node.js · Docker · RabbitMQ",
+    image: "/images/projects/elite-hotel.webp",
+  },
+  {
+    slug: "nxtcart",
+    title: "Nxtcart",
+    meta: "Live",
+    stack: "Next.js · Auth.js · Stripe",
+    image: "/images/projects/nxtcart.webp",
+  },
+];
+
+const liveCount = projects.filter((p) => p.liveUrl).length;
+
+const d = (ms: number) => ({ "--d": `${ms}ms` }) as React.CSSProperties;
 
 export default function Hero() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const parallaxRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
-  const nameRef = useRef<HTMLHeadingElement>(null);
-  const roleRef = useRef<HTMLParagraphElement>(null);
-  const taglineRef = useRef<HTMLParagraphElement>(null);
-  const ctaRef = useRef<HTMLDivElement>(null);
-
-  useGSAP(() => {
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-
-    // 1. Initial State Setup
-    gsap.set(".char-reveal", { yPercent: 110, opacity: 0 });
-    gsap.set(roleRef.current, { y: 20, opacity: 0 });
-    gsap.set(taglineRef.current, { y: 20, opacity: 0 });
-    gsap.set(ctaRef.current, { y: 20, opacity: 0 });
-    gsap.set(scrollRef.current, { opacity: 0 });
-    gsap.set(imageRef.current, { scale: 1.1, opacity: 0 });
-
-    // 2. Cinematic Entrance Sequence
-    tl.to(imageRef.current, {
-      scale: 1,
-      opacity: 1,
-      force3D: true,
-      duration: 2.0,
-      ease: "power2.inOut",
-    })
-      .to(".char-reveal", {
-        yPercent: 0,
-        opacity: 1,
-        force3D: true,
-        stagger: 0.04,
-        duration: 0.9,
-        ease: "power3.out",
-      }, "-=1.2")
-      .to(roleRef.current, {
-        y: 0,
-        opacity: 1,
-        duration: 1,
-      }, "-=0.8")
-      .to(taglineRef.current, {
-        y: 0,
-        opacity: 1,
-        duration: 1,
-      }, "-=0.8")
-      .to(ctaRef.current, {
-        y: 0,
-        opacity: 1,
-        duration: 0.8,
-      }, "-=0.5")
-      .to(scrollRef.current, {
-        opacity: 1,
-        duration: 1,
-      }, "-=0.5");
-
-    // 3. Scroll Parallax Effect
-    // Cache innerWidth once to avoid multiple forced layout reads
-    const vw = window.innerWidth;
-    const isMobile = vw < 768;
-    gsap.to(parallaxRef.current, {
-      y: isMobile ? 40 : 100,
-      ease: "none",
-      // willChange handled by CSS class will-change-transform on wrapper
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top top",
-        end: "bottom top",
-        scrub: isMobile ? false : true,
-        toggleActions: isMobile ? "play none none reverse" : undefined,
-      },
-    });
-
-    gsap.to(nameRef.current, {
-      y: -50,
-      opacity: 0,
-      force3D: true,
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top top",
-        end: "50% top",
-        scrub: true,
-      }
-    });
-
-  }, { scope: containerRef });
-
-  const renderSplitText = (text: string) => {
-    return text.split("").map((char, index) => (
-      <span key={index} className="char-reveal inline-block overflow-hidden opacity-0">
-        {char === " " ? "\u00A0" : char}
-      </span>
-    ));
-  };
-
   return (
-    <section
-      ref={containerRef}
-      className="relative h-screen min-h-screen w-full overflow-hidden flex items-center justify-center bg-background"
-    >
-      {/* Background Image — Loaded immediately, displayed conditionally via CSS */}
-      <div ref={parallaxRef} className="absolute inset-0 z-0 w-full h-full will-change-transform">
-        <div ref={imageRef} className="absolute inset-0 w-full h-full opacity-0 origin-center">
+    <section id="top" aria-labelledby="hero-heading" className="relative pt-24 pb-12 md:pt-28">
+      <div className="container mx-auto px-4 md:px-6">
+        {/* Sage panel */}
+        <div className="hero-settle relative grid grid-cols-[minmax(0,1fr)] overflow-hidden rounded-[28px] bg-sage text-ink lg:min-h-[600px] lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)]" style={d(0)}>
+          {/* Copy */}
+          <div className="relative z-10 flex flex-col justify-center gap-6 px-6 py-10 sm:px-10 md:py-14 lg:px-14">
+            <p className="hero-rise flex items-center gap-3 font-mono text-xs uppercase tracking-[0.16em]" style={d(80)}>
+              <span className="h-px w-6 bg-ink" aria-hidden="true" />
+              Mohammed Fawaz · Developer · Creator · Kerala
+            </p>
 
-          {/* Light Mode Image */}
-          <div className="dark:hidden absolute inset-0 w-full h-full">
-            <Image
-              src="/lightmode.webp"
-              alt="Minimal architectural abstract background"
-              fill
-              sizes="100vw"
-              className="object-cover object-[15%_50%] sm:object-[20%_50%] md:object-center"
-              priority
-              quality={85}
-            />
+            <h1
+              id="hero-heading"
+              className="hero-rise font-serif text-[clamp(2.9rem,6.4vw,5.6rem)] font-normal leading-[0.95] tracking-[-0.03em]"
+              style={d(160)}
+            >
+              Code, content, and the <Scribble delay="0.9s">AI agents</Scribble> in between.
+            </h1>
+
+            <p className="hero-rise max-w-[42ch] text-[17px] leading-relaxed text-ink/80" style={d(260)}>
+              Full-stack developer and content creator. I build Node.js services and React apps, make reels in
+              Malayalam and English, and design Claude agent workflows, like the one that now edits my videos.
+            </p>
+
+            <div className="hero-rise flex flex-wrap items-center gap-3" style={d(340)}>
+              <a
+                href="#projects"
+                className="group inline-flex items-center gap-2 rounded-full bg-tomato-deep px-6 py-3.5 text-sm font-semibold text-paper transition-[background-color,transform] duration-150 hover:-translate-y-px hover:bg-[#9E2A17] active:translate-y-px"
+              >
+                See my work
+                <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+              </a>
+              <TransitionLink
+                href="/guides/claude-video-editing"
+                className="inline-flex items-center gap-2 rounded-full border border-ink/45 px-6 py-3.5 text-sm font-semibold text-ink transition-[border-color,background-color,transform] duration-150 hover:-translate-y-px hover:border-ink hover:bg-ink/5 active:translate-y-px"
+              >
+                How I edit with AI
+              </TransitionLink>
+            </div>
+
+            <div className="hero-rise flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-ink/75" style={d(400)}>
+              <a
+                href="https://www.instagram.com/_.fawaz_v/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 font-medium text-ink underline decoration-ink/30 underline-offset-4 hover:decoration-ink"
+              >
+                <Instagram size={15} aria-hidden="true" />
+                @_.fawaz_v
+                <span className="sr-only">on Instagram (opens in new tab)</span>
+              </a>
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 font-medium text-ink underline decoration-ink/30 underline-offset-4 hover:decoration-ink"
+              >
+                <Download size={15} aria-hidden="true" />
+                Resume
+                <span className="sr-only">(opens in new tab)</span>
+              </a>
+            </div>
           </div>
 
-          {/* Dark Mode Image */}
-          <div className="hidden dark:block absolute inset-0 w-full h-full">
+          {/* Portrait, multiplied into the sage */}
+          <div className="relative flex min-h-[440px] flex-col justify-end sm:min-h-[520px] lg:block lg:min-h-0">
             <Image
-              src="/darkmode.webp"
-              alt="Liquid metal abstract dark background"
+              src="/images/hero/portrait-light.webp"
+              alt="Mohammed Fawaz"
               fill
-              sizes="100vw"
-              className="object-cover object-[15%_50%] sm:object-[20%_50%] md:object-center"
               priority
-              quality={85}
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover object-[50%_18%] grayscale contrast-[1.05] mix-blend-multiply"
             />
-            {/* Vignette & Overlay for text readability */}
-            <div className="absolute inset-0 bg-black/20" aria-hidden="true" />
-            <div className="absolute inset-0 bg-linear-to-t from-background via-transparent to-black/40" aria-hidden="true" />
+            {/* soften the seam with the copy column on wide screens */}
+            <div
+              className="pointer-events-none absolute inset-0 hidden bg-linear-to-r from-sage to-transparent to-30% lg:block"
+              aria-hidden="true"
+            />
+
+            {/* AI video editor card: the agent's real pipeline */}
+            <div
+              role="group"
+              aria-label="AI video editor pipeline, from its workflow file"
+              className="hero-rise relative z-10 mx-4 mb-4 w-auto rounded-2xl sm:ml-auto sm:w-[310px] lg:absolute lg:bottom-4 lg:right-4 lg:m-0 lg:w-[310px] bg-[#FFFDF8] p-4 text-ink shadow-[0_18px_40px_-18px_rgba(27,30,25,0.45)]"
+              style={d(520)}
+            >
+              <div className="mb-3 flex items-center justify-between">
+                <span className="text-sm font-semibold">AI video editor</span>
+                <span className="font-mono text-[11px] uppercase tracking-wider text-ink/60">claude code</span>
+              </div>
+              <ol className="grid grid-cols-2 gap-1.5">
+                {pipeline.map((step, i) => (
+                  <li
+                    key={step}
+                    className="flex items-center justify-between gap-2 rounded-lg bg-[#ECE7DC] px-2.5 py-1.5 font-mono text-[12px]"
+                  >
+                    <span>
+                      <span className="text-ink/45">{i + 1}</span> {step}
+                    </span>
+                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#2F7A3E]" aria-hidden="true" />
+                    <span className="sr-only">done</span>
+                  </li>
+                ))}
+              </ol>
+              <div className="mt-3 flex items-center justify-between text-xs text-ink/65">
+                <span>76 s take → 65.6 s reel</span>
+                <TransitionLink
+                  href="/work/ai-video-editor"
+                  className="inline-flex items-center gap-1 rounded-full bg-tomato-deep px-3 py-1 text-[12px] font-medium text-paper transition-colors hover:bg-[#9E2A17]"
+                  aria-label="AI video editor case study"
+                >
+                  Case study
+                  <ArrowUpRight size={12} aria-hidden="true" />
+                </TransitionLink>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Below the panel: shipped work + one big number */}
+        <div className="mt-8 grid grid-cols-[minmax(0,1fr)] gap-6 md:mt-10 lg:grid-cols-[240px_minmax(0,1fr)_170px] lg:items-start lg:gap-8">
+          <div className="hero-rise flex flex-col gap-2" style={d(600)}>
+            <p className="font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground">Selected work</p>
+            <p className="font-serif text-[28px] leading-[1.05] tracking-[-0.02em] text-foreground">Built, used and real.</p>
           </div>
 
+          <ul className="hero-rise grid grid-cols-[minmax(0,1fr)] gap-4 sm:grid-cols-3" style={d(660)}>
+            {work.map((w) => (
+              <li key={w.title}>
+                <TransitionLink
+                  href={`/work/${w.slug}`}
+                  className="group block overflow-hidden rounded-2xl border border-line bg-raised transition-transform duration-300 hover:-translate-y-0.5"
+                >
+                  <span className="relative block aspect-[16/10] overflow-hidden">
+                    <Image
+                      src={w.image}
+                      alt=""
+                      fill
+                      sizes="(max-width: 640px) 100vw, 25vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                    />
+                  </span>
+                  <span className="flex flex-col gap-0.5 px-3.5 py-3">
+                    <span className="flex items-baseline justify-between gap-2 font-medium text-foreground">
+                      {w.title}
+                      <span className="font-mono text-xs text-muted-foreground">{w.meta}</span>
+                    </span>
+                    <span className="text-xs text-muted-foreground">{w.stack}</span>
+                  </span>
+                </TransitionLink>
+              </li>
+            ))}
+          </ul>
+
+          <div className="hero-rise flex items-end gap-4 lg:flex-col lg:items-start lg:gap-1" style={d(720)}>
+            <span className="font-serif text-[64px] leading-[0.85] tracking-[-0.03em] text-foreground">{projects.length}</span>
+            <span className="text-sm leading-snug text-muted-foreground">
+              projects built
+              <br />
+              {liveCount} with live demos
+            </span>
+          </div>
         </div>
       </div>
-
-      {/* Content Overlay */}
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-end text-right">
-        <div className="w-full max-w-none perspective-1000">
-          <h1
-            ref={nameRef}
-            className="text-4xl sm:text-6xl md:text-8xl lg:text-[10rem] font-bold tracking-tighter uppercase mb-6 leading-none text-foreground dark:text-white md:drop-shadow-2xl"
-            aria-label="Mohammed Fawaz"
-          >
-            <div className="block" aria-hidden="true">{renderSplitText("Mohammed")}</div>
-            <div className="block text-violet-600 dark:text-violet-400 drop-shadow-lg" aria-hidden="true">{renderSplitText("Fawaz")}</div>
-          </h1>
-
-          <p
-            ref={roleRef}
-            className="text-lg md:text-2xl font-light tracking-[0.2em] uppercase text-violet-600 dark:text-cyan-400 max-w-2xl ml-auto mr-0 md:backdrop-blur-md py-2 px-6 rounded-full border border-violet-500/20 dark:border-cyan-500/20 bg-violet-500/5 dark:bg-cyan-500/10 opacity-0"
-          >
-            Full Stack Developer
-          </p>
-
-          {/* Value Proposition Tagline */}
-          <p ref={taglineRef} className="text-sm md:text-base font-serif italic text-muted-foreground dark:text-[#7B82A8] mt-3 mr-1 tracking-wide opacity-0">
-            Building scalable systems with React, Node.js &amp; Cloud Architecture
-          </p>
-
-          {/* CTA Buttons */}
-          <div
-            ref={ctaRef}
-            className="flex flex-wrap gap-4 mt-8 justify-end opacity-0"
-          >
-            <a
-              href="#projects"
-              className="glow-btn-violet px-8 py-3.5 text-sm font-bold uppercase tracking-widest rounded-full
-                bg-violet-600 hover:bg-violet-500 text-white transition-all duration-300"
-            >
-              Explore My Work
-            </a>
-            <a
-              href="/resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Download Resume (opens in new tab)"
-              className="px-8 py-3.5 text-sm font-bold uppercase tracking-widest rounded-full
-                border border-violet-500/40 text-violet-600 dark:text-violet-300
-                hover:border-violet-500 dark:hover:border-violet-400 hover:bg-violet-500/10
-                transition-all duration-300"
-            >
-              Download Resume
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* Modern Scroll Indicator */}
-      <div
-        ref={scrollRef}
-        className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 opacity-0"
-      >
-        <span className="text-[10px] uppercase tracking-widest text-[#6B6F8A] dark:text-[#7B82A8]">Scroll</span>
-        <div className="w-px h-16 bg-linear-to-b from-transparent via-violet-500/50 dark:via-cyan-400/50 to-transparent" />
-      </div>
-
     </section>
   );
 }

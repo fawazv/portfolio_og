@@ -1,52 +1,27 @@
 "use client"
 
-import * as React from "react"
 import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 
+/**
+ * Light is the default theme. Which icon shows is decided by CSS (the `dark`
+ * class next-themes puts on <html>), so there's no "mounted" state, no layout
+ * shift and no hydration mismatch. resolvedTheme is used for the click so it
+ * stays correct if system mode is ever turned back on.
+ */
 export function ThemeToggle() {
-  const { theme, setTheme } = useTheme()
-  const [mounted, setMounted] = React.useState(false)
-
-  React.useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) return null
-
-  const isDark = theme === "dark"
+  const { resolvedTheme, setTheme } = useTheme()
 
   return (
     <button
-      onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="relative p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
-      aria-label="Toggle theme"
+      type="button"
+      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+      className="relative grid h-11 w-11 place-items-center rounded-full text-foreground hover:bg-foreground/5 transition-colors"
+      aria-label="Switch between light and dark theme"
     >
-      {/* Sun icon — visible in dark mode to switch to light */}
-      <span
-        className="absolute inset-0 flex items-center justify-center p-2 transition-all duration-200"
-        style={{
-          opacity: isDark ? 0 : 1,
-          transform: isDark ? "scale(0)" : "scale(1)",
-        }}
-        aria-hidden={isDark}
-      >
-        <Sun className="h-5 w-5 text-black" />
-      </span>
-
-      {/* Moon icon — visible in light mode to switch to dark */}
-      <span
-        className="flex items-center justify-center transition-all duration-200"
-        style={{
-          opacity: isDark ? 1 : 0,
-          transform: isDark ? "scale(1)" : "scale(0)",
-        }}
-        aria-hidden={!isDark}
-      >
-        <Moon className="h-5 w-5 text-white" />
-      </span>
-
-      <span className="sr-only">Toggle theme</span>
+      {/* Moon in light mode (switch to dark), sun in dark mode (switch to light) */}
+      <Moon className="h-5 w-5 dark:hidden" aria-hidden="true" />
+      <Sun className="hidden h-5 w-5 dark:block" aria-hidden="true" />
     </button>
   )
 }

@@ -1,59 +1,60 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, JetBrains_Mono, Playfair_Display } from "next/font/google";
+import { Host_Grotesk, JetBrains_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import NoiseOverlay from "@/components/ui/noise-overlay";
 
-const plusJakarta = Plus_Jakarta_Sans({
-  variable: "--font-plus-jakarta",
+// Signal Violet type system: Host Grotesk (display + text), JetBrains Mono
+// (labels, data), Instrument Serif italic (one accent word at most per screen).
+const hostGrotesk = Host_Grotesk({
+  variable: "--font-host-grotesk",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
-const playfair = Playfair_Display({
-  variable: "--font-serif",
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
   subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://fawazv.online"),
-  title: "Mohammed Fawaz | Full Stack Developer — React, Node.js, Microservices",
+  title: "Mohammed Fawaz | Full Stack Developer, Content Creator & AI Workflows",
   description:
-    "Full Stack Developer specializing in React, Next.js, Node.js & Microservices architecture. View projects and get in touch.",
+    "Full Stack Developer (React, Next.js, Node.js, microservices) and content creator who builds AI agent workflows, including an AI video editor on Claude Code.",
   authors: [{ name: "Mohammed Fawaz" }],
   keywords: [
     "Full Stack Developer", "React Developer", "Next.js", "Node.js",
     "Microservices", "TypeScript", "Docker", "AWS", "Kerala", "India",
+    "Content Creator", "Video Editor", "AI Agents", "Claude Code", "AI Workflows",
   ],
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://fawazv.online",
     siteName: "Mohammed Fawaz — Portfolio",
-    title: "Mohammed Fawaz | Full Stack Developer — React, Node.js, Microservices",
+    title: "Mohammed Fawaz | Full Stack Developer, Content Creator & AI Workflows",
     description:
-      "Full Stack Developer specializing in React, Next.js, Node.js & Microservices. Open to remote & hybrid roles.",
-    images: [
-      {
-        url: "/og-image.webp",
-        width: 1200,
-        height: 630,
-        alt: "Mohammed Fawaz — Full Stack Developer Portfolio",
-      },
-    ],
+      "Full Stack Developer (React, Next.js, Node.js, microservices) and content creator who builds AI agent workflows, including an AI video editor on Claude Code.",
+    // Image comes from src/app/opengraph-image.tsx
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mohammed Fawaz | Full Stack Developer",
+    title: "Mohammed Fawaz | Developer, Creator & AI Workflows",
     description:
-      "Full Stack Developer specializing in React, Next.js, Node.js & Microservices. Open to remote & hybrid roles.",
-    images: ["/og-image.webp"],
+      "Full Stack Developer (React, Next.js, Node.js, microservices) and content creator who builds AI agent workflows, including an AI video editor on Claude Code.",
+    // Image comes from src/app/twitter-image.tsx
   },
   robots: {
     index: true,
@@ -65,9 +66,10 @@ export const metadata: Metadata = {
   },
 };
 
-import CustomCursor from "@/components/ui/cursor";
+
 import Background from "@/components/ui/background";
-import SmoothScroll from "@/components/ui/smooth-scroll";
+import ScrollManager from "@/components/ui/scroll-manager";
+import { ViewTransitionResolver } from "@/components/ui/transition-link";
 
 export default function RootLayout({
   children,
@@ -75,7 +77,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${hostGrotesk.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         <script
           type="application/ld+json"
@@ -84,44 +90,46 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Person",
               name: "Mohammed Fawaz",
-              jobTitle: "Full Stack Developer",
+              jobTitle: "Full Stack Developer and Content Creator",
               url: "https://fawazv.online",
               email: "fawazv.business@gmail.com",
               description:
-                "Full Stack Developer specializing in React, Next.js, Node.js, and Microservices architecture.",
+                "Full Stack Developer (React, Next.js, Node.js, microservices) and content creator who builds AI agent workflows, including an AI video editor on Claude Code.",
               image: "https://fawazv.online/portrait.webp",
               sameAs: [
                 "https://github.com/fawazv/",
                 "https://www.linkedin.com/in/mohammed-fawaz-216314280/",
+                "https://www.instagram.com/_.fawaz_v/",
               ],
               knowsAbout: [
                 "React", "Next.js", "Node.js", "TypeScript",
                 "Microservices", "Docker", "AWS", "MongoDB", "PostgreSQL",
+                "AI agents", "Claude Code", "Video editing", "Content creation",
               ],
             }),
           }}
         />
       </head>
       <body
-        className={`${plusJakarta.variable} ${jetbrainsMono.variable} ${playfair.variable} antialiased`}
+        className="antialiased"
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
-          enableSystem
+          defaultTheme="light"
+          enableSystem={false}
           disableTransitionOnChange
         >
           <a
             href="#main-content"
-            className="sr-only focus:not-sr-only focus:absolute focus:z-9999 focus:p-4 focus:bg-background focus:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-neon-blue"
+            className="sr-only focus:not-sr-only focus:absolute focus:z-9999 focus:p-4 focus:bg-canvas focus:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           >
             Skip to content
           </a>
 
-          <SmoothScroll />
+          <ScrollManager />
+          <ViewTransitionResolver />
           <Background />
           <NoiseOverlay />
-          <CustomCursor />
           <Navbar />
           <main id="main-content">
             {children}

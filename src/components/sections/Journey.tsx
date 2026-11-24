@@ -1,156 +1,155 @@
 "use client";
 
-import { useRef } from "react";
-import { RevealHeader } from "@/components/ui/reveal-header";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useEffect, useRef, useState } from "react";
+import { Scribble } from "@/components/ui/scribble";
 
-gsap.registerPlugin(ScrollTrigger);
+/*
+ * Journey (F2) — pinned chapters, done with CSS `position: sticky` (no
+ * scroll-jacking, no GSAP pin). The sage frame holds the year, which counts
+ * up as each chapter crosses the middle of the screen, and a tomato rail
+ * fills. Below lg, and under reduced motion, it's a plain stacked timeline
+ * (the frame is hidden and each chapter shows its own year).
+ */
 
-const journey = [
+const chapters = [
   {
-    year: "2026 - Present",
-    role: "Full Stack Developer",
-    company: "Freelance & Open Source",
-    description: "Architecting enterprise-scale applications like 'Elite Hotel' (Microservices) and 'Nxtcart' (E-commerce). Expertise in Next.js, Docker, Kubernetes, and Cloud Architecture."
+    year: 2018,
+    span: "2018 – 2020",
+    title: "Commerce with computer applications",
+    place: "GHSS Tirurangadi · Higher secondary",
+    body: "My first programs, written in the computer applications classes. The first sign that I liked building things.",
   },
   {
-    year: "2024",
-    role: "The Pivot to Tech",
-    company: "Self-Taught Journey",
-    description: "Graduated with a Bachelor of Commerce but discovered a passion for problem-solving. Dedicated 1000+ hours to mastering the MERN stack and software engineering fundamentals."
+    year: 2020,
+    span: "2020 – 2023",
+    title: "Bachelor of Commerce",
+    place: "Calicut University · Co-operation",
+    body: "A degree in how businesses and co-operatives run: accounts, operations and the logic behind the numbers.",
   },
   {
-    year: "2020 - 2023",
-    role: "Bachelor of Commerce",
-    company: "Calicut University",
-    description: "Graduated with a specialization in Co-operation. Developed a strong analytical mindset and understanding of business logic."
+    year: 2024,
+    span: "2024",
+    title: "The pivot",
+    place: "Self-taught",
+    body: "A year of teaching myself the MERN stack and software fundamentals, one project at a time.",
   },
   {
-    year: "2018 - 2020",
-    role: "Computer Applications",
-    company: "GHSS Tirurangadi",
-    description: "Higher Secondary in Commerce with Computer Applications. Early exposure to programming concepts which sparked my initial interest in tech."
-  }
+    year: 2025,
+    span: "2025",
+    title: "Full-stack developer",
+    place: "Independent projects",
+    body: "Built Elite Hotel on ten services and RabbitMQ, and Nxtcart on Next.js 15. Five projects shipped that year.",
+  },
+  {
+    year: 2026,
+    span: "2026 – now",
+    title: "Creator and AI workflows",
+    place: "@_.fawaz_v · Claude Code",
+    body: "Making reels in Malayalam and English, and building AI agent workflows. My AI video editor now edits them from one take.",
+  },
 ];
 
 export default function Journey() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const leftRef = useRef<HTMLDivElement>(null);
-  const rightRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
+  const [shownYear, setShownYear] = useState(chapters[0].year);
+  const stepRefs = useRef<(HTMLLIElement | null)[]>([]);
+  const yearRef = useRef(chapters[0].year);
 
-  useGSAP(() => {
-    const mm = gsap.matchMedia();
-
-    mm.add("(min-width: 768px)", () => {
-      // Desktop: Pinning and Timeline Animation
-      ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: "top top",
-        end: "bottom bottom",
-        pin: leftRef.current,
-      });
-
-      const line = containerRef.current?.querySelector(".timeline-line-fill");
-      if (line) {
-        gsap.fromTo(line,
-          { scaleY: 0 },
-          {
-            scaleY: 1,
-            ease: "none",
-            scrollTrigger: {
-              trigger: rightRef.current,
-              start: "top 60%",
-              end: "bottom 80%",
-              scrub: 1,
-            }
-          }
-        );
-      }
-    });
-
-    // Single stagger batch for all journey items
-    gsap.fromTo(
-      ".journey-item",
-      { opacity: 0, y: 40 },
-      {
-        opacity: 1,
-        y: 0,
-        force3D: true,
-        duration: 0.6,
-        ease: "power2.out",
-        stagger: 0.2,
-        scrollTrigger: {
-          trigger: rightRef.current,
-          start: "top 75%",
-          once: true,
+  // Which chapter is crossing the middle of the screen
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) setActive(Number((e.target as HTMLElement).dataset.index));
         }
-      }
+      },
+      { rootMargin: "-45% 0px -50% 0px" }
     );
+    stepRefs.current.forEach((el) => el && observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
 
-    return () => mm.revert();
+  // Count the year up (or down) to the active chapter's year
+  useEffect(() => {
+    const to = chapters[active].year;
+    const from = yearRef.current;
+    if (from === to) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let frame = 0;
+    const start = performance.now();
+    const tick = (t: number) => {
+      const p = reduce ? 1 : Math.min(1, (t - start) / 450);
+      const value = Math.round(from + (to - from) * (1 - Math.pow(1 - p, 3)));
+      yearRef.current = value;
+      setShownYear(value);
+      if (p < 1) frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [active]);
 
-  }, { scope: containerRef });
+  const progress = (active + 1) / chapters.length;
 
   return (
-    <section id="journey" className="bg-background relative overflow-hidden">
-      {/* Dot Grid Overlay */}
-      <div className="absolute inset-0 dot-grid pointer-events-none" aria-hidden="true" />
-      {/* Ambient orb — cyan tint for variety */}
-      <div className="absolute bottom-1/4 left-0 w-[500px] h-[500px] bg-cyan-500/8 rounded-full blur-[120px] pointer-events-none" aria-hidden="true" />
-      <div
-        ref={containerRef}
-        className="container mx-auto px-6 flex flex-col md:flex-row min-h-screen"
-      >
-        {/* Left Column - Pinned */}
-        <div
-          ref={leftRef}
-          className="w-full md:w-1/2 flex flex-col justify-center relative"
-        >
-          <RevealHeader className="text-4xl md:text-6xl font-bold uppercase tracking-tighter mb-8 md:mb-0">
-            My <span className="gradient-text">Journey</span>
-          </RevealHeader>
-          <div className="w-24 h-px bg-linear-to-r from-violet-500 to-cyan-400 mt-4 hidden md:block" />
+    <section id="journey" aria-labelledby="journey-heading" className="relative py-24 md:py-32">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="mb-12 flex flex-col gap-4 md:mb-16">
+          <p className="font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground">Journey</p>
+          <h2
+            id="journey-heading"
+            className="font-serif text-[clamp(2.5rem,5vw,4.25rem)] font-normal leading-[1] tracking-[-0.03em] text-foreground"
+          >
+            Commerce first, <Scribble delay="0.2s">code</Scribble> since.
+          </h2>
         </div>
 
-        {/* Right Column - Scrolling Content */}
-        <div ref={rightRef} className="w-full md:w-1/2 flex flex-col justify-center py-20 md:py-32 relative">
-
-          {/* Thread/Timeline Line */}
-          <div className="absolute left-0 top-24 bottom-20 w-[2px] bg-violet-500/10 hidden md:block overflow-hidden rounded-full">
-            <div className="timeline-line-fill w-full h-full bg-linear-to-b from-violet-500/40 via-cyan-400/20 to-transparent origin-top shadow-[0_0_15px_rgba(139,92,246,0.4)]" />
-          </div>
-
-          <div className="space-y-24 pl-0 md:pl-12">
-            {journey.map((item, index) => (
-              <div
-                key={index}
-                className="journey-item relative flex flex-col gap-4 border-l-2 md:border-l-0 border-violet-500/15 pl-8 md:pl-0"
-              >
-                {/* Mobile Glow Border */}
-                <div className="absolute left-[-2px] top-0 h-full w-[2px] bg-violet-500 md:hidden origin-top scale-y-0 transition-transform duration-1000" />
-
-                <div className="relative cosmos-card rounded-2xl p-6">
-                  {/* Desktop Dot */}
-                  <div className="absolute -left-[70px] top-4 w-3 h-3 bg-violet-500 rounded-full hidden md:block z-10 shadow-[0_0_8px_rgba(124,58,237,0.3)] dark:shadow-[0_0_12px_rgba(139,92,246,0.6)]" />
-
-                  <span className="font-mono text-xs tracking-wider text-violet-600/70 dark:text-cyan-400/70 block mb-2">
-                    {item.year}
-                  </span>
-                  <h3 className="text-2xl md:text-3xl font-semibold uppercase tracking-tight mb-1 text-space dark:text-[#F0F0FF]">
-                    {item.role}
-                  </h3>
-                  <p className="text-sm font-mono text-[#6B6F8A] dark:text-[#7B82A8] uppercase mb-3 tracking-wide">
-                    {item.company}
-                  </p>
-                  <p className="text-[#6B6F8A] dark:text-[#7B82A8] text-sm leading-relaxed max-w-lg">
-                    {item.description}
-                  </p>
-                </div>
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1fr)] lg:gap-16">
+          {/* Sticky frame (wide screens, full motion only) */}
+          <div className="hidden lg:block motion-reduce:lg:hidden">
+            <div
+              className="sticky top-28 flex aspect-[4/3.4] flex-col justify-between overflow-hidden rounded-[28px] bg-sage p-10 text-ink"
+              aria-hidden="true"
+            >
+              <span className="font-mono text-xs uppercase tracking-[0.16em] text-ink/70">
+                Chapter {active + 1} of {chapters.length}
+              </span>
+              <span className="font-serif text-[clamp(6rem,11vw,10rem)] leading-[0.85] tracking-[-0.04em] tabular-nums">
+                {shownYear}
+              </span>
+              <div className="flex flex-col gap-3">
+                <span className="text-lg font-semibold">{chapters[active].title}</span>
+                <span className="relative h-1 overflow-hidden rounded-full bg-ink/15">
+                  <span
+                    className="absolute inset-y-0 left-0 rounded-full bg-tomato-deep transition-[width] duration-500 ease-out"
+                    style={{ width: `${progress * 100}%` }}
+                  />
+                </span>
               </div>
-            ))}
+            </div>
           </div>
+
+          {/* Chapters */}
+          <ol className="flex flex-col gap-6 lg:gap-[22vh] lg:py-[12vh]">
+            {chapters.map((c, i) => (
+              <li
+                key={c.span}
+                ref={(el) => {
+                  stepRefs.current[i] = el;
+                }}
+                data-index={i}
+                className={`rounded-2xl border border-line bg-raised p-6 transition-opacity duration-500 md:p-8 ${
+                  i === active ? "lg:opacity-100" : "lg:opacity-45"
+                } motion-reduce:lg:opacity-100`}
+              >
+                <p className="font-mono text-xs uppercase tracking-[0.16em] text-accent">{c.span}</p>
+                <h3 className="mt-3 font-serif text-3xl font-normal leading-tight tracking-[-0.02em] text-foreground md:text-4xl">
+                  {c.title}
+                </h3>
+                <p className="mt-1 text-sm text-muted-foreground">{c.place}</p>
+                <p className="mt-4 max-w-[54ch] leading-relaxed text-foreground/85">{c.body}</p>
+              </li>
+            ))}
+          </ol>
         </div>
       </div>
     </section>
