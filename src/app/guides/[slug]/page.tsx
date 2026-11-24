@@ -69,7 +69,7 @@ function howToJsonLd(g: Guide) {
 function SectionHeading({ id, step, children }: { id: string; step?: string; children: React.ReactNode }) {
   return (
     <h2 id={`${id}-heading`} className="flex items-baseline gap-4 font-serif text-[clamp(2.25rem,4vw,3rem)] font-normal leading-[1.05] tracking-[-0.02em] text-foreground">
-      {step && <span className="font-mono text-sm tracking-normal text-tomato">{step}</span>}
+      {step && <span className="font-mono text-sm tracking-normal text-accent">{step}</span>}
       {children}
     </h2>
   );
@@ -186,7 +186,7 @@ export default async function GuidePage({ params }: { params: Promise<Params> })
                     href={`#${c.id}`}
                     className="-ml-px flex gap-2 border-l-2 border-transparent py-1 pl-4 text-sm text-muted-foreground transition-colors hover:border-tomato hover:text-foreground"
                   >
-                    {"step" in c && c.step && <span className="font-mono text-xs leading-5 text-tomato">{c.step}</span>}
+                    {"step" in c && c.step && <span className="font-mono text-xs leading-5 text-accent">{c.step}</span>}
                     {c.label}
                   </a>
                 </li>

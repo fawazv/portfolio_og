@@ -37,6 +37,11 @@ export function PromptBlock({ label = "Prompt", text }: { label?: string; text: 
     timer.current = window.setTimeout(() => setCopied(false), 2000);
   };
 
+  // A distinct accessible name per button ("Copy prompt: Set up this folder for…"),
+  // so screen-reader users can tell several copy buttons on one page apart.
+  const preview = text.split(/\s+/).slice(0, 6).join(" ");
+  const buttonName = `Copy ${label.toLowerCase()}: ${preview}…`;
+
   return (
     <figure className="overflow-hidden rounded-2xl border border-line bg-raised">
       <figcaption className="flex items-center justify-between gap-4 border-b border-line px-4 py-2.5">
@@ -47,6 +52,7 @@ export function PromptBlock({ label = "Prompt", text }: { label?: string; text: 
         <button
           type="button"
           onClick={copy}
+          aria-label={buttonName}
           className="inline-flex min-h-9 items-center gap-1.5 rounded-full px-3 text-xs font-medium text-foreground transition-colors hover:bg-surface"
         >
           {copied ? <Check size={14} aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}
