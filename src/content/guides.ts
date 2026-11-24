@@ -1,6 +1,6 @@
 /*
  * Guides — single source for /guides and /guides/[slug].
- * The video-editing guide comes from the owner's own MY-GUIDE.md and
+ * The video-editing guide comes from the owner's own MY-GUIDE-v2.md and
  * EDITING-GUIDE.md (E:\Ai Video Editor). Every number is from that reel's
  * real run; nothing is invented. Keep it that way.
  *
@@ -60,22 +60,22 @@ export const guides: Guide[] = [
     title: "Claude × HyperFrames: how I edit my reels by talking",
     shortTitle: "Edit reels by talking to Claude",
     summary:
-      "I film one take, drop it in a folder and tell Claude what I want. It cuts the dead air, captions my exact words in Malayalam and English, adds on-brand motion graphics, face-tracked effects and sound, and checks its own work. I never open a video editor.",
+      "I film one take, drop it in a folder and tell Claude what I want. It cuts the dead air, captions my exact words in Malayalam and English, adds motion graphics, 3D B-roll, face-tracked effects and sound in my brand, and checks its own work. I never open a video editor.",
     updated: "November 2026",
-    updatedIso: "2026-11-21",
-    readTime: "8 min read",
+    updatedIso: "2026-11-24",
+    readTime: "9 min read",
     tags: ["Claude Code", "HyperFrames", "ffmpeg", "Video"],
     author: { name: "Mohammed Fawaz", handle: "@_.fawaz_v", href: "https://www.instagram.com/_.fawaz_v/" },
     cover: {
       src: `${img}/cover.webp`,
       width: 1440,
       height: 640,
-      alt: "Four frames from the finished reel: the orbit hook, the feed card, the productivity graph and the end word",
+      alt: "Four frames from the finished reel: the orbit hook, the 3D tiles, the productivity graph and the end word",
     },
     facts: [
-      { value: "76 → 65.6 s", label: "raw take to finished reel" },
-      { value: "39", label: "choices rated on the storyboard" },
-      { value: "3", label: "review rounds" },
+      { value: "66.4 s", label: "finished reel from one raw take" },
+      { value: "50", label: "choices rated on the storyboard" },
+      { value: "5", label: "review rounds" },
     ],
     needs: [
       "Claude desktop app, **Code** tab → [claude.com/download](https://claude.com/download)",
@@ -84,13 +84,13 @@ export const guides: Guide[] = [
       "About 20 minutes for setup",
     ],
     parts: [
-      { name: "HyperFrames", job: "The editor: footage, timeline, captions, graphics, final render. The edit is HTML, so every caption sits on an exact frame." },
+      { name: "HyperFrames", job: "The editor: footage, timeline, captions, graphics, 3D, final render. The edit is HTML, so every caption sits on an exact frame." },
       { name: "ffmpeg", job: "Cuts, colour grade and voice level, done before HyperFrames." },
-      { name: "Effects engine", job: "Anything that follows your face: orbit, words behind your head, iPhone toggles, punch-ins." },
+      { name: "Effects engine", job: "Anything that follows your face: orbit, words behind your head, punch-ins." },
       { name: "earshot", job: "Claude's ears. It can't hear, so every sound is picked and checked by measurement." },
       { name: "The skills", job: "The playbook: measure the footage, time captions, keep graphics off your face, check every render." },
       { name: "Brand sheet", job: "`brand/brand.json`: my colours, fonts, caption and title style, so every video looks like mine." },
-      { name: "Storyboard", job: "A page with a clip of every beat and a picture of every choice, rated Keep, Maybe or Drop." },
+      { name: "Four review pages", job: "Brand Lab (your look), Sound Board (your sounds), Colour Lab (your grade), Storyboard (the edit)." },
     ],
     skills: [
       {
@@ -168,12 +168,16 @@ export const guides: Guide[] = [
           { type: "h3", text: "Your sounds" },
           {
             type: "p",
-            text: "Put your packs in `public/sound/mine/`, one folder per pack. Claude only uses these. A moment with no fitting sound becomes a “gap” for you, and Claude never makes up a sound for it.",
+            text: "Put your packs in `public/sound/mine/`, one folder per pack. Then open the **Sound Board** (`public/sound/mine/player.html`): play every sound, mark ⭐ favourites and 🚫 never-use, rename them, and press **Save choices**. Claude tries your ⭐ sounds first and never uses a 🚫 one. A moment with no fitting sound becomes a “gap” for you, and Claude never makes up a sound for it.",
+          },
+          {
+            type: "image",
+            image: { src: `${img}/sound-board.webp`, width: 1280, height: 980, alt: "The Sound Board: every sound with its waveform, loudness, favourite and never-use marks", caption: "The Sound Board: rate your sounds once, and every edit uses them." },
           },
           { type: "h3", text: "Your pictures" },
           {
             type: "p",
-            text: "Effects like orbit or a phone feed need *your* screenshots or clips. Claude never generates or downloads them: it asks you, tells you exactly how many and what shape, and waits.",
+            text: "Effects like orbit or a phone feed need *your* screenshots or clips. Claude never generates or downloads them: it asks you, tells you exactly how many and what shape, and waits. B-roll and 3D graphics need no pictures: they're drawn from your words.",
           },
           { type: "h3", text: "Film it" },
           { type: "p", text: "One take, mistakes included, a pause between sentences. Leave room above your head. Vertical, 4K if you can." },
@@ -197,9 +201,20 @@ export const guides: Guide[] = [
             items: [
               "Claude transcribes. For Malayalam, you fix the words once in `corrected.txt`.",
               "It cuts every pause and lands each cut where the camera angle changes.",
-              "It asks for any pictures an effect needs. In my reel that was 8 reel screenshots for the orbit, 3 posts for the feed and 1 clip of typing for the b-roll split. You drop them in the folder it names and reply `added`. Claude blurs names and notifications, strips location data and never touches your originals.",
+              "It asks for any pictures an effect needs. In my reel that was 8 reel screenshots for the orbit and 3 posts for the feed. You drop them in the folder it names and reply `added`. Claude blurs names and notifications, strips location data and never touches your originals.",
               "It builds the draft, looks at the frames itself, and fixes anything that covers your face or the captions.",
             ],
+          },
+          { type: "h3", text: "Add B-roll and 3D from your words" },
+          { type: "p", text: "No pictures needed:" },
+          {
+            type: "prompt",
+            label: "B-roll prompt",
+            text: "Add B-roll motion graphics drawn from my words, following docs/WORKFLOW.md (\"B-roll motion graphics\"): a full-screen cover or a card above my head, <how many> at most, never in the first second, and never invent numbers. Where a beat lists things, make it a 3D graphic. Show me the list before building.",
+          },
+          {
+            type: "p",
+            text: "In my reel this turned two checklists into **3D tiles** and a **3D stack**, the b-roll split into a **3D screen**, and added two cards straight from my lines (“no waste”, “edited fully in Claude”).",
           },
         ],
       },
@@ -210,7 +225,7 @@ export const guides: Guide[] = [
         blocks: [
           {
             type: "p",
-            text: "You get a page with a short clip of every beat and a preview of every single choice: cuts, captions, graphics, effects, transitions and sounds. Rate each one:",
+            text: "You get a page with a short clip of every beat and a preview of every single choice: cuts, captions, graphics, effects, transitions, sounds and colour. Rate each one:",
           },
           {
             type: "image",
@@ -221,11 +236,20 @@ export const guides: Guide[] = [
             type: "p",
             text: "Hit **Submit**, then type `done` in the chat. Claude changes the Maybes, answers your notes and sends the next round. Nothing is delivered until every item is Keep or Drop.",
           },
+          { type: "h3", text: "Grade it yourself (optional)" },
+          {
+            type: "p",
+            text: "Say “Open the Colour Lab for work/<video name>/”. You get Lightroom-style sliders on frames of your own take: start from your brand grade, Auto or a match to your reference video, then white balance, light, tone curve, colour mixer with **Protect skin**, masks that follow your face, and your own LUT. Press **Send grade**: Claude renders real frames through it so you can see the page tells the truth, then **Keep this grade**.",
+          },
+          {
+            type: "image",
+            image: { src: `${img}/colour-lab.webp`, width: 1280, height: 1480, alt: "The Colour Lab: start-from looks, a before and after split of my take, and the grading panels", caption: "The Colour Lab: grade on frames of your own take, then check it against a real render." },
+          },
           { type: "h3", text: "Notes that worked for me" },
           {
             type: "list",
             items: [
-              "*“The audio and video are not in sync. Fix it.”* → Claude made every cut a whole number of frames, so sound and picture both run exactly 65.633 s.",
+              "*“The audio and video are not in sync. Fix it.”* → Claude made every cut a whole number of frames, so sound and picture run the same length.",
               "*“Add an orbit and other effects. Tell me what pictures you need.”*",
               "*“At 31 to 37 s there's a background blur. Remove it and add a motion graphic.”* → a glass card with a line that climbs to 3x exactly on the word “productivity”.",
             ],
@@ -247,7 +271,7 @@ export const guides: Guide[] = [
             rows: [
               ["`exports/<video>.mp4`", "The reel"],
               ["`exports/<video>.srt`", "Subtitles"],
-              ["`exports/<video>-notes.md`", "The checks, plus anything still missing (like music)"],
+              ["`exports/<video>-notes.md`", "The checks, plus anything still missing (like music) and each sound whose licence is unknown"],
             ],
           },
           { type: "p", text: "Then Claude asks whether to keep your pictures for next time, and cleans out the in-between files." },
@@ -258,24 +282,26 @@ export const guides: Guide[] = [
       image: {
         src: `${img}/effects-grid.webp`,
         width: 1440,
-        height: 1280,
-        alt: "Eight effects from the reel: orbit, feed, EDITOR crossed out, voice wave, checklist, iPhone toggles, productivity graph, b-roll split",
+        height: 1920,
+        alt: "Twelve moments from the reel: orbit, feed, EDITOR crossed out, voice wave, 3D tiles, iPhone toggles, productivity graph, 3D screen, 3D stack, B-roll cover, B-roll overlay, end word",
       },
       items: [
-        "Captions in Malayalam and English, key words in my orange",
         "My reels orbiting my head in the hook",
         "My real posts sliding in on a phone feed",
         "**EDITOR** written huge behind me and crossed out on “I'm not a video editor”",
         "A voice wave whose silence collapses, on “I've started editing videos”",
+        "**3D tiles** building up what Claude Code makes: captions, motion graphics, sound effects, editing tools, workflows",
         "iPhone toggles flipping on as I name each field",
-        "Two checklists ticking as I say each item",
-        "A b-roll split with a “just a prompt?” sticker",
         "A productivity graph that tops out on the word",
-        "Sounds from my own packs on every beat, all measured",
+        "A **3D screen** with “just a prompt?” crossed out",
+        "A **3D stack** ticking off skills, proper instructions, step-by-step",
+        "B-roll from my words: “no waste” on tokens, “edited fully in Claude”",
+        "Captions in Malayalam and English, key words in my orange, and sounds from my own packs on every beat",
       ],
     },
     practices: [
       "**Brand first.** Make the brand sheet before the first video. It's the difference between a good edit and *your* edit.",
+      "**Rate your sounds once.** ⭐ and 🚫 on the Sound Board save you a note on every video.",
       "**Review on the storyboard, not in chat.** A note on the exact item beats describing a timestamp.",
       "**Point to your words.** “When I say X” lands on the exact frame. “Around 30 seconds” doesn't.",
       "**Press Submit.** Ratings save as you click, but Claude only acts on a submitted round. Clicking a rating that's already selected clears it.",
@@ -287,6 +313,7 @@ export const guides: Guide[] = [
       ["Sound and picture drift apart", "“Audio and video are out of sync after <time>. Measure and fix it.”"],
       ["A graphic covers my face or the captions", "“At <time>, <graphic> covers my face. Move it.”"],
       ["An effect waits for pictures", "Add them to the folder it named and reply `added`, or reply `skip this effect`"],
+      ["The colour looks off", "Rate the colour item Maybe, or open the Colour Lab"],
       ["No music", "Add a track to `public/music/`, or rate the music gap Drop"],
     ],
     closing: "That's it. Film, drop in the take, describe the edit, rate the storyboard.",

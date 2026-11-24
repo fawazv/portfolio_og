@@ -42,19 +42,19 @@ export const projects: Project[] = [
     image: "/images/projects/ai-video-editor.webp",
     guideUrl: "/guides/claude-video-editing",
     facts: [
-      { value: "76 → 65.6 s", label: "raw take to finished reel" },
-      { value: "39", label: "choices rated on the storyboard" },
-      { value: "3", label: "review rounds" },
+      { value: "66.4 s", label: "finished reel from one raw take" },
+      { value: "50", label: "choices rated on the storyboard" },
+      { value: "5", label: "review rounds" },
     ],
     overview:
-      "I make reels in Malayalam and English. Instead of opening an editor, I drop the take in a folder and describe the edit. Claude cuts the dead air, captions my exact words, adds motion graphics in my brand, face-tracked effects and sound, then builds a storyboard page where I rate every single choice Keep, Maybe or Drop. Nothing is rendered for delivery until every item is Keep or Drop.",
+      "I make reels in Malayalam and English. Instead of opening an editor, I drop the take in a folder and describe the edit. Claude cuts the dead air, captions my exact words, adds motion graphics, 3D B-roll, face-tracked effects and sound in my brand, then builds a storyboard page where I rate every single choice Keep, Maybe or Drop. Nothing is rendered for delivery until every item is Keep or Drop.",
     built: [
       "Claude Code drives the whole run, steered by a set of agent skills: HyperFrames, face-tracked effects, motion and caption rules, and my own editing playbook.",
       "Speech to text with whisper.cpp for English and a separate model for Malayalam; I correct the Malayalam words once and a script aligns them back onto the timings.",
-      "ffmpeg does the cuts, colour grade and voice level before the edit. Every cut is a whole number of frames, so sound and picture both run exactly 65.633 s.",
+      "ffmpeg does the cuts, colour grade and voice level before the edit. Every cut is a whole number of frames, so sound and picture run the same length.",
       "HyperFrames renders the edit from HTML, so each caption and graphic sits on an exact frame.",
       "earshot measures sound, because Claude can't hear: every effect comes from my own packs and is checked by measurement, and a moment with no fitting sound is left as a gap for me.",
-      "Python scripts build the storyboard and Brand Lab review pages, and a delivery check tests frame count, black or frozen frames, loudness (−14 LUFS) and true peak.",
+      "Python scripts build four review pages (Brand Lab, Sound Board, Colour Lab and the storyboard), and a delivery check tests frame count, black or frozen frames, loudness (−14 LUFS) and true peak.",
     ],
     decisions: [
       {

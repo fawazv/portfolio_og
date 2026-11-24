@@ -156,7 +156,7 @@ export default function Hero() {
                 ))}
               </ol>
               <div className="mt-3 flex items-center justify-between text-xs text-ink/65">
-                <span>76 s take → 65.6 s reel</span>
+                <span>1 take → 66.4 s reel</span>
                 <TransitionLink
                   href="/work/ai-video-editor"
                   className="inline-flex items-center gap-1 rounded-full bg-tomato-deep px-3 py-1 text-[12px] font-medium text-paper transition-colors hover:bg-[#9E2A17]"
